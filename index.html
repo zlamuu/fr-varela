@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FR.VARELA — Maxikiosco 24hs en Florencio Varela</title>
+<meta name="description" content="Maxikiosco FR.VARELA abierto las 24 horas en Florencio Varela. Golosinas, chocolates, snacks, bebidas y almacén. 3 sucursales. Pedí por WhatsApp y te lo llevamos.">
+<meta name="theme-color" content="#E11B22">
+<!-- Para compartir por WhatsApp / redes -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="FR.VARELA — Maxikiosco 24hs">
+<meta property="og:description" content="Pedí bebidas, golosinas, snacks y más. Abierto las 24 horas en Florencio Varela.">
+<!-- Ícono (emoji como favicon) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌭</text></svg>">
+<!-- Fuentes -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --red:#DE3B26;        /* rojo cálido (tira un poco a ladrillo) */
+  --orange:#DE3B26;
+  --yellow:#F5B301;     /* amarillo cálido */
+  --green:#25D366;
+  --bg:#FBF5EC;         /* crema cálido */
+  --bg2:#FFFFFF;
+  --card:#FFFDF9;       /* blanco cálido */
+  --card2:#FFFDF9;
+  --line:#EDE2D2;       /* borde cálido */
+  --text:#241F1A;       /* casi negro cálido */
+  --muted:#8C8275;
+  --white:#FFFFFF;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family:'Outfit', system-ui, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+/* ===== TOPBAR ===== */
+.topbar { position:sticky; top:0; z-index:100; background:#fff; box-shadow:0 1px 0 var(--line); }
+header { padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.logo-wrap { display:flex; align-items:center; gap:10px; }
+.logo-mark {
+  width:52px; height:52px; flex-shrink:0; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; font-size:27px;
+  background:linear-gradient(145deg, #E23A2A, #B71D14);
+  box-shadow:0 6px 16px rgba(222,59,38,0.45); border:2px solid #fff;
+  outline:1px solid var(--line);
+}
+.logo-name { font-family:'Bebas Neue', sans-serif; font-size:2.3rem; letter-spacing:1.5px; line-height:0.85; display:flex; align-items:center; flex-wrap:wrap; gap:4px; }
+.logo-name .fr { color:#241F1A; }
+.logo-name .va { color:var(--red); }
+.badge24 {
+  font-family:'Outfit', sans-serif; font-size:0.58rem; font-weight:900;
+  background:var(--yellow); color:#241F1A; padding:2px 7px; border-radius:6px;
+  letter-spacing:0.5px; align-self:center;
+}
+.logo-sub { font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; font-weight:700; margin-top:3px; }
+
+.cart-btn {
+  background:var(--red); color:#fff; border:none; border-radius:50px;
+  padding:10px 18px; font-size:0.9rem; font-weight:800; cursor:pointer;
+  display:flex; align-items:center; gap:8px; transition:all .2s; white-space:nowrap;
+}
+.cart-btn:hover { background:#c4151b; transform:translateY(-1px); }
+.cart-count {
+  background:var(--yellow); color:#1B1B1F; border-radius:50%;
+  min-width:22px; height:22px; padding:0 5px; display:flex; align-items:center; justify-content:center;
+  font-size:0.75rem; font-weight:900;
+}
+
+/* ===== TICKER ===== */
+.ticker {
+  overflow:hidden; white-space:nowrap;
+  background:linear-gradient(90deg, #B0472A, #CE5333, #B0472A);
+  background-size:200% 100%; animation:tickerbg 6s linear infinite;
+}
+@keyframes tickerbg { 0%{background-position:0 0} 100%{background-position:200% 0} }
+.ticker-track { display:inline-block; padding:7px 0; animation:tickermove 22s linear infinite; font-weight:800; font-size:0.74rem; letter-spacing:0.5px; color:#fff; text-transform:uppercase; }
+.ticker-track span { padding:0 22px; }
+@keyframes tickermove { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* ===== HERO ===== */
+.hero {
+  position:relative; overflow:hidden; text-align:center;
+  padding:34px 20px 30px; color:#fff;
+  background:linear-gradient(135deg, #CE5333 0%, #A63A1F 100%);
+}
+.hero::before {
+  content:""; position:absolute; inset:0;
+  background-image:radial-gradient(rgba(255,255,255,0.10) 1.5px, transparent 1.5px);
+  background-size:18px 18px; opacity:0.6;
+}
+.hero-inner { position:relative; z-index:1; }
+.hero h1 { font-family:'Bebas Neue', sans-serif; font-size:clamp(2.3rem,8vw,3.6rem); letter-spacing:1.5px; line-height:0.95; color:#fff; }
+.hero h1 .neon-y { color:var(--yellow); }
+.hero h1 .neon-c { color:#fff; }
+.hero p { color:rgba(255,255,255,0.92); font-size:0.95rem; margin:10px auto 0; max-width:480px; line-height:1.5; }
+.hero-badges { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:18px; }
+.hbadge {
+  display:inline-flex; align-items:center; gap:6px;
+  background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.30);
+  border-radius:50px; padding:7px 14px; font-size:0.76rem; font-weight:700; color:#fff;
+}
+.live-dot { width:8px; height:8px; border-radius:50%; background:#9bff9b; box-shadow:0 0 8px #4dff4d; animation:pulse 1.8s infinite; }
+@keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(150,255,150,0.7)} 70%{box-shadow:0 0 0 8px rgba(150,255,150,0)} 100%{box-shadow:0 0 0 0 rgba(150,255,150,0)} }
+
+/* ===== BENEFICIOS ===== */
+.benefits { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:16px; max-width:1100px; margin:0 auto; }
+.benefit { display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.benefit .b-ico { font-size:24px; }
+.benefit b { display:block; font-size:0.9rem; color:var(--text); line-height:1.1; }
+.benefit small { color:var(--muted); font-size:0.7rem; }
+@media (max-width:620px){ .benefits { grid-template-columns:repeat(2,1fr); } }
+
+/* ===== BUSCADOR ===== */
+.search-wrap { position:sticky; top:68px; z-index:95; background:var(--bg); padding:12px 16px 8px; }
+.search-box { display:flex; align-items:center; gap:8px; background:#fff; border:1px solid var(--line); border-radius:50px; padding:11px 16px; max-width:1100px; margin:0 auto; transition:all .2s; }
+.search-box:focus-within { border-color:var(--red); box-shadow:0 0 0 3px rgba(225,27,34,0.12); }
+.search-box svg { width:18px; height:18px; fill:var(--muted); flex-shrink:0; }
+.search-box input { flex:1; background:none; border:none; outline:none; color:var(--text); font-size:0.95rem; font-family:inherit; }
+.search-box input::placeholder { color:var(--muted); }
+.search-clear { background:none; border:none; color:var(--muted); font-size:1.1rem; cursor:pointer; padding:0 2px; display:none; }
+.search-box.has-text .search-clear { display:block; }
+
+/* ===== CATEGORIAS ===== */
+.cat-bar { position:sticky; top:124px; z-index:90; background:var(--bg); padding:4px 16px 12px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; max-width:1100px; margin:0 auto; }
+.cat-bar::-webkit-scrollbar { display:none; }
+.cat-btn {
+  background:#fff; color:#444; border:1px solid var(--line); border-radius:50px;
+  padding:8px 16px; font-size:0.78rem; font-weight:700; cursor:pointer; white-space:nowrap;
+  transition:all .2s; text-transform:uppercase; letter-spacing:0.4px;
+}
+.cat-btn:hover { border-color:var(--red); color:var(--red); transform:translateY(-2px); }
+.cat-btn.active { background:var(--red); color:#fff; border-color:var(--red); box-shadow:0 4px 12px rgba(225,27,34,0.3); }
+
+/* ===== TITULOS ===== */
+#main { max-width:1100px; margin:0 auto; }
+.section-title {
+  font-family:'Bebas Neue', sans-serif; font-size:1.5rem; letter-spacing:1px; color:var(--text);
+  text-transform:uppercase; padding:22px 16px 8px; border-left:4px solid var(--red);
+  margin:0;
+}
+
+/* ===== GRILLA ===== */
+.products-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:14px; padding:10px 16px 24px; }
+.product-card { background:#fff; border-radius:16px; overflow:hidden; border:1px solid var(--line); transition:transform .18s ease, box-shadow .18s ease; display:flex; flex-direction:column; position:relative; box-shadow:0 2px 10px rgba(0,0,0,0.05); animation:cardin .4s ease; }
+@keyframes cardin { from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
+.product-card:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 14px 30px rgba(0,0,0,0.16); z-index:5; }
+.product-img-wrap, .product-info { cursor:pointer; }
+
+.product-img-wrap { position:relative; width:100%; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#F4ECDD; }
+.product-img-wrap img { width:100%; height:100%; object-fit:cover; position:relative; z-index:1; }
+.product-emoji-fb { font-size:64px; line-height:1; position:relative; z-index:1; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.12)); }
+
+.product-info { padding:11px 12px 6px; flex:1; display:flex; flex-direction:column; gap:4px; }
+.product-name { font-size:0.85rem; font-weight:700; color:var(--text); line-height:1.3; }
+.product-desc { font-size:0.7rem; color:var(--muted); }
+.product-price { font-size:1.1rem; font-weight:900; color:var(--red); margin-top:4px; }
+
+.product-footer { padding:0 12px 12px; display:flex; align-items:center; justify-content:flex-end; }
+.add-btn { background:var(--red); color:#fff; border:none; border-radius:50%; width:38px; height:38px; font-size:1.4rem; cursor:pointer; display:flex; align-items:center; justify-content:center; font-weight:700; transition:all .15s; box-shadow:0 3px 10px rgba(225,27,34,0.35); }
+.add-btn:hover { background:#c4151b; transform:scale(1.1); }
+.qty-ctrl { display:flex; align-items:center; gap:6px; background:#F4ECDD; border:1px solid var(--line); border-radius:50px; padding:5px 10px; }
+.qty-ctrl button { background:none; border:none; color:var(--red); font-size:1.1rem; cursor:pointer; font-weight:800; width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
+.qty-ctrl span { font-size:0.9rem; font-weight:800; color:var(--text); min-width:20px; text-align:center; }
+
+.promo-badge { position:absolute; top:8px; left:8px; z-index:3; background:var(--red); color:#fff; font-size:0.6rem; font-weight:900; padding:4px 8px; border-radius:50px; letter-spacing:0.8px; box-shadow:0 2px 8px rgba(225,27,34,0.45); }
+.size-tag { position:absolute; top:8px; right:8px; z-index:3; background:rgba(255,255,255,0.95); color:var(--text); font-size:0.64rem; font-weight:800; padding:3px 9px; border-radius:50px; letter-spacing:0.2px; box-shadow:0 1px 4px rgba(0,0,0,0.12); }
+
+/* ===== SIN RESULTADOS ===== */
+.no-results { text-align:center; color:var(--muted); padding:60px 20px; font-size:0.95rem; }
+.no-results .big-e { font-size:48px; display:block; margin-bottom:12px; }
+
+/* ===== CARRITO ===== */
+.cart-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.45); z-index:200; }
+.cart-overlay.open { display:block; }
+.cart-panel { position:fixed; right:0; top:0; bottom:0; width:min(420px,100vw); background:#fff; display:flex; flex-direction:column; z-index:201; transform:translateX(100%); transition:transform .3s ease; box-shadow:-8px 0 30px rgba(0,0,0,0.15); }
+.cart-panel.open { transform:translateX(0); }
+.cart-header { background:#fff; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+.cart-header h2 { font-family:'Bebas Neue', sans-serif; font-size:1.5rem; letter-spacing:0.5px; color:var(--text); }
+.cart-header-actions { display:flex; align-items:center; gap:8px; }
+.clear-btn { background:none; border:1px solid var(--line); color:#d33; border-radius:8px; padding:6px 10px; cursor:pointer; font-size:0.78rem; }
+.clear-btn:hover { border-color:#d33; }
+.close-btn { background:none; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:0.85rem; }
+.close-btn:hover { border-color:var(--red); color:var(--red); }
+.cart-items { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; }
+.cart-items::-webkit-scrollbar { width:5px; }
+.cart-items::-webkit-scrollbar-thumb { background:#ccc; border-radius:10px; }
+.cart-empty { text-align:center; color:var(--muted); padding:50px 20px; }
+.cart-empty .big-e { font-size:52px; display:block; margin-bottom:12px; }
+.cart-item { background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; display:flex; align-items:center; gap:10px; }
+.ci-img { width:52px; height:52px; border-radius:8px; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:#F4ECDD; }
+.ci-img img { width:100%; height:100%; object-fit:cover; }
+.ci-emoji-fb { font-size:28px; }
+.ci-info { flex:1; min-width:0; }
+.ci-name { font-size:0.83rem; font-weight:700; color:var(--text); }
+.ci-price { font-size:0.8rem; color:var(--red); font-weight:800; }
+.ci-ctrl { display:flex; align-items:center; gap:6px; background:#F4ECDD; border:1px solid var(--line); border-radius:50px; padding:4px 10px; }
+.ci-ctrl button { background:none; border:none; color:var(--red); font-size:1.1rem; cursor:pointer; font-weight:800; width:20px; height:20px; display:flex; align-items:center; justify-content:center; }
+.ci-ctrl span { font-size:0.9rem; font-weight:800; color:var(--text); min-width:18px; text-align:center; }
+
+/* ===== VENTA CRUZADA ===== */
+.cart-suggest { padding:6px 16px 2px; border-top:1px solid var(--line); }
+.cart-suggest h4 { font-size:0.8rem; font-weight:800; color:var(--text); margin:8px 0; display:flex; align-items:center; gap:6px; }
+.suggest-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none; }
+.suggest-row::-webkit-scrollbar { display:none; }
+.suggest-card { flex:0 0 auto; width:94px; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
+.suggest-thumb { height:52px; display:flex; align-items:center; justify-content:center; font-size:30px; }
+.suggest-body { padding:6px 7px 8px; display:flex; flex-direction:column; gap:3px; }
+.suggest-name { font-size:0.66rem; color:#444; line-height:1.2; height:2.4em; overflow:hidden; }
+.suggest-price { font-size:0.74rem; color:var(--text); font-weight:800; }
+.suggest-add { margin-top:3px; background:var(--red); color:#fff; border:none; border-radius:8px; padding:5px; font-weight:800; font-size:0.72rem; cursor:pointer; }
+.suggest-add:hover { background:#c4151b; }
+
+.cart-footer { padding:16px 20px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:12px; background:#fff; }
+.cart-note { font-size:0.72rem; color:var(--muted); background:#F8F1E6; border:1px solid var(--line); border-radius:8px; padding:8px 12px; line-height:1.4; }
+.cart-total { display:flex; justify-content:space-between; align-items:center; }
+.cart-total .label { font-size:0.95rem; color:var(--muted); font-weight:600; }
+.cart-total .amount { font-size:1.5rem; color:var(--text); font-weight:900; }
+.whatsapp-btn { background:var(--green); color:#fff; border:none; border-radius:14px; padding:15px; font-size:1rem; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:10px; transition:all .2s; box-shadow:0 4px 14px rgba(37,211,102,0.35); }
+.whatsapp-btn:hover { background:#1ebe57; transform:translateY(-1px); }
+.whatsapp-btn svg { width:22px; height:22px; fill:#fff; flex-shrink:0; }
+
+/* ===== BARRA INFERIOR ===== */
+.checkout-bar { position:fixed; left:0; right:0; bottom:0; z-index:150; background:var(--red); color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transform:translateY(120%); transition:transform .3s ease; box-shadow:0 -4px 20px rgba(0,0,0,0.18); border:none; font-family:inherit; width:100%; }
+.checkout-bar.show { transform:translateY(0); }
+.checkout-bar .cb-left { display:flex; align-items:center; gap:10px; font-weight:800; font-size:0.95rem; }
+.checkout-bar .cb-badge { background:#fff; color:var(--red); border-radius:50%; min-width:24px; height:24px; padding:0 6px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900; }
+.checkout-bar .cb-total { font-weight:900; font-size:1.1rem; }
+
+/* ===== TOAST ===== */
+.toast { position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(20px); background:#1B1B1F; color:#fff; padding:11px 18px; border-radius:50px; font-size:0.85rem; font-weight:600; z-index:250; opacity:0; pointer-events:none; transition:all .25s ease; white-space:nowrap; box-shadow:0 6px 20px rgba(0,0,0,0.25); }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ===== COMO PEDIR ===== */
+.howto { padding:26px 16px 6px; max-width:1100px; margin:0 auto; }
+.block-title { font-family:'Bebas Neue', sans-serif; font-size:1.7rem; letter-spacing:1px; color:var(--text); text-align:center; margin-bottom:14px; }
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+.step { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 12px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.step-n { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; border-radius:50%; background:var(--red); color:#fff; font-weight:900; margin-bottom:10px; }
+.step b { display:block; color:var(--text); font-size:1rem; }
+.step small { color:var(--muted); font-size:0.74rem; }
+@media (max-width:480px){ .steps { grid-template-columns:1fr; } }
+
+/* ===== FOOTER ===== */
+footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); margin-top:20px; }
+.foot-col h3 { font-family:'Bebas Neue', sans-serif; font-size:1.2rem; letter-spacing:1px; color:var(--yellow); margin-bottom:8px; }
+.foot-col p, .foot-col a { font-size:0.82rem; color:#aab; line-height:1.7; text-decoration:none; display:block; }
+.foot-col a:hover { color:#fff; }
+.foot-brand .logo-name { font-size:1.8rem; }
+.foot-brand .logo-name .fr { color:#fff; }
+.foot-brand .logo-name .va { color:var(--red); }
+.foot-copy { grid-column:1 / -1; text-align:center; color:#666; font-size:0.72rem; border-top:1px solid #3a2c1f; padding-top:16px; }
+
+/* ===== FONDOS POR CATEGORIA (pastel) ===== */
+/* Fondo de imagen unificado y elegante (gris muy suave) para que combine */
+.t-promos, .t-bebidas, .t-golosinas, .t-snacks, .t-comida,
+.t-lacteos, .t-almacen, .t-cigarrillos {
+  background: linear-gradient(160deg, #FCF6ED, #F1E7D6);
+}
+/* Las promos llevan un toque rojo muy sutil para destacar */
+.t-promos { background: linear-gradient(160deg, #FFF4F4, #FFE7E7); }
+
+@media (max-width:360px) {
+  .products-grid { grid-template-columns:repeat(2,1fr); gap:10px; padding:8px 12px 20px; }
+  .product-img-wrap { height:120px; }
+}
+/* ===== Destacados (vidriera) ===== */
+.featured { max-width:1100px; margin:0 auto; padding:6px 0 0; }
+.featured-head { font-family:'Bebas Neue', sans-serif; font-size:1.4rem; letter-spacing:1px; color:var(--text); margin:8px 16px 10px; }
+.featured-row { display:flex; gap:12px; overflow-x:auto; padding:0 16px 14px; scrollbar-width:none; }
+.featured-row::-webkit-scrollbar { display:none; }
+.feat-card { position:relative; flex:0 0 auto; width:152px; background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.06); }
+.feat-card .product-img-wrap { height:108px; }
+.feat-body { padding:8px 10px 12px; padding-right:44px; }
+.feat-name { font-size:0.76rem; font-weight:700; color:var(--text); line-height:1.25; height:2.5em; overflow:hidden; margin-bottom:2px; }
+.feat-add { position:absolute; right:8px; bottom:8px; width:34px; height:34px; font-size:1.3rem; }
+
+/* ===== Barra de orden ===== */
+.toolbar { max-width:1100px; margin:0 auto; padding:8px 16px 0; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.result-count { font-size:0.8rem; color:var(--muted); font-weight:600; }
+.sort-label { font-size:0.8rem; color:var(--muted); display:flex; align-items:center; gap:6px; }
+.sort-label select {
+  font-family:inherit; font-size:0.82rem; font-weight:600; color:var(--text);
+  background:#fff; border:1px solid var(--line); border-radius:50px; padding:7px 12px; cursor:pointer;
+}
+.sort-label select:focus { outline:none; border-color:var(--red); }
+
+/* ===== Ventana de detalle de producto ===== */
+.pm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:300; align-items:center; justify-content:center; padding:20px; }
+.pm-overlay.open { display:flex; }
+.pm-card { position:relative; background:var(--card); border-radius:18px; width:min(380px,100%); max-height:92vh; overflow:hidden auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:pmin .25s ease; }
+@keyframes pmin { from{opacity:0; transform:translateY(20px) scale(.97)} to{opacity:1; transform:none} }
+.pm-close { position:absolute; top:10px; right:10px; z-index:4; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.92); color:var(--text); font-size:1rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
+.pm-img { position:relative; height:220px; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:18px 18px 0 0; }
+.pm-img img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; position:relative; z-index:1; }
+.pm-imgbg { position:absolute; inset:0; background-size:cover; background-position:center; filter:blur(22px) brightness(0.9); transform:scale(1.25); z-index:0; }
+.pm-emoji { font-size:96px; position:relative; z-index:1; filter:drop-shadow(0 6px 10px rgba(0,0,0,0.15)); }
+.pm-info { padding:16px 18px 18px; }
+.pm-promo { display:inline-block; background:var(--red); color:#fff; font-size:0.62rem; font-weight:900; padding:3px 8px; border-radius:50px; margin-bottom:8px; letter-spacing:0.5px; }
+.pm-name { font-size:1.15rem; font-weight:800; color:var(--text); line-height:1.25; }
+.pm-price { color:var(--muted); font-weight:700; margin:4px 0 14px; }
+.pm-qtyrow { display:flex; align-items:center; gap:12px; }
+.pm-qty { display:flex; align-items:center; gap:10px; background:#F4ECDD; border:1px solid var(--line); border-radius:50px; padding:6px 12px; }
+.pm-qty button { background:none; border:none; color:var(--red); font-size:1.3rem; font-weight:800; cursor:pointer; width:24px; height:24px; }
+.pm-qty span { font-weight:800; min-width:22px; text-align:center; color:var(--text); }
+.pm-add { flex:1; background:var(--red); color:#fff; border:none; border-radius:12px; padding:13px; font-weight:800; font-size:0.95rem; cursor:pointer; box-shadow:0 4px 12px rgba(222,59,38,0.35); transition:background .2s; }
+.pm-add:hover { background:#B23A1C; }
+.pm-price small { color:var(--muted); font-size:0.7rem; font-weight:600; }
+.pm-cat { display:inline-block; background:#F4ECDD; color:var(--text); font-size:0.65rem; font-weight:800; padding:3px 9px; border-radius:50px; margin-bottom:8px; }
+.pm-tags { font-size:0.72rem; color:var(--muted); margin:10px 0 14px; line-height:1.5; }
+.pm-sg-title { font-size:0.85rem; font-weight:800; color:var(--text); margin:18px 0 10px; border-top:1px solid var(--line); padding-top:14px; }
+.pm-sg-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
+.pm-sg-row::-webkit-scrollbar { display:none; }
+.pm-sg-card { flex:0 0 auto; width:84px; cursor:pointer; }
+.pm-sg-thumb { height:64px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:30px; }
+.pm-sg-thumb img { width:100%; height:100%; object-fit:cover; }
+.pm-sg-emoji { filter:drop-shadow(0 3px 5px rgba(0,0,0,0.12)); }
+.pm-sg-name { font-size:0.64rem; color:var(--text); line-height:1.2; height:2.4em; overflow:hidden; margin-top:4px; }
+.pm-sg-price { font-size:0.72rem; color:var(--red); font-weight:800; }
+
+/* hover en destacados */
+.feat-card { transition:all .2s; }
+.feat-card .product-img-wrap, .feat-body { cursor:pointer; }
+.feat-card:hover { transform:translateY(-3px); box-shadow:0 12px 26px rgba(0,0,0,0.14); }
+
+/* ===== Botón flotante WhatsApp ===== */
+.wa-float {
+  position:fixed; right:16px; bottom:96px; z-index:160;
+  width:54px; height:54px; border-radius:50%;
+  background:var(--green); display:flex; align-items:center; justify-content:center;
+  box-shadow:0 6px 18px rgba(37,211,102,0.5); transition:transform .2s;
+}
+.wa-float:hover { transform:scale(1.08); }
+.wa-float svg { width:30px; height:30px; fill:#fff; }
+
+/* ===== Volver arriba ===== */
+.to-top {
+  position:fixed; left:16px; bottom:96px; z-index:160;
+  width:46px; height:46px; border-radius:50%; cursor:pointer;
+  background:#fff; color:var(--text); border:1px solid var(--line);
+  font-size:1.3rem; font-weight:900; box-shadow:0 4px 14px rgba(0,0,0,0.15);
+  opacity:0; pointer-events:none; transform:translateY(10px); transition:all .25s;
+}
+.to-top.show { opacity:1; pointer-events:auto; transform:translateY(0); }
+
+@media (prefers-reduced-motion: reduce) { *, *::after, *::before { animation:none !important; } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <header>
+    <div class="logo-wrap">
+      <div class="logo-mark">🌭</div>
+      <div>
+        <div class="logo-name"><span class="fr">FR</span> <span class="va">VARELA</span> <span class="badge24">24 HS</span></div>
+        <div class="logo-sub">Maxikiosco · Florencio Varela</div>
+      </div>
+    </div>
+    <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito">
+      🛒 Carrito
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+  </header>
+  <div class="ticker">
+    <div class="ticker-track">
+      <span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 TE LO LLEVAMOS</span>
+      <span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 TE LO LLEVAMOS</span>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>ABIERTO <span class="neon-y">24</span> <span class="neon-c">HORAS</span></h1>
+    <p>Golosinas, chocolates, snacks, bebidas y más. 3 sucursales en Florencio Varela. Pedí y te lo llevamos. 🛵</p>
+    <div class="hero-badges">
+      <span class="hbadge live"><span class="live-dot"></span> Abierto ahora · 24 hs</span>
+    </div>
+  </div>
+</section>
+
+<section class="benefits">
+  <div class="benefit"><span class="b-ico">🕐</span><div><b>24 horas</b><small>Siempre abierto</small></div></div>
+  <div class="benefit"><span class="b-ico">🛵</span><div><b>Envío</b><small>A domicilio</small></div></div>
+  <div class="benefit"><span class="b-ico">📦</span><div><b>+300</b><small>Productos</small></div></div>
+  <div class="benefit"><span class="b-ico">📲</span><div><b>WhatsApp</b><small>Pedido fácil</small></div></div>
+</section>
+
+<div class="search-wrap">
+  <div class="search-box" id="search-box">
+    <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
+    <input type="search" id="search-input" placeholder="Buscar producto…" oninput="onSearch(this.value)" autocomplete="off">
+    <button class="search-clear" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
+  </div>
+</div>
+
+<nav class="cat-bar" id="cat-bar">
+  <button class="cat-btn active" onclick="filterCat('all',this)">🏪 Todos</button>
+  <button class="cat-btn" onclick="filterCat('promos',this)">🔥 Promos</button>
+  <button class="cat-btn" onclick="filterCat('golosinas',this)">🍫 Golosinas</button>
+  <button class="cat-btn" onclick="filterCat('snacks',this)">🥔 Snacks</button>
+  <button class="cat-btn" onclick="filterCat('bebidas',this)">🥤 Bebidas</button>
+  <button class="cat-btn" onclick="filterCat('comida',this)">🌭 Para comer</button>
+  <button class="cat-btn" onclick="filterCat('almacen',this)">🛒 Almacén</button>
+  <button class="cat-btn" onclick="filterCat('cigarrillos',this)">🚬 Cigarrillos</button>
+</nav>
+
+<section class="featured" id="featured"></section>
+
+<div class="toolbar">
+  <span id="result-count" class="result-count"></span>
+  <label class="sort-label">Ordenar:
+    <select id="sort-select" onchange="setSort(this.value)">
+      <option value="rel">Recomendado</option>
+      <option value="price-asc">Precio: menor a mayor</option>
+      <option value="price-desc">Precio: mayor a menor</option>
+      <option value="az">Nombre (A → Z)</option>
+    </select>
+  </label>
+</div>
+
+<main id="main"></main>
+
+<a class="wa-float" href="https://wa.me/5491131403844" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">↑</button>
+
+<section class="howto">
+  <h2 class="block-title">¿Cómo hacer tu pedido?</h2>
+  <div class="steps">
+    <div class="step"><span class="step-n">1</span><b>Elegí</b><small>Tocá ➕ en los productos que quieras</small></div>
+    <div class="step"><span class="step-n">2</span><b>Revisá</b><small>Mirá tu carrito 🛒 y el total</small></div>
+    <div class="step"><span class="step-n">3</span><b>Pedí</b><small>Enviás el pedido por WhatsApp 📲</small></div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-col foot-brand">
+    <div class="logo-name"><span class="fr">FR</span> <span class="va">VARELA</span></div>
+    <p>Tu maxikiosco de confianza en Florencio Varela. Bebidas, golosinas, snacks y almacén, las 24 horas.</p>
+  </div>
+  <div class="foot-col">
+    <h3>Horario</h3>
+    <p>Abierto las 24 horas<br>Todos los días del año</p>
+  </div>
+  <div class="foot-col">
+    <h3>Sucursales</h3>
+    <p>📍 España 2960<br>📍 San Martín esq. Bocuzzi<br>📍 Av. Hipólito Yrigoyen 1940</p>
+  </div>
+  <div class="foot-col">
+    <h3>Contacto</h3>
+    <a href="https://wa.me/5491131403844" target="_blank" rel="noopener">📲 WhatsApp: 11 3140-3844</a>
+    <p>📍 Florencio Varela, Buenos Aires</p>
+  </div>
+  <div class="foot-copy">© <span id="year"></span> FR.VARELA · Hecho con ❤️ para nuestros vecinos</div>
+</footer>
+
+<div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
+
+<div class="cart-panel" id="cart-panel" role="dialog" aria-label="Tu pedido">
+  <div class="cart-header">
+    <h2>🛒 Tu Pedido</h2>
+    <div class="cart-header-actions">
+      <button class="clear-btn" id="clear-btn" onclick="clearCart()">🗑️ Vaciar</button>
+      <button class="close-btn" onclick="closeCart()">✕ Cerrar</button>
+    </div>
+  </div>
+  <div class="cart-items" id="cart-items"></div>
+  <div class="cart-suggest" id="cart-suggest" style="display:none"></div>
+  <div class="cart-footer">
+    <div class="cart-note">💡 Los precios son estimados. Coordinás el pago y la entrega por WhatsApp.</div>
+    <div class="cart-total">
+      <span class="label">Total estimado:</span>
+      <span class="amount" id="cart-total">$0</span>
+    </div>
+    <button class="whatsapp-btn" onclick="sendToWhatsApp()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Pedir por WhatsApp
+    </button>
+  </div>
+</div>
+
+<button class="checkout-bar" id="checkout-bar" onclick="openCart()">
+  <span class="cb-left"><span class="cb-badge" id="cb-badge">0</span> Ver pedido</span>
+  <span class="cb-total" id="cb-total">$0</span>
+</button>
+
+<div class="pm-overlay" id="pm-overlay" onclick="if(event.target===this)closeProduct()">
+  <div class="pm-card" id="pm-card"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// CATÁLOGO REAL FR.VARELA. Para poner una foto, agregá img:'img/archivo.jpg'
+const products = [
+  // ===== PROMOS =====
+  { id:1,  name:'Promo Franui + Alfajor Barrigón', emoji:'🔥', price:12100, category:'promos' },
+  { id:2,  name:'Promo Franui x3',                 emoji:'🔥', price:23500, category:'promos' },
+  { id:3,  name:'Promo Franui + Block',            emoji:'🔥', price:12600, category:'promos' },
+  { id:4,  name:'Promo Dos Marcianos',             emoji:'🚀', price:3900,  category:'promos' },
+  { id:5,  name:'Blockazo 1KG',                    emoji:'🍫', price:40000, category:'promos' },
+
+  // ===== GOLOSINAS / CHOCOLATES / ALFAJORES =====
+  { id:6,  name:'Mogul Moras 80gr',           emoji:'🐻', price:3000,  category:'golosinas', img:'img/mogul-moras.png' },
+  { id:7,  name:'Mogul Extreme ácido-dulce',  emoji:'🐻', price:3000,  category:'golosinas' },
+  { id:8,  name:'Mogul Eucaliptus 80gr',      emoji:'🐻', price:3100,  category:'golosinas' },
+  { id:9,  name:'Mogul Tubitos',              emoji:'🍬', price:1800,  category:'golosinas' },
+  { id:10, name:'Rollo Mogul',                emoji:'🍬', price:2000,  category:'golosinas' },
+  { id:11, name:'Gomitas Mogul',              emoji:'🐻', price:1700,  category:'golosinas' },
+  { id:12, name:'Mentiras Felfort',           emoji:'🍬', price:1800,  category:'golosinas' },
+  { id:13, name:'Cadbury de Frutilla 162gr',  emoji:'🍫', price:12800, category:'golosinas' },
+  { id:14, name:'Alfajor Guaymallén',         emoji:'🍫', price:1500,  category:'golosinas' },
+  { id:15, name:'Tita',                       emoji:'🍫', price:2100,  category:'golosinas' },
+  { id:16, name:'Snickers Importados',        emoji:'🍫', price:4900,  category:'golosinas' },
+  { id:17, name:'Tableta Bon o Bon 48g',      emoji:'🍫', price:3500,  category:'golosinas' },
+  { id:18, name:'Tableta Bon o Bon 160gr',    emoji:'🍫', price:9500,  category:'golosinas' },
+  { id:19, name:'Alfajor Pepito Triple',      emoji:'🍫', price:2900,  category:'golosinas' },
+  { id:20, name:'Milka Importado 100g',       emoji:'🍫', price:12900, category:'golosinas' },
+  { id:21, name:'Milka Super',                emoji:'🍫', price:3500,  category:'golosinas' },
+  { id:22, name:'Milka Blanco Relleno DDL 67g',emoji:'🍫', price:5600, category:'golosinas' },
+  { id:23, name:'Alfajor Goat',               emoji:'🍫', price:3300,  category:'golosinas' },
+  { id:24, name:'Alfajor Milka Mousse Triple',emoji:'🍫', price:2800,  category:'golosinas' },
+  { id:25, name:'Maná Rellenas',              emoji:'🍪', price:3100,  category:'golosinas' },
+  { id:26, name:'Barrigón Mega Negro',        emoji:'🍫', price:3300,  category:'golosinas' },
+  { id:27, name:'Barrigón Rosa',              emoji:'🍫', price:3100,  category:'golosinas' },
+  { id:28, name:'Barrigón Frutilla',          emoji:'🍫', price:3300,  category:'golosinas' },
+  { id:29, name:'Alfajor Barrigón Mega Brownie',emoji:'🍫', price:3300,category:'golosinas' },
+  { id:30, name:'Alfajor Alma de Campeón Negro',emoji:'🍫', price:3100,category:'golosinas' },
+  { id:31, name:'Gomitas 360 Uva',            emoji:'🐻', price:2500,  category:'golosinas' },
+  { id:32, name:'Gomitas 360 Ositos Surtidos',emoji:'🐻', price:2500,  category:'golosinas' },
+  { id:33, name:'Turrón Misky',               emoji:'🍬', price:1200,  category:'golosinas' },
+  { id:34, name:'Mr Beast Feastables',        emoji:'🍫', price:18000, category:'golosinas' },
+  { id:35, name:'Oblea Bon o Bon',            emoji:'🍫', price:2300,  category:'golosinas' },
+  { id:36, name:'Bon o Bon Supreme Avellanas',emoji:'🍫', price:2200,  category:'golosinas' },
+  { id:37, name:'Bon o Bon x3',               emoji:'🍫', price:2800,  category:'golosinas' },
+  { id:38, name:'Alfajor Bon o Bon',          emoji:'🍫', price:2300,  category:'golosinas' },
+  { id:39, name:'Kit Kat',                    emoji:'🍫', price:3500,  category:'golosinas' },
+  { id:40, name:'Chocolate Shot 35gr',        emoji:'🍫', price:3000,  category:'golosinas' },
+  { id:41, name:'Chocolate Arcor 25g',        emoji:'🍫', price:2400,  category:'golosinas' },
+  { id:42, name:'Mantecol 41g',               emoji:'🥜', price:2600,  category:'golosinas' },
+  { id:43, name:'Almohadita Mantecol',        emoji:'🥜', price:5800,  category:'golosinas' },
+  { id:44, name:'Alfajor Mantecol',           emoji:'🥜', price:2600,  category:'golosinas' },
+  { id:45, name:'Alfajor Jorgelín',           emoji:'🍫', price:2400,  category:'golosinas' },
+  { id:46, name:'Alfajor Jorgito Negro',      emoji:'🍫', price:2400,  category:'golosinas' },
+  { id:47, name:'Ferrero Rocher x8',          emoji:'🍫', price:15900, category:'golosinas' },
+  { id:48, name:'Ferrero Rocher 8u 100g',     emoji:'🍫', price:16500, category:'golosinas' },
+  { id:49, name:'Caja Ferrero Rocher 100gr',  emoji:'🍫', price:16500, category:'golosinas' },
+  { id:50, name:'Rastas',                     emoji:'🍫', price:3300,  category:'golosinas' },
+  { id:51, name:'Rasta Trico Maicena',        emoji:'🍪', price:3300,  category:'golosinas' },
+  { id:52, name:'Rasta Argéntrico',           emoji:'🍫', price:3500,  category:'golosinas' },
+  { id:53, name:'Cofler Bañadas',             emoji:'🍫', price:5600,  category:'golosinas' },
+  { id:54, name:'Cofler Air 27gr',            emoji:'🍫', price:3300,  category:'golosinas' },
+  { id:55, name:'Cofler Aireado 27g',         emoji:'🍫', price:3600,  category:'golosinas' },
+  { id:56, name:'Blupper Chicle Metro',       emoji:'🫧', price:4000,  category:'golosinas' },
+  { id:57, name:'Kinder Joy',                 emoji:'🥚', price:4500,  category:'golosinas' },
+  { id:58, name:'Kinder Bueno',               emoji:'🍫', price:5200,  category:'golosinas' },
+  { id:59, name:'Kinder Barritas x4',         emoji:'🍫', price:5800,  category:'golosinas' },
+  { id:60, name:'Kinder 4',                   emoji:'🍫', price:5500,  category:'golosinas' },
+  { id:61, name:'Nerds',                      emoji:'🌈', price:6900,  category:'golosinas' },
+  { id:62, name:'Rocklets 20g',               emoji:'🔴', price:2000,  category:'golosinas' },
+  { id:63, name:'Rocklets Extreme 20g',       emoji:'🔴', price:2100,  category:'golosinas' },
+  { id:64, name:'Alfajor Hamblet',            emoji:'🍫', price:1600,  category:'golosinas' },
+  { id:65, name:'Alfajor Águila',             emoji:'🍫', price:2800,  category:'golosinas' },
+  { id:66, name:'Águila Barrita 14g',         emoji:'🍫', price:2000,  category:'golosinas' },
+  { id:67, name:'Alfajor Pescado Raúl Negro', emoji:'🍫', price:2300,  category:'golosinas' },
+  { id:68, name:'Alfajor Shot x3',            emoji:'🍫', price:2600,  category:'golosinas' },
+  { id:69, name:'Oreo 118g',                  emoji:'🍪', price:3300,  category:'golosinas' },
+  { id:70, name:'Mini Oreo',                  emoji:'🍪', price:2500,  category:'golosinas' },
+  { id:71, name:'Oreo de Menta',              emoji:'🍪', price:3900,  category:'golosinas' },
+  { id:72, name:'Alfajor Oreo Triple',        emoji:'🍪', price:3200,  category:'golosinas' },
+  { id:73, name:'Postre Oreo',                emoji:'🍮', price:3500,  category:'golosinas' },
+  { id:74, name:'Postre Chocotorta',          emoji:'🍮', price:3500,  category:'golosinas' },
+  { id:75, name:'Franui sin Azúcar',          emoji:'🫐', price:8800,  category:'golosinas' },
+  { id:76, name:'Franui Chocolate con Leche', emoji:'🫐', price:8800,  category:'golosinas' },
+  { id:77, name:'Capitán del Espacio',        emoji:'🚀', price:2800,  category:'golosinas' },
+  { id:78, name:'Llavero Bananita Bebe',      emoji:'🍌', price:5000,  category:'golosinas' },
+  { id:79, name:'Tic Tac',                    emoji:'🟢', price:2600,  category:'golosinas', img:'img/tictac.png' },
+  { id:80, name:'Frutas Infieles',            emoji:'🍓', price:11000, category:'golosinas' },
+  { id:81, name:'Mini Pepitos',               emoji:'🍪', price:2500,  category:'golosinas' },
+
+  // ===== SNACKS =====
+  { id:82, name:'Doritos 40g',                emoji:'🔺', price:4300,  category:'snacks' },
+  { id:83, name:'Saladix Caja',               emoji:'🥨', price:3500,  category:'snacks' },
+  { id:84, name:'Saladix Cross',              emoji:'🥨', price:2400,  category:'snacks' },
+  { id:85, name:'Cheetos Originales 85gr',    emoji:'🧀', price:5800,  category:'snacks' },
+  { id:86, name:'Lays 40g',                   emoji:'🥔', price:2800,  category:'snacks' },
+  { id:87, name:'Lays 85g',                   emoji:'🥔', price:5300,  category:'snacks' },
+  { id:88, name:'Lays Importadas',            emoji:'🥔', price:7000,  category:'snacks' },
+  { id:89, name:'Takis Fuego',                emoji:'🌶️', price:3300,  category:'snacks' },
+  { id:90, name:'Takis Original',             emoji:'🌶️', price:4500,  category:'snacks' },
+  { id:91, name:'Dorilocos',                  emoji:'🔺', price:9500,  category:'snacks' },
+  { id:92, name:'Quento Papas',               emoji:'🥔', price:4000,  category:'snacks' },
+  { id:93, name:'Porteñitas x3',              emoji:'🥨', price:5800,  category:'snacks' },
+  { id:94, name:'Club Social 24g',            emoji:'🍘', price:1700,  category:'snacks' },
+  { id:95, name:'Traviata Rex y Kesitas',     emoji:'🍘', price:2800,  category:'snacks', img:'img/traviata-rex.png' },
+  { id:96, name:'Traviata 108g',              emoji:'🍘', price:2000,  category:'snacks' },
+  { id:97, name:'Rex Caja',                   emoji:'🍘', price:3800,  category:'snacks' },
+  { id:98, name:'Galletitas Mellizas',        emoji:'🍪', price:3000,  category:'snacks' },
+  { id:99, name:'Cerealitas',                 emoji:'🍪', price:3500,  category:'snacks' },
+  { id:100,name:'9 de Oro Clásicas',          emoji:'🍪', price:2000,  category:'snacks' },
+  { id:101,name:'Leonachos',                  emoji:'🦁', price:3500,  category:'snacks', img:'img/leonachos.png' },
+  { id:102,name:'Don Satur Bizcocho',         emoji:'🍘', price:1700,  category:'snacks' },
+
+  // ===== BEBIDAS =====
+  { id:103,name:'Monster Mango Loco',         emoji:'⚡', price:5100,  category:'bebidas', img:'img/monster-mango.png' },
+  { id:104,name:'Coca y Fanta 250ml',         emoji:'🥤', price:2500,  category:'bebidas' },
+  { id:105,name:'Sprite 500ml',               emoji:'💚', price:3200,  category:'bebidas' },
+  { id:106,name:'Sprite Lata',                emoji:'💚', price:3200,  category:'bebidas' },
+  { id:107,name:'Baggio 1L',                  emoji:'🧃', price:4000,  category:'bebidas' },
+  { id:108,name:'Baggio Multifruta 200ml',    emoji:'🧃', price:1500,  category:'bebidas' },
+  { id:109,name:'Enerwin Ed. Limitada',       emoji:'⚡', price:7900,  category:'bebidas' },
+  { id:110,name:'Paso de los Toros 500ml',    emoji:'🥤', price:3300,  category:'bebidas' },
+  { id:111,name:'Speed Chico',                emoji:'⚡', price:3100,  category:'bebidas' },
+  { id:112,name:'Placer 500ml',               emoji:'🥤', price:1800,  category:'bebidas' },
+  { id:113,name:'Vaso de Hielo',              emoji:'🧊', price:2600,  category:'bebidas' },
+
+  // ===== PARA COMER =====
+  { id:114,name:'Pancho Simple',              emoji:'🌭', price:2900,  category:'comida' },
+  { id:115,name:'Pancho Triple',              emoji:'🌭', price:4800,  category:'comida' },
+  { id:116,name:'Pancho Pringles',            emoji:'🌭', price:5000,  category:'comida' },
+  { id:117,name:'Pancho Therian',             emoji:'🌭', price:5200,  category:'comida' },
+  { id:118,name:'Sándwich de Miga x3',        emoji:'🥪', price:5000,  category:'comida' },
+  { id:119,name:'Pizza Individual Muzza/Queso',emoji:'🍕', price:4000, category:'comida' },
+  { id:120,name:'Medialunas Rellenas JyQ',    emoji:'🥐', price:5000,  category:'comida' },
+  { id:121,name:'Viandas Saludables',         emoji:'🍱', price:8000,  category:'comida' },
+
+  // ===== ALMACÉN =====
+  { id:122,name:'Polenta Presto Pronta',      emoji:'🌽', price:2800,  category:'almacen' },
+  { id:123,name:'Matarazzo Dedalitos',        emoji:'🍝', price:3000,  category:'almacen' },
+  { id:124,name:'Aceite Cocinero',            emoji:'🫙', price:5500,  category:'almacen' },
+  { id:125,name:'Fideos Don Vicente',         emoji:'🍝', price:4500,  category:'almacen' },
+  { id:126,name:'Taragüí Mate Listo',         emoji:'🧉', price:5500,  category:'almacen' },
+  { id:127,name:'Azúcar Canella',             emoji:'🧂', price:2500,  category:'almacen' },
+  { id:128,name:'Puré de Tomates',            emoji:'🍅', price:2000,  category:'almacen' },
+  { id:129,name:'Mayonesa (Liviana/Hellmanns)',emoji:'🥫', price:3000, category:'almacen' },
+  { id:130,name:'Arroz Gallo Oro',            emoji:'🍚', price:2500,  category:'almacen' },
+
+  // ===== CIGARRILLOS =====
+  { id:131,name:'Red Point x20',              emoji:'🚬', price:3200,  category:'cigarrillos' },
+  { id:132,name:'Philip Morris Mentolado x10',emoji:'🚬', price:4700,  category:'cigarrillos' },
+  { id:133,name:'Chester Mentolado x10',      emoji:'🚬', price:4400,  category:'cigarrillos' },
+  { id:134,name:'Milenio Mentolado x20',      emoji:'🚬', price:3600,  category:'cigarrillos' },
+];
+
+const STORAGE_KEY = 'frvarela_cart';
+let cart = loadCart();
+let currentCat = 'all';
+let searchTerm = '';
+
+const catNames = {
+  promos:      '🔥 Promos',
+  golosinas:   '🍫 Golosinas',
+  snacks:      '🥔 Snacks',
+  bebidas:     '🥤 Bebidas',
+  comida:      '🌭 Para comer',
+  almacen:     '🛒 Almacén',
+  cigarrillos: '🚬 Cigarrillos',
+};
+
+// Venta cruzada: qué categorías combinan con cada una (en orden de prioridad)
+const pairs = {
+  promos:      ['bebidas', 'snacks'],
+  golosinas:   ['bebidas', 'snacks'],
+  snacks:      ['bebidas', 'golosinas'],
+  bebidas:     ['snacks', 'golosinas'],
+  comida:      ['bebidas', 'snacks'],
+  almacen:     ['golosinas', 'bebidas'],
+  cigarrillos: ['bebidas', 'golosinas'],
+};
+
+/* ---------- Persistencia ---------- */
+function loadCart() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; }
+  catch { return {}; }
+}
+function saveCart() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(cart)); } catch {}
+}
+
+/* ---------- Normalizar texto (sin tildes) ---------- */
+function norm(s) {
+  return (s || '').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+}
+
+/* ---------- Orden de productos ---------- */
+let sortMode = 'rel';
+function setSort(v) { sortMode = v; renderProducts(); }
+function sortList(arr) {
+  const a = arr.slice();
+  if (sortMode === 'price-asc') a.sort((x, y) => x.price - y.price);
+  else if (sortMode === 'price-desc') a.sort((x, y) => y.price - x.price);
+  else if (sortMode === 'az') a.sort((x, y) => x.name.localeCompare(y.name, 'es'));
+  return a;
+}
+function updateResultCount(n) {
+  const el = document.getElementById('result-count');
+  if (el) el.textContent = n + (n === 1 ? ' producto' : ' productos');
+}
+
+/* ---------- Destacados (vidriera) ---------- */
+const featuredIds = [1, 2, 3, 5, 34, 47, 57, 103, 89, 114, 85, 61];
+function renderFeatured() {
+  const el = document.getElementById('featured');
+  if (!el) return;
+  const show = currentCat === 'all' && !searchTerm.trim();
+  if (!show) { el.style.display = 'none'; el.innerHTML = ''; return; }
+  const items = featuredIds.map(id => products.find(p => p.id === id)).filter(Boolean);
+  if (!items.length) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<div class="featured-head">⭐ Destacados</div>
+    <div class="featured-row">${items.map(p => {
+      const { name, size } = splitSize(p.name);
+      const src = imgSrc(p);
+      const thumb = src
+        ? `<img src="${src}" alt="${name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="product-emoji-fb" style="display:none">${p.emoji}</span>`
+        : `<span class="product-emoji-fb">${p.emoji}</span>`;
+      return `<div class="feat-card">
+        <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${size ? `<span class="size-tag">${size}</span>` : ''}${thumb}</div>
+        <div class="feat-body" onclick="openProduct(${p.id})">
+          <div class="feat-name">${name}</div>
+          <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+        </div>
+        <button class="add-btn feat-add" onclick="addToCart(${p.id})" aria-label="Agregar ${name}">+</button>
+      </div>`;
+    }).join('')}</div>`;
+}
+
+/* ---------- Render de productos ---------- */
+function renderProducts() {
+  const main = document.getElementById('main');
+  const term = norm(searchTerm.trim());
+  let count = 0;
+  let html = '';
+  if (term) {
+    const found = sortList(products.filter(p =>
+      norm(p.name).includes(term) || norm(p.desc).includes(term)));
+    if (!found.length) {
+      main.innerHTML = `<div class="no-results">
+        <span class="big-e">🔍</span>
+        No encontramos "<b>${escapeHtml(searchTerm)}</b>".<br>Probá con otra palabra.
+      </div>`;
+      updateResultCount(0);
+      return;
+    }
+    count = found.length;
+    html = `<div class="section-title">Resultados (${found.length})</div>
+      <div class="products-grid">${found.map(renderCard).join('')}</div>`;
+  } else {
+    const cats = currentCat === 'all' ? Object.keys(catNames) : [currentCat];
+    html = cats.map(cat => {
+      const prods = sortList(products.filter(p => p.category === cat));
+      if (!prods.length) return '';
+      count += prods.length;
+      return `<div class="section-title">${catNames[cat]}</div>
+        <div class="products-grid">${prods.map(renderCard).join('')}</div>`;
+    }).join('');
+  }
+  main.innerHTML = html;
+  updateResultCount(count);
+  renderFeatured();
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+// Productos que ya tienen foto real en img/p<ID>.png (se va agrandando con cada tanda)
+const haveImg = [1,2,7,8,13,14,15,16,17,19,20,21,23,24,25,26,27,30,31,32,33,34,35,36,39,40,42,45,46,47,50,53,56,57,61,62,80,82,83,85,86,87,98,99,104,105,107,108,109,113,114,118,119,121,125,126,131,132,133];
+function imgSrc(p) {
+  if (p.img) return p.img;
+  if (haveImg.includes(p.id)) return 'img/p' + p.id + '.png';
+  return null;
+}
+
+function thumbHtml(p) {
+  const src = imgSrc(p);
+  if (src) {
+    return `<img src="${src}" alt="${p.name}" loading="lazy"
+      onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+      <span class="product-emoji-fb" style="display:none">${p.emoji}</span>`;
+  }
+  return `<span class="product-emoji-fb">${p.emoji}</span>`;
+}
+
+// Separa el tamaño/cantidad del nombre (ej: "Mogul Moras 80gr" -> {name:"Mogul Moras", size:"80gr"})
+function splitSize(fullName) {
+  const re = /\s*(\d+(?:[.,]\d+)?\s?(?:kg|gr|g|ml|cc|l)\b|x\s?\d+)\b/i;
+  const m = fullName.match(re);
+  if (!m) return { name: fullName, size: '' };
+  const size = m[1].replace(/\s+/g, '').toUpperCase().replace('GR', 'g').replace('ML', 'ml').replace('KG', 'kg').replace('L', 'L');
+  const name = fullName.replace(m[0], '').replace(/\s{2,}/g, ' ').trim();
+  return { name: name || fullName, size };
+}
+
+function renderCard(p) {
+  const inCart = cart[p.id];
+  const footer = inCart
+    ? `<div class="qty-ctrl">
+         <button onclick="changeQty(${p.id},-1)" aria-label="Quitar uno">−</button>
+         <span>${inCart}</span>
+         <button onclick="changeQty(${p.id},1)" aria-label="Agregar uno">+</button>
+       </div>`
+    : `<button class="add-btn" onclick="addToCart(${p.id})" aria-label="Agregar ${p.name}">+</button>`;
+
+  const badge = p.category === 'promos' ? '<span class="promo-badge">🔥 PROMO</span>' : '';
+  const { name, size } = splitSize(p.name);
+  const sizeTag = size ? `<span class="size-tag">${size}</span>` : '';
+  return `<div class="product-card" id="card-${p.id}">
+    ${badge}
+    <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${sizeTag}${thumbHtml(p)}</div>
+    <div class="product-info" onclick="openProduct(${p.id})">
+      <div class="product-name">${name}</div>
+      <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
+    </div>
+    <div class="product-footer">${footer}</div>
+  </div>`;
+}
+
+/* ---------- Carrito ---------- */
+function addToCart(id) {
+  cart[id] = (cart[id] || 0) + 1;
+  const p = products.find(x => x.id === id);
+  afterCartChange(id);
+  showToast(`✅ ${p.name} agregado`);
+}
+
+function changeQty(id, delta) {
+  cart[id] = (cart[id] || 0) + delta;
+  if (cart[id] <= 0) delete cart[id];
+  afterCartChange(id);
+  renderCartPanel();
+}
+
+function afterCartChange(id) {
+  saveCart();
+  updateCount();
+  refreshCard(id);
+  updateCheckoutBar();
+}
+
+function refreshCard(id) {
+  const p = products.find(x => x.id === id);
+  const el = document.getElementById('card-' + id);
+  if (!el) return;
+  const tmp = document.createElement('div');
+  tmp.innerHTML = renderCard(p);
+  el.replaceWith(tmp.firstElementChild);
+}
+
+function cartCount() { return Object.values(cart).reduce((a, b) => a + b, 0); }
+function cartTotal() {
+  return Object.entries(cart).reduce((t, [id, qty]) => {
+    const p = products.find(x => x.id == id);
+    return t + (p ? p.price * qty : 0);
+  }, 0);
+}
+
+function updateCount() {
+  document.getElementById('cart-count').textContent = cartCount();
+}
+
+function updateCheckoutBar() {
+  const bar = document.getElementById('checkout-bar');
+  const n = cartCount();
+  const cartOpen = document.getElementById('cart-panel').classList.contains('open');
+  if (n > 0 && !cartOpen) bar.classList.add('show');
+  else bar.classList.remove('show');
+  document.getElementById('cb-badge').textContent = n;
+  document.getElementById('cb-total').textContent = '$' + cartTotal().toLocaleString('es-AR');
+}
+
+function clearCart() {
+  if (!Object.keys(cart).length) return;
+  if (!confirm('¿Vaciar todo el carrito?')) return;
+  cart = {};
+  saveCart();
+  updateCount();
+  updateCheckoutBar();
+  renderProducts();
+  renderCartPanel();
+}
+
+/* ---------- Categorías y búsqueda ---------- */
+function filterCat(cat, btn) {
+  currentCat = cat;
+  searchTerm = '';
+  syncSearchUI();
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderProducts();
+}
+
+function onSearch(value) {
+  searchTerm = value;
+  document.getElementById('search-box').classList.toggle('has-text', value.length > 0);
+  renderProducts();
+}
+
+function clearSearch() {
+  searchTerm = '';
+  syncSearchUI();
+  renderProducts();
+}
+
+function syncSearchUI() {
+  const input = document.getElementById('search-input');
+  input.value = searchTerm;
+  document.getElementById('search-box').classList.toggle('has-text', searchTerm.length > 0);
+}
+
+/* ---------- Panel del carrito ---------- */
+function openCart() {
+  document.getElementById('cart-overlay').classList.add('open');
+  document.getElementById('cart-panel').classList.add('open');
+  updateCheckoutBar();
+  renderCartPanel();
+}
+
+function closeCart() {
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.getElementById('cart-panel').classList.remove('open');
+  updateCheckoutBar();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeCart(); closeProduct(); }
+});
+
+/* ---------- Venta cruzada ---------- */
+function getSuggestions(limit = 6) {
+  const cartIds = Object.keys(cart).map(Number);
+  if (!cartIds.length) return [];
+  // categorías que hay en el carrito
+  const cartCats = new Set(cartIds.map(id => products.find(p => p.id === id)?.category));
+  // categorías recomendadas (sin repetir)
+  const wanted = [];
+  cartCats.forEach(c => (pairs[c] || []).forEach(w => { if (!wanted.includes(w)) wanted.push(w); }));
+  // una cola de candidatos por categoría (que no estén ya en el carrito)
+  const queues = wanted.map(cat => products.filter(p => p.category === cat && !cart[p.id]));
+  // intercalo categorías para que la mezcla sea variada (ej: snack, golosina, snack…)
+  const out = [];
+  let i = 0;
+  while (out.length < limit && queues.some(q => q.length)) {
+    const q = queues[i % queues.length];
+    if (q.length) out.push(q.shift());
+    i++;
+  }
+  return out;
+}
+
+function renderSuggestions() {
+  const box = document.getElementById('cart-suggest');
+  const sug = getSuggestions(6);
+  if (!sug.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+  box.style.display = 'block';
+  box.innerHTML = `<h4>🔥 Agregá también</h4>
+    <div class="suggest-row">${sug.map(p => `
+      <div class="suggest-card">
+        <div class="suggest-thumb t-${p.category}">${p.emoji}</div>
+        <div class="suggest-body">
+          <div class="suggest-name">${p.name}</div>
+          <div class="suggest-price">$${p.price.toLocaleString('es-AR')}</div>
+          <button class="suggest-add" onclick="addSuggestion(${p.id})">+ Agregar</button>
+        </div>
+      </div>`).join('')}</div>`;
+}
+
+function addSuggestion(id) {
+  addToCart(id);       // agrega + toast + actualiza grilla/contador/barra
+  renderCartPanel();   // refresca items, total y recomendaciones
+}
+
+function renderCartPanel() {
+  const items = Object.entries(cart);
+  const el = document.getElementById('cart-items');
+  renderSuggestions();
+  document.getElementById('clear-btn').style.display = items.length ? 'block' : 'none';
+
+  if (!items.length) {
+    el.innerHTML = `<div class="cart-empty">
+      <span class="big-e">🛒</span>
+      Tu carrito está vacío.<br>¡Agregá productos!
+    </div>`;
+    document.getElementById('cart-total').textContent = '$0';
+    return;
+  }
+
+  let total = 0;
+  el.innerHTML = items.map(([id, qty]) => {
+    const p = products.find(x => x.id == id);
+    const sub = p.price * qty;
+    total += sub;
+    const ciSrc = imgSrc(p);
+    const ciThumb = ciSrc
+      ? `<img src="${ciSrc}" alt="${p.name}" loading="lazy"
+           onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+         <span class="ci-emoji-fb" style="display:none">${p.emoji}</span>`
+      : `<span class="ci-emoji-fb">${p.emoji}</span>`;
+    return `<div class="cart-item">
+      <div class="ci-img t-${p.category}">${ciThumb}</div>
+      <div class="ci-info">
+        <div class="ci-name">${p.name}</div>
+        <div class="ci-price">$${sub.toLocaleString('es-AR')}</div>
+      </div>
+      <div class="ci-ctrl">
+        <button onclick="changeQty(${p.id},-1)" aria-label="Quitar uno">−</button>
+        <span>${qty}</span>
+        <button onclick="changeQty(${p.id},1)" aria-label="Agregar uno">+</button>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('cart-total').textContent = '$' + total.toLocaleString('es-AR');
+}
+
+/* ---------- Toast ---------- */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+/* ---------- WhatsApp ---------- */
+function sendToWhatsApp() {
+  const items = Object.entries(cart);
+  if (!items.length) { showToast('¡Agregá al menos un producto!'); return; }
+
+  const num = 'FR-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+  let msg = `Hola! 👋 Quiero hacer un pedido 🛒\n`;
+  msg += `📋 *Número de pedido: #${num}*\n\n`;
+  msg += `📦 *Mi pedido:*\n`;
+
+  let total = 0;
+  items.forEach(([id, qty]) => {
+    const p = products.find(x => x.id == id);
+    const sub = p.price * qty;
+    total += sub;
+    msg += `• ${p.name} x${qty} → $${sub.toLocaleString('es-AR')}\n`;
+  });
+
+  msg += `\n💰 *Total estimado: $${total.toLocaleString('es-AR')}*\n`;
+  msg += `¡Muchas gracias! 🙏`;
+
+  window.open('https://wa.me/5491131403844?text=' + encodeURIComponent(msg), '_blank');
+}
+
+/* ---------- Ventana de detalle del producto ---------- */
+let pmId = null, pmQty = 1;
+function openProduct(id) {
+  pmId = id; pmQty = 1;
+  renderProductModal();
+  document.getElementById('pm-overlay').classList.add('open');
+}
+function closeProduct() {
+  document.getElementById('pm-overlay').classList.remove('open');
+}
+function pmChange(d) { pmQty = Math.max(1, pmQty + d); renderProductModal(); }
+function pmAdd() {
+  const p = products.find(x => x.id === pmId);
+  if (!p) return;
+  cart[pmId] = (cart[pmId] || 0) + pmQty;
+  saveCart(); updateCount(); refreshCard(pmId); updateCheckoutBar();
+  showToast(`✅ ${pmQty} x ${splitSize(p.name).name} agregado`);
+  closeProduct();
+}
+function modalSuggestions(p) {
+  const cats = (pairs[p.category] || []).concat(p.category);
+  const seen = {}; const out = [];
+  for (const c of cats) {
+    for (const x of products) {
+      if (x.category === c && x.id !== p.id && !seen[x.id]) { seen[x.id] = 1; out.push(x); }
+      if (out.length >= 6) break;
+    }
+    if (out.length >= 6) break;
+  }
+  return out.slice(0, 6);
+}
+
+function renderProductModal() {
+  const p = products.find(x => x.id === pmId);
+  if (!p) return;
+  const { name, size } = splitSize(p.name);
+  const src = imgSrc(p);
+  const thumb = src
+    ? `<img src="${src}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-emoji" style="display:none">${p.emoji}</span>`
+    : `<span class="pm-emoji">${p.emoji}</span>`;
+  const total = (p.price * pmQty).toLocaleString('es-AR');
+  const sug = modalSuggestions(p);
+  const sugHtml = sug.length ? `
+      <div class="pm-sg-title">Te puede gustar 👇</div>
+      <div class="pm-sg-row">${sug.map(s => {
+        const ssrc = imgSrc(s);
+        const sthumb = ssrc
+          ? `<img src="${ssrc}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-sg-emoji" style="display:none">${s.emoji}</span>`
+          : `<span class="pm-sg-emoji">${s.emoji}</span>`;
+        return `<div class="pm-sg-card" onclick="openProduct(${s.id})">
+          <div class="pm-sg-thumb t-${s.category}">${sthumb}</div>
+          <div class="pm-sg-name">${splitSize(s.name).name}</div>
+          <div class="pm-sg-price">$${s.price.toLocaleString('es-AR')}</div>
+        </div>`;
+      }).join('')}</div>` : '';
+
+  const imgbg = src ? `<div class="pm-imgbg" style="background-image:url('${src}')"></div>` : '';
+  document.getElementById('pm-card').innerHTML = `
+    <button class="pm-close" onclick="closeProduct()" aria-label="Cerrar">✕</button>
+    <div class="pm-img t-${p.category}">${imgbg}${size ? `<span class="size-tag">${size}</span>` : ''}${thumb}</div>
+    <div class="pm-info">
+      ${p.category === 'promos' ? '<span class="pm-promo">🔥 PROMO</span>' : ''}
+      <h3 class="pm-name">${name}</h3>
+      <div class="pm-price">$${p.price.toLocaleString('es-AR')} <small>c/u</small></div>
+      <div class="pm-qtyrow">
+        <div class="pm-qty">
+          <button onclick="pmChange(-1)" aria-label="Menos">−</button>
+          <span>${pmQty}</span>
+          <button onclick="pmChange(1)" aria-label="Más">+</button>
+        </div>
+        <button class="pm-add" onclick="pmAdd()">Agregar · $${total}</button>
+      </div>
+      ${sugHtml}
+    </div>`;
+}
+
+/* ---------- Botón volver arriba ---------- */
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('to-top');
+  if (btn) btn.classList.toggle('show', window.scrollY > 600);
+});
+
+/* ---------- Init ---------- */
+document.getElementById('year').textContent = new Date().getFullYear();
+renderProducts();
+updateCount();
+updateCheckoutBar();
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+# CATÁLOGO FR.VARELA — lista maestra (nombre | precio | categoría)
+# categorías: golosinas, snacks, bebidas, comida, almacen, cigarrillos, promos
+
+## ALMACÉN
+Polenta Presto Pronta | 2800 | almacen
+Matarazzo Dedalitos | 3000 | almacen
+Aceite Cocinero | 5500 | almacen
+Fideos Don Vicente | 4500 | almacen
+Taragüí Mate Listo | 5500 | almacen
+Azúcar Canella | 2500 | almacen
+Puré de Tomates | 2000 | almacen
+Mayonesa (Liviana/Hellmanns/Menoyo/BC) | 3000 | almacen
+Arroz Gallo Oro | 2500 | almacen
+
+## BEBIDAS
+Monster Mango Loco | 5100 | bebidas
+Coca y Fanta 250ml | 2500 | bebidas
+Sprite 500ml | 3200 | bebidas
+Sprite Lata | 3200 | bebidas
+Baggio 1L | 4000 | bebidas
+Baggio Multifruta 200ml | 1500 | bebidas
+Enerwin Ed. Limitada | 7900 | bebidas
+Paso de los Toros 500ml | 3300 | bebidas
+Speed Chico | 3100 | bebidas
+Placer 500ml | 1800 | bebidas
+Vaso de Hielo | 2600 | bebidas
+
+## COMIDA (para comer)
+Pancho Simple | 2900 | comida
+Pancho Triple | 4800 | comida
+Pancho Pringles | 5000 | comida
+Pancho Therian | 5200 | comida
+Sándwich de Miga x3 | 5000 | comida
+Pizza Individual Muzza/Queso | 4000 | comida
+Medialunas Rellenas JyQ | 5000 | comida
+Viandas Saludables | 8000 | comida
+
+## CIGARRILLOS
+Red Point x20 | 3200 | cigarrillos
+Philip Morris Mentolado x10 | 4700 | cigarrillos
+Chester Mentolado x10 | 4400 | cigarrillos
+Milenio Mentolado x20 | 3600 | cigarrillos
+
+## PROMOS
+Promo Franui + Alf Barrigón | 12100 | promos
+Promo Franui x3 | 23500 | promos
+Promo Franui + Block | 12600 | promos
+Promo Dos Marcianos | 3900 | promos
+Blockazo 1KG | 40000 | promos
+
+## SNACKS
+Doritos 40g | 4300 | snacks
+Saladix Caja | 3500 | snacks
+Saladix Cross | 2400 | snacks
+Cheetos Originales 85gr | 5800 | snacks
+Lays 40g | 2800 | snacks
+Lays 85g | 5300 | snacks
+Lays Importadas | 7000 | snacks
+Takis Fuego | 3300 | snacks
+Takis Original | 4500 | snacks
+Dorilocos | 9500 | snacks
+Quento Papas | 4000 | snacks
+Porteñitas x3 | 5800 | snacks
+Club Social 24g | 1700 | snacks
+Traviata Rex y Kesitas | 2800 | snacks
+Traviata 108g | 2000 | snacks
+Rex Caja | 3800 | snacks
+Galletitas Mellizas | 3000 | snacks
+Cerealitas | 3500 | snacks
+9 de Oro Clásicas | 2000 | snacks
+Mini Pepitos | 2500 | snacks
+
+## GOLOSINAS / CHOCOLATES / ALFAJORES
+Mogul Moras 80gr | 3000 | golosinas
+Mogul Extreme ácido-dulce | 3000 | golosinas
+Mogul Eucaliptus 80gr | 3100 | golosinas
+Mogul Tubitos | 1800 | golosinas
+Rollo Mogul | 2000 | golosinas
+Gomitas Mogul | 1700 | golosinas
+Mentiras Felfort | 1800 | golosinas
+Leonachos | 3500 | golosinas
+Cadbury de Frutilla 162gr | 12800 | golosinas
+Alfajor Guaymallén | 1500 | golosinas
+Tita | 2100 | golosinas
+Snickers Importados | 4900 | golosinas
+Don Satur Bizcocho | 1700 | golosinas
+Tableta Bon o Bon 48g | 3500 | golosinas
+Tableta Bon o Bon 160gr | 9500 | golosinas
+Alf Pepito Triple | 2900 | golosinas
+Milka Importado 100g | 12900 | golosinas
+Milka Super | 3500 | golosinas
+Milka Blanco Relleno DDL 67gr | 5600 | golosinas
+Alf Goat | 3300 | golosinas
+Alf Milka Mousse Triple | 2800 | golosinas
+Mara Rellenas | 3100 | golosinas
+Barrigón Mega Negro | 3300 | golosinas
+Barrigón Rosa | 3100 | golosinas
+Barrigón Frutilla | 3300 | golosinas
+Alf Barrigón Mega Brownie | 3300 | golosinas
+Alf Alma de Campeón Negro | 3100 | golosinas
+Gomitas 360 Uva | 2500 | golosinas
+Gomitas 360 Ositos Surtidos | 2500 | golosinas
+Turrón Misky | 1200 | golosinas
+Mr Beats | 18000 | golosinas
+Oblea Bon o Bon | 2300 | golosinas
+Bon o Bon Supreme de Avellanas | 2200 | golosinas
+Bon o Bon x3 | 2800 | golosinas
+Alf Bon o Bon | 2300 | golosinas
+Kit Kat | 3500 | golosinas
+Chocolate Shot 35gr | 3000 | golosinas
+Chocolate Arcor 25g | 2400 | golosinas
+Mantecol 41g | 2600 | golosinas
+Almohadita Mantecol | 5800 | golosinas
+Alfajor Mantecol | 2600 | golosinas
+Alf Jorgelín | 2400 | golosinas
+Alf Jorgito Negro | 2400 | golosinas
+Ferrero Rocher x8 | 15900 | golosinas
+Ferrero Rocher 8 unid 100g | 16500 | golosinas
+Caja Ferrero Rocher 100gr | 16500 | golosinas
+Rastas | 3300 | golosinas
+Rasta Trico Maicena | 3300 | golosinas
+Rasta Argéntrico | 3500 | golosinas
+Cofler Bañadas | 5600 | golosinas
+Cofler Air 27gr | 3300 | golosinas
+Cofler Aireado 27g | 3600 | golosinas
+Blupper Chicle Metro | 4000 | golosinas
+Kinder Joy | 4500 | golosinas
+Kinder Bueno | 5200 | golosinas
+Kinder Barritas x4 | 5800 | golosinas
+Kinder 4 | 5500 | golosinas
+Nerds | 6900 | golosinas
+Rocklets 20g | 2000 | golosinas
+Rocklets Extreme 20g | 2100 | golosinas
+Alf Hamblet | 1600 | golosinas
+Alf Águila | 2800 | golosinas
+Águila Barrita 14g | 2000 | golosinas
+Alf Pescado Raúl Negro | 2300 | golosinas
+Alf Shot x3 | 2600 | golosinas
+Oreo 118g | 3300 | golosinas
+Mini Oreo | 2500 | golosinas
+Nuevas Oreo de Menta | 3900 | golosinas
+Alf Oreo Triple | 3200 | golosinas
+Postre Oreo | 3500 | golosinas
+Postre Chocotorta | 3500 | golosinas
+Franui sin Azúcar | 8800 | golosinas
+Franui Chocolate con Leche | 8800 | golosinas
+Capitán del Espacio | 2800 | golosinas
+Llavero Bananita Bebe | 5000 | golosinas
+Tic Tac | 2600 | golosinas
+Frutas Infieles | 11000 | golosinas

@@ -1,0 +1,5 @@
+.claude/
+backups/
+_newcss.css
+*.tmp
+Thumbs.db
