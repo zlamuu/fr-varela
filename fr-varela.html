@@ -49,15 +49,77 @@ body {
 header { padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .logo-wrap { display:flex; align-items:center; gap:10px; }
 .logo-mark {
-  width:52px; height:52px; flex-shrink:0; border-radius:14px;
-  display:flex; align-items:center; justify-content:center; font-size:27px;
-  background:linear-gradient(145deg, #E23A2A, #B71D14);
-  box-shadow:0 6px 16px rgba(222,59,38,0.45); border:2px solid #fff;
-  outline:1px solid var(--line);
+  width:50px; height:50px; flex-shrink:0; border-radius:14px;
+  display:flex; align-items:center; justify-content:center; font-size:26px;
+  background:linear-gradient(145deg, #CE5333, #A63A1F);
+  box-shadow:0 5px 14px rgba(206,83,51,0.4);
+}
+.logo-mark-img {
+  width:50px; height:50px; flex-shrink:0; border-radius:50%; overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.18);
+}
+.logo-mark-img img { width:100%; height:100%; object-fit:cover; transform:scale(1.24); }
+
+/* ===== LOGO recreado (FR Varela 24hs con llamas) ===== */
+.fr-logo {
+  position:relative; flex-shrink:0;
+  width:1em; height:1em; border-radius:50%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  font-family:'Bebas Neue', sans-serif; color:#fff; text-align:center; line-height:0.8;
+  background:
+    radial-gradient(circle at 30% 84%, rgba(255,228,70,0.95), transparent 42%),
+    radial-gradient(circle at 72% 80%, rgba(255,150,20,0.92), transparent 46%),
+    radial-gradient(circle at 50% 56%, #FFD23B 0%, #FF8A12 40%, #E0392B 70%, #5e0d08 100%);
+  border:0.05em solid #14100c;
+  box-shadow: inset 0 0 0 0.018em rgba(255,255,255,0.35), 0 0.06em 0.2em rgba(0,0,0,0.35);
+  overflow:hidden;
+}
+.fr-logo::after { content:""; position:absolute; inset:0; border-radius:50%; box-shadow: inset 0 0.16em 0.3em rgba(0,0,0,0.28); pointer-events:none; }
+.frl-fr { font-size:0.34em; letter-spacing:0.02em; text-shadow:0 0.045em 0.06em rgba(0,0,0,0.55); }
+.frl-va { font-size:0.27em; font-style:italic; letter-spacing:0.01em; margin-top:-0.05em; text-shadow:0 0.05em 0.07em rgba(0,0,0,0.6); }
+.frl-hs { font-size:0.2em; letter-spacing:0.06em; margin-top:-0.02em; text-shadow:0 0.05em 0.07em rgba(0,0,0,0.6); }
+.header-logo { font-size:50px; }
+.hero-logo { font-size:104px; box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35), 0 10px 30px rgba(0,0,0,0.4); }
+
+/* ===== Banner: marca + novedades deslizantes ===== */
+.hero-grid { display:flex; align-items:center; justify-content:center; gap:40px; flex-wrap:wrap; text-align:left; max-width:1000px; margin:0 auto; }
+.hero-brand { display:flex; flex-direction:column; align-items:flex-start; gap:4px; flex:0 1 auto; min-width:260px; }
+.brand-eyebrow { font-family:'Outfit', sans-serif; font-weight:800; letter-spacing:3px; font-size:0.78rem; color:rgba(255,255,255,0.85); }
+.brand-name { font-family:'Bebas Neue', sans-serif; font-size:clamp(3.2rem, 8vw, 5.8rem); line-height:0.86; letter-spacing:1px; color:#fff; text-shadow:0 4px 16px rgba(0,0,0,0.28); margin-top:4px; }
+.bn-fr { color:var(--yellow); }
+.bn-va { color:#fff; }
+.brand-sub { color:rgba(255,255,255,0.92); font-size:0.82rem; font-weight:600; margin-top:12px; display:flex; align-items:center; gap:6px; }
+.hero-slider { position:relative; min-width:250px; flex:0 1 380px; border-left:2px solid rgba(255,255,255,0.22); padding-left:32px; }
+.hslides { position:relative; height:84px; }
+.hslide { position:absolute; inset:0; opacity:0; visibility:hidden; transform:translateX(26px); transition:opacity .4s ease, transform .4s ease, visibility .4s; display:flex; flex-direction:column; justify-content:center; pointer-events:none; }
+.hslide.active { visibility:visible; }
+.hslide.active { opacity:1; transform:none; pointer-events:auto; }
+.hs-title { font-family:'Bebas Neue', sans-serif; font-size:2rem; letter-spacing:0.5px; color:#fff; line-height:1; }
+.hs-text { color:rgba(255,255,255,0.92); font-size:0.96rem; margin-top:6px; }
+.hero-dots { display:flex; gap:6px; margin-top:10px; }
+.hero-dot { width:8px; height:8px; border-radius:50px; background:rgba(255,255,255,0.45); cursor:pointer; transition:all .25s; }
+.hero-dot.active { background:#fff; width:22px; }
+@media (max-width:640px) {
+  .hero { padding:24px 16px 22px; }
+  .hero-grid { flex-direction:column; text-align:center; gap:14px; }
+  .hero-brand { align-items:center; text-align:center; min-width:0; }
+  .brand-eyebrow { font-size:0.68rem; letter-spacing:2px; }
+  .brand-name { font-size:3rem; }
+  .brand-sub { justify-content:center; font-size:0.76rem; }
+  .hero-slider { flex:none; max-width:100%; width:100%; border-left:none; padding-left:0; border-top:1px solid rgba(255,255,255,0.25); padding-top:14px; text-align:center; }
+  .hslides { height:74px; }
+  .hslide { align-items:center; }
+  .hs-title { font-size:1.5rem; }
+  .hs-text { font-size:0.85rem; }
+  .hero-dots { justify-content:center; margin-top:8px; }
 }
 .logo-name { font-family:'Bebas Neue', sans-serif; font-size:2.3rem; letter-spacing:1.5px; line-height:0.85; display:flex; align-items:center; flex-wrap:wrap; gap:4px; }
 .logo-name .fr { color:#241F1A; }
+.logo-name .hfr { color:var(--red); }
 .logo-name .va { color:var(--red); }
+header .logo-name { font-size:1.9rem; }
+header .logo-name .va { color:#241F1A; }
 .badge24 {
   font-family:'Outfit', sans-serif; font-size:0.58rem; font-weight:900;
   background:var(--yellow); color:#241F1A; padding:2px 7px; border-radius:6px;
@@ -91,7 +153,7 @@ header { padding:12px 18px; display:flex; align-items:center; justify-content:sp
 /* ===== HERO ===== */
 .hero {
   position:relative; overflow:hidden; text-align:center;
-  padding:34px 20px 30px; color:#fff;
+  padding:42px 24px 40px; color:#fff;
   background:linear-gradient(135deg, #CE5333 0%, #A63A1F 100%);
 }
 .hero::before {
@@ -158,7 +220,7 @@ header { padding:12px 18px; display:flex; align-items:center; justify-content:sp
 .product-img-wrap, .product-info { cursor:pointer; }
 
 .product-img-wrap { position:relative; width:100%; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#F4ECDD; }
-.product-img-wrap img { width:100%; height:100%; object-fit:cover; position:relative; z-index:1; }
+.product-img-wrap img { width:100%; height:100%; object-fit:cover; object-position:center; transform:scale(1.04); position:relative; z-index:1; }
 .product-emoji-fb { font-size:64px; line-height:1; position:relative; z-index:1; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.12)); }
 
 .product-info { padding:11px 12px 6px; flex:1; display:flex; flex-direction:column; gap:4px; }
@@ -214,7 +276,8 @@ header { padding:12px 18px; display:flex; align-items:center; justify-content:sp
 .suggest-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none; }
 .suggest-row::-webkit-scrollbar { display:none; }
 .suggest-card { flex:0 0 auto; width:94px; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
-.suggest-thumb { height:52px; display:flex; align-items:center; justify-content:center; font-size:30px; }
+.suggest-thumb { height:52px; display:flex; align-items:center; justify-content:center; font-size:30px; overflow:hidden; }
+.suggest-thumb img { width:100%; height:100%; object-fit:cover; }
 .suggest-body { padding:6px 7px 8px; display:flex; flex-direction:column; gap:3px; }
 .suggest-name { font-size:0.66rem; color:#444; line-height:1.2; height:2.4em; overflow:hidden; }
 .suggest-price { font-size:0.74rem; color:var(--text); font-weight:800; }
@@ -223,6 +286,24 @@ header { padding:12px 18px; display:flex; align-items:center; justify-content:sp
 
 .cart-footer { padding:16px 20px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:12px; background:#fff; }
 .cart-note { font-size:0.72rem; color:var(--muted); background:#F8F1E6; border:1px solid var(--line); border-radius:8px; padding:8px 12px; line-height:1.4; }
+.min-order { display:none; border-radius:12px; padding:11px 13px; font-size:0.8rem; }
+.min-order.warn { display:block; background:#FBF5EC; border:1px solid var(--line); }
+.min-order.ok { display:block; background:#EAF7EE; border:1px solid #c7ead2; color:#1b7a3d; font-weight:800; letter-spacing:0.2px; }
+.mo-top { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+.mo-label { color:var(--muted); font-weight:600; }
+.mo-falta { color:var(--red); font-weight:800; }
+.mo-bar { height:6px; background:#EDE4D6; border-radius:50px; overflow:hidden; }
+.mo-bar > span { display:block; height:100%; background:linear-gradient(90deg, var(--red), #ff7a3c); border-radius:50px; transition:width .35s; }
+
+/* Medios de pago */
+.pay-note { display:flex; flex-direction:column; gap:8px; }
+.pay-chips { display:flex; gap:6px; flex-wrap:wrap; }
+.pay-chip { font-size:0.7rem; font-weight:700; color:var(--text); background:#F4ECDD; border:1px solid var(--line); border-radius:50px; padding:5px 12px; }
+.ship-note { font-size:0.72rem; color:var(--muted); }
+.checkout-fields { display:flex; flex-direction:column; gap:8px; }
+.ck-input { font-family:inherit; font-size:0.9rem; color:var(--text); background:#fff; border:1px solid var(--line); border-radius:10px; padding:11px 14px; outline:none; transition:border-color .2s; }
+.ck-input:focus { border-color:var(--red); box-shadow:0 0 0 3px rgba(222,59,38,0.1); }
+.ck-input::placeholder { color:var(--muted); }
 .cart-total { display:flex; justify-content:space-between; align-items:center; }
 .cart-total .label { font-size:0.95rem; color:var(--muted); font-weight:600; }
 .cart-total .amount { font-size:1.5rem; color:var(--text); font-weight:900; }
@@ -231,11 +312,11 @@ header { padding:12px 18px; display:flex; align-items:center; justify-content:sp
 .whatsapp-btn svg { width:22px; height:22px; fill:#fff; flex-shrink:0; }
 
 /* ===== BARRA INFERIOR ===== */
-.checkout-bar { position:fixed; left:0; right:0; bottom:0; z-index:150; background:var(--red); color:#fff; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; cursor:pointer; transform:translateY(120%); transition:transform .3s ease; box-shadow:0 -4px 20px rgba(0,0,0,0.18); border:none; font-family:inherit; width:100%; }
+.checkout-bar { position:fixed; right:16px; bottom:20px; z-index:155; background:var(--red); color:#fff; padding:13px 20px; display:flex; align-items:center; gap:14px; cursor:pointer; transform:translateY(160%); transition:transform .3s ease; box-shadow:0 10px 28px rgba(222,59,38,0.45); border:none; font-family:inherit; border-radius:50px; }
 .checkout-bar.show { transform:translateY(0); }
-.checkout-bar .cb-left { display:flex; align-items:center; gap:10px; font-weight:800; font-size:0.95rem; }
+.checkout-bar .cb-left { display:flex; align-items:center; gap:9px; font-weight:800; font-size:0.95rem; }
 .checkout-bar .cb-badge { background:#fff; color:var(--red); border-radius:50%; min-width:24px; height:24px; padding:0 6px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900; }
-.checkout-bar .cb-total { font-weight:900; font-size:1.1rem; }
+.checkout-bar .cb-total { font-weight:900; font-size:1.05rem; }
 
 /* ===== TOAST ===== */
 .toast { position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(20px); background:#1B1B1F; color:#fff; padding:11px 18px; border-radius:50px; font-size:0.85rem; font-weight:600; z-index:250; opacity:0; pointer-events:none; transition:all .25s ease; white-space:nowrap; box-shadow:0 6px 20px rgba(0,0,0,0.25); }
@@ -257,6 +338,7 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .foot-col p, .foot-col a { font-size:0.82rem; color:#aab; line-height:1.7; text-decoration:none; display:block; }
 .foot-col a:hover { color:#fff; }
 .foot-brand .logo-name { font-size:1.8rem; }
+.foot-logo { width:78px; height:78px; border-radius:50%; object-fit:cover; margin-bottom:10px; box-shadow:0 4px 14px rgba(0,0,0,0.35); }
 .foot-brand .logo-name .fr { color:#fff; }
 .foot-brand .logo-name .va { color:var(--red); }
 .foot-copy { grid-column:1 / -1; text-align:center; color:#666; font-size:0.72rem; border-top:1px solid #3a2c1f; padding-top:16px; }
@@ -294,6 +376,12 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
   background:#fff; border:1px solid var(--line); border-radius:50px; padding:7px 12px; cursor:pointer;
 }
 .sort-label select:focus { outline:none; border-color:var(--red); }
+.toolbar-filters { display:flex; gap:8px; flex-wrap:wrap; }
+.t-select {
+  font-family:inherit; font-size:0.82rem; font-weight:600; color:var(--text);
+  background:#fff; border:1px solid var(--line); border-radius:50px; padding:8px 14px; cursor:pointer;
+}
+.t-select:focus { outline:none; border-color:var(--red); }
 
 /* ===== Ventana de detalle de producto ===== */
 .pm-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:300; align-items:center; justify-content:center; padding:20px; }
@@ -316,6 +404,13 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-add { flex:1; background:var(--red); color:#fff; border:none; border-radius:12px; padding:13px; font-weight:800; font-size:0.95rem; cursor:pointer; box-shadow:0 4px 12px rgba(222,59,38,0.35); transition:background .2s; }
 .pm-add:hover { background:#B23A1C; }
 .pm-price small { color:var(--muted); font-size:0.7rem; font-weight:600; }
+.pm-vlabel { font-size:0.8rem; font-weight:700; color:var(--text); margin:12px 0 8px; }
+.pm-variants { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:14px; }
+.pm-var { font-family:inherit; font-size:0.8rem; font-weight:700; color:var(--text); background:#F4ECDD; border:1px solid var(--line); border-radius:50px; padding:7px 14px; cursor:pointer; transition:all .15s; }
+.pm-var:hover { border-color:var(--red); }
+.pm-var.active { background:var(--red); color:#fff; border-color:var(--red); }
+.var-tag { background:var(--red) !important; color:#fff !important; }
+.ci-var { color:var(--red); font-weight:700; font-size:0.78rem; }
 .pm-cat { display:inline-block; background:#F4ECDD; color:var(--text); font-size:0.65rem; font-weight:800; padding:3px 9px; border-radius:50px; margin-bottom:8px; }
 .pm-tags { font-size:0.72rem; color:var(--muted); margin:10px 0 14px; line-height:1.5; }
 .pm-sg-title { font-size:0.85rem; font-weight:800; color:var(--text); margin:18px 0 10px; border-top:1px solid var(--line); padding-top:14px; }
@@ -333,6 +428,19 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .feat-card .product-img-wrap, .feat-body { cursor:pointer; }
 .feat-card:hover { transform:translateY(-3px); box-shadow:0 12px 26px rgba(0,0,0,0.14); }
 
+/* ===== Cartel de confirmación (vaciar) ===== */
+.cf-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:320; align-items:center; justify-content:center; padding:20px; }
+.cf-overlay.open { display:flex; }
+.cf-card { background:var(--card); border-radius:18px; width:min(340px,100%); padding:26px 24px 22px; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:pmin .25s ease; }
+.cf-icon { font-size:44px; margin-bottom:6px; }
+.cf-title { font-size:1.2rem; font-weight:800; color:var(--text); margin-bottom:6px; }
+.cf-text { color:var(--muted); font-size:0.9rem; margin-bottom:20px; line-height:1.45; }
+.cf-actions { display:flex; gap:10px; }
+.cf-cancel { flex:1; background:#F4ECDD; color:var(--text); border:1px solid var(--line); border-radius:12px; padding:12px; font-weight:800; font-size:0.92rem; cursor:pointer; font-family:inherit; transition:background .2s; }
+.cf-cancel:hover { background:#ece0cd; }
+.cf-ok { flex:1; background:var(--red); color:#fff; border:none; border-radius:12px; padding:12px; font-weight:800; font-size:0.92rem; cursor:pointer; font-family:inherit; transition:background .2s; }
+.cf-ok:hover { background:#B23A1C; }
+
 /* ===== Botón flotante WhatsApp ===== */
 .wa-float {
   position:fixed; right:16px; bottom:96px; z-index:160;
@@ -345,13 +453,28 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 /* ===== Volver arriba ===== */
 .to-top {
-  position:fixed; left:16px; bottom:96px; z-index:160;
-  width:46px; height:46px; border-radius:50%; cursor:pointer;
-  background:#fff; color:var(--text); border:1px solid var(--line);
-  font-size:1.3rem; font-weight:900; box-shadow:0 4px 14px rgba(0,0,0,0.15);
-  opacity:0; pointer-events:none; transform:translateY(10px); transition:all .25s;
+  position:fixed; left:16px; bottom:20px; z-index:160;
+  width:42px; height:42px; border-radius:50%; cursor:pointer;
+  background:var(--red); color:#fff; border:none;
+  font-size:1.2rem; font-weight:900; box-shadow:0 6px 16px rgba(222,59,38,0.4);
+  opacity:0; pointer-events:none; transform:translateY(10px) scale(0.9); transition:all .25s;
 }
-.to-top.show { opacity:1; pointer-events:auto; transform:translateY(0); }
+.to-top:hover { background:#B23A1C; }
+.to-top.show { opacity:1; pointer-events:auto; transform:translateY(0) scale(1); }
+
+/* ===== Sucursales ===== */
+.sucursales { padding:26px 16px 6px; max-width:1100px; margin:0 auto; }
+.suc-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.suc-card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:18px 14px; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.suc-ic { font-size:26px; }
+.suc-name { font-weight:800; color:var(--text); margin-top:6px; font-size:1rem; }
+.suc-sub { color:var(--muted); font-size:0.78rem; margin-bottom:14px; }
+.suc-btn { display:inline-block; background:var(--red); color:#fff; text-decoration:none; padding:9px 18px; border-radius:50px; font-weight:800; font-size:0.82rem; transition:background .2s; }
+.suc-btn:hover { background:#B23A1C; }
+@media (max-width:640px) { .suc-grid { grid-template-columns:1fr; } }
+
+/* ===== Etiqueta NUEVO ===== */
+.nuevo-badge { position:absolute; top:8px; left:8px; z-index:3; background:#1FAA4E; color:#fff; font-size:0.6rem; font-weight:900; padding:4px 8px; border-radius:50px; letter-spacing:0.8px; box-shadow:0 2px 8px rgba(31,170,78,0.4); }
 
 @media (prefers-reduced-motion: reduce) { *, *::after, *::before { animation:none !important; } }
 </style>
@@ -361,10 +484,10 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 <div class="topbar">
   <header>
     <div class="logo-wrap">
-      <div class="logo-mark">🌭</div>
+      <span class="logo-mark-img"><img src="img/logo.png" alt="FR Varela 24hs" loading="lazy"></span>
       <div>
-        <div class="logo-name"><span class="fr">FR</span> <span class="va">VARELA</span> <span class="badge24">24 HS</span></div>
-        <div class="logo-sub">Maxikiosco · Florencio Varela</div>
+        <div class="logo-name"><span class="hfr">FR</span> <span class="va">VARELA</span></div>
+        <div class="logo-sub">Maxikiosco · 24hs · Florencio Varela</div>
       </div>
     </div>
     <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito">
@@ -382,10 +505,21 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <section class="hero">
   <div class="hero-inner">
-    <h1>ABIERTO <span class="neon-y">24</span> <span class="neon-c">HORAS</span></h1>
-    <p>Golosinas, chocolates, snacks, bebidas y más. 3 sucursales en Florencio Varela. Pedí y te lo llevamos. 🛵</p>
-    <div class="hero-badges">
-      <span class="hbadge live"><span class="live-dot"></span> Abierto ahora · 24 hs</span>
+    <div class="hero-grid">
+      <div class="hero-brand">
+        <div class="brand-eyebrow">MAXIKIOSCO · 24 HORAS</div>
+        <div class="brand-name"><span class="bn-fr">FR</span> <span class="bn-va">VARELA</span></div>
+        <div class="brand-sub"><span class="live-dot"></span> Abierto ahora · Florencio Varela · 3 sucursales</div>
+      </div>
+      <div class="hero-slider">
+        <div class="hslides" id="hslides">
+          <div class="hslide active"><div class="hs-title">🔥 Promos de la semana</div><div class="hs-text">Combos Franui, Block y más a precio especial</div></div>
+          <div class="hslide"><div class="hs-title">🆕 Nuevos ingresos</div><div class="hs-text">Mr Beast, Takis, Cadbury, Kinder y más</div></div>
+          <div class="hslide"><div class="hs-title">🛵 Envío a domicilio</div><div class="hs-text">Hacé tu pedido por WhatsApp, las 24 horas</div></div>
+          <div class="hslide"><div class="hs-title">🍫 +300 productos</div><div class="hs-text">Golosinas, bebidas, snacks y almacén</div></div>
+        </div>
+        <div class="hero-dots" id="hero-dots"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -395,6 +529,30 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
   <div class="benefit"><span class="b-ico">🛵</span><div><b>Envío</b><small>A domicilio</small></div></div>
   <div class="benefit"><span class="b-ico">📦</span><div><b>+300</b><small>Productos</small></div></div>
   <div class="benefit"><span class="b-ico">📲</span><div><b>WhatsApp</b><small>Pedido fácil</small></div></div>
+</section>
+
+<section class="sucursales">
+  <h2 class="block-title">📍 Nuestras 3 sucursales en Florencio Varela</h2>
+  <div class="suc-grid">
+    <div class="suc-card">
+      <div class="suc-ic">📍</div>
+      <div class="suc-name">España 2960</div>
+      <div class="suc-sub">Abierto las 24 hs</div>
+      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=Espa%C3%B1a%202960%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="suc-card">
+      <div class="suc-ic">📍</div>
+      <div class="suc-name">Hipólito Yrigoyen 1940</div>
+      <div class="suc-sub">Abierto las 24 hs</div>
+      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=Hip%C3%B3lito%20Yrigoyen%201940%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="suc-card">
+      <div class="suc-ic">📍</div>
+      <div class="suc-name">San Martín 3302</div>
+      <div class="suc-sub">Abierto las 24 hs</div>
+      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=San%20Mart%C3%ADn%203302%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
 </section>
 
 <div class="search-wrap">
@@ -420,19 +578,29 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <div class="toolbar">
   <span id="result-count" class="result-count"></span>
-  <label class="sort-label">Ordenar:
-    <select id="sort-select" onchange="setSort(this.value)">
+  <div class="toolbar-filters">
+    <select id="brand-select" class="t-select" onchange="setBrand(this.value)" aria-label="Filtrar por marca">
+      <option value="">Todas las marcas</option>
+    </select>
+    <select id="price-select" class="t-select" onchange="setPrice(this.value)" aria-label="Filtrar por precio">
+      <option value="">Cualquier precio</option>
+      <option value="1">Hasta $2.000</option>
+      <option value="2">$2.000 – $5.000</option>
+      <option value="3">$5.000 – $10.000</option>
+      <option value="4">Más de $10.000</option>
+    </select>
+    <select id="sort-select" class="t-select" onchange="setSort(this.value)" aria-label="Ordenar">
       <option value="rel">Recomendado</option>
       <option value="price-asc">Precio: menor a mayor</option>
       <option value="price-desc">Precio: mayor a menor</option>
       <option value="az">Nombre (A → Z)</option>
     </select>
-  </label>
+  </div>
 </div>
 
 <main id="main"></main>
 
-<a class="wa-float" href="https://wa.me/5491131403844" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
+<a class="wa-float" href="https://wa.me/5491123593011" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
   <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
@@ -449,6 +617,7 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <footer>
   <div class="foot-col foot-brand">
+    <img src="img/logo.png" class="foot-logo" alt="FR Varela 24hs" loading="lazy">
     <div class="logo-name"><span class="fr">FR</span> <span class="va">VARELA</span></div>
     <p>Tu maxikiosco de confianza en Florencio Varela. Bebidas, golosinas, snacks y almacén, las 24 horas.</p>
   </div>
@@ -458,11 +627,12 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
   </div>
   <div class="foot-col">
     <h3>Sucursales</h3>
-    <p>📍 España 2960<br>📍 San Martín esq. Bocuzzi<br>📍 Av. Hipólito Yrigoyen 1940</p>
+    <p>📍 España 2960<br>📍 Hipólito Yrigoyen 1940<br>📍 San Martín 3302</p>
   </div>
   <div class="foot-col">
     <h3>Contacto</h3>
-    <a href="https://wa.me/5491131403844" target="_blank" rel="noopener">📲 WhatsApp: 11 3140-3844</a>
+    <a href="https://wa.me/5491123593011" target="_blank" rel="noopener">📲 WhatsApp: 11 2359-3011</a>
+    <a href="https://instagram.com/fr.varela" target="_blank" rel="noopener">📸 Instagram: @fr.varela</a>
     <p>📍 Florencio Varela, Buenos Aires</p>
   </div>
   <div class="foot-copy">© <span id="year"></span> FR.VARELA · Hecho con ❤️ para nuestros vecinos</div>
@@ -481,7 +651,19 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
   <div class="cart-items" id="cart-items"></div>
   <div class="cart-suggest" id="cart-suggest" style="display:none"></div>
   <div class="cart-footer">
-    <div class="cart-note">💡 Los precios son estimados. Coordinás el pago y la entrega por WhatsApp.</div>
+    <div class="min-order" id="min-order"></div>
+    <div class="pay-note">
+      <div class="pay-chips">
+        <span class="pay-chip">Efectivo</span>
+        <span class="pay-chip">Transferencia</span>
+        <span class="pay-chip">MercadoPago</span>
+      </div>
+      <div class="ship-note">Entrega rápida a domicilio · 24 hs — envío según zona</div>
+    </div>
+    <div class="checkout-fields">
+      <input id="ck-name" class="ck-input" type="text" placeholder="Tu nombre" autocomplete="name" oninput="saveCkFields()">
+      <input id="ck-addr" class="ck-input" type="text" placeholder="Dirección de entrega (o escribí: retiro en el local)" autocomplete="street-address" oninput="saveCkFields()">
+    </div>
     <div class="cart-total">
       <span class="label">Total estimado:</span>
       <span class="amount" id="cart-total">$0</span>
@@ -502,6 +684,18 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <div class="pm-overlay" id="pm-overlay" onclick="if(event.target===this)closeProduct()">
   <div class="pm-card" id="pm-card"></div>
+</div>
+
+<div class="cf-overlay" id="cf-overlay" onclick="if(event.target===this)closeConfirm()">
+  <div class="cf-card">
+    <div class="cf-icon">🗑️</div>
+    <h3 class="cf-title">¿Vaciar el carrito?</h3>
+    <p class="cf-text">Se van a quitar todos los productos de tu pedido.</p>
+    <div class="cf-actions">
+      <button class="cf-cancel" onclick="closeConfirm()">Cancelar</button>
+      <button class="cf-ok" onclick="confirmClear()">Sí, vaciar</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -605,10 +799,15 @@ const products = [
   { id:89, name:'Takis Fuego',                emoji:'🌶️', price:3300,  category:'snacks' },
   { id:90, name:'Takis Original',             emoji:'🌶️', price:4500,  category:'snacks' },
   { id:91, name:'Dorilocos',                  emoji:'🔺', price:9500,  category:'snacks' },
-  { id:92, name:'Quento Papas',               emoji:'🥔', price:4000,  category:'snacks' },
+  { id:92, name:'Quento Papas',               emoji:'🥔', price:4000,  category:'snacks', variants:[
+      {l:'Clásicas',img:'img/quento-clasicas.png'},{l:'Salame',img:'img/quento-salame.png'},
+      {l:'Mega Queso',img:'img/quento-mega-queso.png'},{l:'Asado Criollo',img:'img/quento-asado-criollo.png'},
+      {l:'Mostaza',img:'img/quento-mostaza.png'},{l:'Ketchup',img:'img/quento-ketchup.png'},
+      {l:'BBQ',img:'img/quento-bbq.png'}] },
   { id:93, name:'Porteñitas x3',              emoji:'🥨', price:5800,  category:'snacks' },
   { id:94, name:'Club Social 24g',            emoji:'🍘', price:1700,  category:'snacks' },
-  { id:95, name:'Traviata Rex y Kesitas',     emoji:'🍘', price:2800,  category:'snacks', img:'img/traviata-rex.png' },
+  { id:95, name:'Traviata Rex y Kesitas',     emoji:'🍘', price:2800,  category:'snacks', img:'img/traviata-rex.png', variants:[
+      {l:'Rex',img:'img/traviata-rex.png'},{l:'Kesitas',img:'img/traviata-kesitas.png'}] },
   { id:96, name:'Traviata 108g',              emoji:'🍘', price:2000,  category:'snacks' },
   { id:97, name:'Rex Caja',                   emoji:'🍘', price:3800,  category:'snacks' },
   { id:98, name:'Galletitas Mellizas',        emoji:'🍪', price:3000,  category:'snacks' },
@@ -627,7 +826,9 @@ const products = [
   { id:109,name:'Enerwin Ed. Limitada',       emoji:'⚡', price:7900,  category:'bebidas' },
   { id:110,name:'Paso de los Toros 500ml',    emoji:'🥤', price:3300,  category:'bebidas' },
   { id:111,name:'Speed Chico',                emoji:'⚡', price:3100,  category:'bebidas' },
-  { id:112,name:'Placer 500ml',               emoji:'🥤', price:1800,  category:'bebidas' },
+  { id:112,name:'Placer 500ml',               emoji:'🥤', price:1800,  category:'bebidas', variants:[
+      {l:'Naranja',img:'img/placer-naranja.png'},{l:'Pomelo',img:'img/placer-pomelo.png'},
+      {l:'Manzana',img:'img/placer-manzana.png'}] },
   { id:113,name:'Vaso de Hielo',              emoji:'🧊', price:2600,  category:'bebidas' },
 
   // ===== PARA COMER =====
@@ -715,6 +916,7 @@ function updateResultCount(n) {
 
 /* ---------- Destacados (vidriera) ---------- */
 const featuredIds = [1, 2, 3, 5, 34, 47, 57, 103, 89, 114, 85, 61];
+const nuevoIds = [34, 89, 90, 13, 57, 88]; // marcados con etiqueta NUEVO
 function renderFeatured() {
   const el = document.getElementById('featured');
   if (!el) return;
@@ -741,6 +943,55 @@ function renderFeatured() {
     }).join('')}</div>`;
 }
 
+/* ---------- Filtros (marca + precio) ---------- */
+let brandFilter = '', priceFilter = '';
+const priceRanges = { '1': [0, 2000], '2': [2000, 5000], '3': [5000, 10000], '4': [10000, Infinity] };
+const BRANDS = [
+  ['mr beast','Mr Beast'], ['mogul','Mogul'], ['bon o bon','Bon o Bon'], ['milka','Milka'],
+  ['kinder','Kinder'], ['cofler','Cofler'], ['ferrero','Ferrero Rocher'], ['oreo','Oreo'],
+  ['pepito','Pepito'], ['mantecol','Mantecol'], ['rocklets','Rocklets'], ['nerds','Nerds'],
+  ['kit kat','Kit Kat'], ['snickers','Snickers'], ['cadbury','Cadbury'], ['mentiras','Felfort'],
+  ['felfort','Felfort'], ['tita','Tita'], ['guayma','Guaymallén'], ['jorgito','Jorgito'],
+  ['jorgelin','Jorgelín'], ['barrigon','Barrigón'], ['rasta','Rasta'], ['lays','Lays'],
+  ['cheetos','Cheetos'], ['doritos','Doritos'], ['dorilocos','Doritos'], ['takis','Takis'],
+  ['saladix','Saladix'], ['club social','Club Social'], ['don satur','Don Satur'],
+  ['traviata','Traviata'], ['rex','Rex'], ['cerealitas','Cerealitas'], ['9 de oro','9 de Oro'],
+  ['quento','Quento'], ['portenitas','Porteñitas'], ['coca','Coca-Cola'], ['fanta','Coca-Cola'],
+  ['sprite','Sprite'], ['monster','Monster'], ['speed','Speed'], ['enerwin','Enerwin'],
+  ['baggio','Baggio'], ['paso de los toros','Paso de los Toros'], ['taragui','Taragüí'],
+  ['philip','Philip Morris'], ['chester','Chester'], ['red point','Red Point'], ['milenio','Milenio'],
+  ['franui','Franui'], ['gomitas','Gomitas'], ['turron','Turrón'], ['mana','Maná'],
+  ['leonachos','Leonachos'], ['aguila','Águila'], ['chocolate','Chocolate'],
+];
+function brandOf(name) {
+  const n = norm(name);
+  for (const [k, label] of BRANDS) if (n.includes(k)) return label;
+  return 'Otros';
+}
+function passFilters(p) {
+  if (brandFilter && brandOf(p.name) !== brandFilter) return false;
+  if (priceFilter) { const r = priceRanges[priceFilter]; if (p.price < r[0] || p.price >= r[1]) return false; }
+  return true;
+}
+function setBrand(v) { brandFilter = v; renderProducts(); }
+function setPrice(v) { priceFilter = v; renderProducts(); }
+function resetFilters() {
+  brandFilter = ''; priceFilter = '';
+  const b = document.getElementById('brand-select'); if (b) b.value = '';
+  const pr = document.getElementById('price-select'); if (pr) pr.value = '';
+  renderProducts();
+}
+function buildBrandSelect() {
+  const sel = document.getElementById('brand-select');
+  if (!sel) return;
+  const counts = {};
+  products.forEach(p => { const b = brandOf(p.name); counts[b] = (counts[b] || 0) + 1; });
+  const brands = Object.keys(counts).filter(b => b !== 'Otros')
+    .sort((a, b) => counts[b] - counts[a] || a.localeCompare(b));
+  sel.innerHTML = '<option value="">Todas las marcas</option>' +
+    brands.map(b => `<option value="${b}">${b} (${counts[b]})</option>`).join('');
+}
+
 /* ---------- Render de productos ---------- */
 function renderProducts() {
   const main = document.getElementById('main');
@@ -749,7 +1000,7 @@ function renderProducts() {
   let html = '';
   if (term) {
     const found = sortList(products.filter(p =>
-      norm(p.name).includes(term) || norm(p.desc).includes(term)));
+      (norm(p.name).includes(term) || norm(p.desc).includes(term)) && passFilters(p)));
     if (!found.length) {
       main.innerHTML = `<div class="no-results">
         <span class="big-e">🔍</span>
@@ -764,12 +1015,18 @@ function renderProducts() {
   } else {
     const cats = currentCat === 'all' ? Object.keys(catNames) : [currentCat];
     html = cats.map(cat => {
-      const prods = sortList(products.filter(p => p.category === cat));
+      const prods = sortList(products.filter(p => p.category === cat && passFilters(p)));
       if (!prods.length) return '';
       count += prods.length;
       return `<div class="section-title">${catNames[cat]}</div>
         <div class="products-grid">${prods.map(renderCard).join('')}</div>`;
     }).join('');
+    if (!count) {
+      html = `<div class="no-results"><span class="big-e">🔎</span>
+        No hay productos con esos filtros.<br>
+        <button class="cf-cancel" style="margin-top:14px;max-width:200px" onclick="resetFilters()">Quitar filtros</button>
+      </div>`;
+    }
   }
   main.innerHTML = html;
   updateResultCount(count);
@@ -781,7 +1038,7 @@ function escapeHtml(s) {
 }
 
 // Productos que ya tienen foto real en img/p<ID>.png (se va agrandando con cada tanda)
-const haveImg = [1,2,7,8,13,14,15,16,17,19,20,21,23,24,25,26,27,30,31,32,33,34,35,36,39,40,42,45,46,47,50,53,56,57,61,62,80,82,83,85,86,87,98,99,104,105,107,108,109,113,114,118,119,121,125,126,131,132,133];
+const haveImg = [1,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,96,97,98,99,100,102,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134];
 function imgSrc(p) {
   if (p.img) return p.img;
   if (haveImg.includes(p.id)) return 'img/p' + p.id + '.png';
@@ -818,9 +1075,13 @@ function renderCard(p) {
        </div>`
     : `<button class="add-btn" onclick="addToCart(${p.id})" aria-label="Agregar ${p.name}">+</button>`;
 
-  const badge = p.category === 'promos' ? '<span class="promo-badge">🔥 PROMO</span>' : '';
+  const badge = p.category === 'promos'
+    ? '<span class="promo-badge">🔥 PROMO</span>'
+    : (nuevoIds.includes(p.id) ? '<span class="nuevo-badge">NUEVO</span>' : '');
   const { name, size } = splitSize(p.name);
-  const sizeTag = size ? `<span class="size-tag">${size}</span>` : '';
+  const sizeTag = p.variants
+    ? `<span class="size-tag var-tag">${p.variants.length} sabores</span>`
+    : (size ? `<span class="size-tag">${size}</span>` : '');
   return `<div class="product-card" id="card-${p.id}">
     ${badge}
     <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${sizeTag}${thumbHtml(p)}</div>
@@ -833,17 +1094,25 @@ function renderCard(p) {
 }
 
 /* ---------- Carrito ---------- */
+// Claves del carrito: "95" (sin sabor) o "95|Rex" (con sabor)
+function keyId(k) { return parseInt(String(k).split('|')[0], 10); }
+function keyVar(k) { const s = String(k).split('|'); return s.length > 1 ? s[1] : ''; }
+
 function addToCart(id) {
-  cart[id] = (cart[id] || 0) + 1;
   const p = products.find(x => x.id === id);
+  if (p && p.variants) { openProduct(id); return; } // tiene sabores: abrir para elegir
+  cart[id] = (cart[id] || 0) + 1;
   afterCartChange(id);
   showToast(`✅ ${p.name} agregado`);
 }
 
-function changeQty(id, delta) {
-  cart[id] = (cart[id] || 0) + delta;
-  if (cart[id] <= 0) delete cart[id];
-  afterCartChange(id);
+function changeQty(key, delta) {
+  cart[key] = (cart[key] || 0) + delta;
+  if (cart[key] <= 0) delete cart[key];
+  saveCart();
+  updateCount();
+  refreshCard(keyId(key));
+  updateCheckoutBar();
   renderCartPanel();
 }
 
@@ -865,8 +1134,8 @@ function refreshCard(id) {
 
 function cartCount() { return Object.values(cart).reduce((a, b) => a + b, 0); }
 function cartTotal() {
-  return Object.entries(cart).reduce((t, [id, qty]) => {
-    const p = products.find(x => x.id == id);
+  return Object.entries(cart).reduce((t, [k, qty]) => {
+    const p = products.find(x => x.id === keyId(k));
     return t + (p ? p.price * qty : 0);
   }, 0);
 }
@@ -887,13 +1156,17 @@ function updateCheckoutBar() {
 
 function clearCart() {
   if (!Object.keys(cart).length) return;
-  if (!confirm('¿Vaciar todo el carrito?')) return;
+  document.getElementById('cf-overlay').classList.add('open');
+}
+function closeConfirm() { document.getElementById('cf-overlay').classList.remove('open'); }
+function confirmClear() {
   cart = {};
   saveCart();
   updateCount();
   updateCheckoutBar();
   renderProducts();
   renderCartPanel();
+  closeConfirm();
 }
 
 /* ---------- Categorías y búsqueda ---------- */
@@ -925,11 +1198,28 @@ function syncSearchUI() {
 }
 
 /* ---------- Panel del carrito ---------- */
+function saveCkFields() {
+  try {
+    localStorage.setItem('frvarela_ck', JSON.stringify({
+      name: document.getElementById('ck-name').value,
+      addr: document.getElementById('ck-addr').value
+    }));
+  } catch {}
+}
+function loadCkFields() {
+  try {
+    const d = JSON.parse(localStorage.getItem('frvarela_ck') || '{}');
+    const n = document.getElementById('ck-name'); if (n) n.value = d.name || '';
+    const a = document.getElementById('ck-addr'); if (a) a.value = d.addr || '';
+  } catch {}
+}
+
 function openCart() {
   document.getElementById('cart-overlay').classList.add('open');
   document.getElementById('cart-panel').classList.add('open');
   updateCheckoutBar();
   renderCartPanel();
+  loadCkFields();
 }
 
 function closeCart() {
@@ -939,7 +1229,7 @@ function closeCart() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeCart(); closeProduct(); }
+  if (e.key === 'Escape') { closeConfirm(); closeProduct(); closeCart(); }
 });
 
 /* ---------- Venta cruzada ---------- */
@@ -970,20 +1260,42 @@ function renderSuggestions() {
   if (!sug.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
   box.style.display = 'block';
   box.innerHTML = `<h4>🔥 Agregá también</h4>
-    <div class="suggest-row">${sug.map(p => `
-      <div class="suggest-card">
-        <div class="suggest-thumb t-${p.category}">${p.emoji}</div>
+    <div class="suggest-row">${sug.map(p => {
+      const src = imgSrc(p);
+      const thumb = src
+        ? `<img src="${src}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="product-emoji-fb" style="display:none">${p.emoji}</span>`
+        : `<span>${p.emoji}</span>`;
+      return `<div class="suggest-card">
+        <div class="suggest-thumb t-${p.category}">${thumb}</div>
         <div class="suggest-body">
-          <div class="suggest-name">${p.name}</div>
+          <div class="suggest-name">${splitSize(p.name).name}</div>
           <div class="suggest-price">$${p.price.toLocaleString('es-AR')}</div>
           <button class="suggest-add" onclick="addSuggestion(${p.id})">+ Agregar</button>
         </div>
-      </div>`).join('')}</div>`;
+      </div>`;
+    }).join('')}</div>`;
 }
 
 function addSuggestion(id) {
   addToCart(id);       // agrega + toast + actualiza grilla/contador/barra
   renderCartPanel();   // refresca items, total y recomendaciones
+}
+
+const MIN_ORDER = 6000; // pedido mínimo (cambiable)
+function updateMinOrder(total) {
+  const el = document.getElementById('min-order');
+  if (!el) return;
+  if (total <= 0) { el.className = 'min-order'; el.innerHTML = ''; return; }
+  if (total >= MIN_ORDER) {
+    el.className = 'min-order ok';
+    el.innerHTML = 'Pedido mínimo alcanzado ✓';
+  } else {
+    const falta = MIN_ORDER - total;
+    const pct = Math.min(100, Math.round(total / MIN_ORDER * 100));
+    el.className = 'min-order warn';
+    el.innerHTML = `<div class="mo-top"><span class="mo-label">Pedido mínimo $${MIN_ORDER.toLocaleString('es-AR')}</span><span class="mo-falta">Faltan $${falta.toLocaleString('es-AR')}</span></div>
+      <div class="mo-bar"><span style="width:${pct}%"></span></div>`;
+  }
 }
 
 function renderCartPanel() {
@@ -998,15 +1310,19 @@ function renderCartPanel() {
       Tu carrito está vacío.<br>¡Agregá productos!
     </div>`;
     document.getElementById('cart-total').textContent = '$0';
+    updateMinOrder(0);
     return;
   }
 
   let total = 0;
-  el.innerHTML = items.map(([id, qty]) => {
-    const p = products.find(x => x.id == id);
+  el.innerHTML = items.map(([key, qty]) => {
+    const p = products.find(x => x.id === keyId(key));
+    if (!p) return '';
+    const variant = keyVar(key);
     const sub = p.price * qty;
     total += sub;
-    const ciSrc = imgSrc(p);
+    const vobj = (variant && p.variants) ? p.variants.find(v => v.l === variant) : null;
+    const ciSrc = vobj ? vobj.img : imgSrc(p);
     const ciThumb = ciSrc
       ? `<img src="${ciSrc}" alt="${p.name}" loading="lazy"
            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
@@ -1015,18 +1331,19 @@ function renderCartPanel() {
     return `<div class="cart-item">
       <div class="ci-img t-${p.category}">${ciThumb}</div>
       <div class="ci-info">
-        <div class="ci-name">${p.name}</div>
+        <div class="ci-name">${p.name}${variant ? ` <span class="ci-var">· ${variant}</span>` : ''}</div>
         <div class="ci-price">$${sub.toLocaleString('es-AR')}</div>
       </div>
       <div class="ci-ctrl">
-        <button onclick="changeQty(${p.id},-1)" aria-label="Quitar uno">−</button>
+        <button onclick="changeQty('${key}',-1)" aria-label="Quitar uno">−</button>
         <span>${qty}</span>
-        <button onclick="changeQty(${p.id},1)" aria-label="Agregar uno">+</button>
+        <button onclick="changeQty('${key}',1)" aria-label="Agregar uno">+</button>
       </div>
     </div>`;
   }).join('');
 
   document.getElementById('cart-total').textContent = '$' + total.toLocaleString('es-AR');
+  updateMinOrder(total);
 }
 
 /* ---------- Toast ---------- */
@@ -1044,29 +1361,38 @@ function sendToWhatsApp() {
   const items = Object.entries(cart);
   if (!items.length) { showToast('¡Agregá al menos un producto!'); return; }
 
-  const num = 'FR-' + Math.random().toString(36).substr(2, 6).toUpperCase();
-  let msg = `Hola! 👋 Quiero hacer un pedido 🛒\n`;
-  msg += `📋 *Número de pedido: #${num}*\n\n`;
-  msg += `📦 *Mi pedido:*\n`;
+  let num = parseInt(localStorage.getItem('frvarela_order_n') || '1000', 10) + 1;
+  localStorage.setItem('frvarela_order_n', num);
+  const ckName = (document.getElementById('ck-name')?.value || '').trim();
+  const ckAddr = (document.getElementById('ck-addr')?.value || '').trim();
+  let msg = `Hola! Quiero hacer un pedido.\n`;
+  msg += `*Pedido N° ${num}*\n`;
+  if (ckName) msg += `*Cliente:* ${ckName}\n`;
+  if (ckAddr) msg += `*Entrega:* ${ckAddr}\n`;
+  msg += `\n*Mi pedido:*\n`;
 
   let total = 0;
-  items.forEach(([id, qty]) => {
-    const p = products.find(x => x.id == id);
+  items.forEach(([key, qty]) => {
+    const p = products.find(x => x.id === keyId(key));
+    if (!p) return;
+    const variant = keyVar(key);
     const sub = p.price * qty;
     total += sub;
-    msg += `• ${p.name} x${qty} → $${sub.toLocaleString('es-AR')}\n`;
+    msg += `- ${p.name}${variant ? ' (' + variant + ')' : ''} x${qty} = $${sub.toLocaleString('es-AR')}\n`;
   });
 
-  msg += `\n💰 *Total estimado: $${total.toLocaleString('es-AR')}*\n`;
-  msg += `¡Muchas gracias! 🙏`;
+  msg += `\n*Total estimado: $${total.toLocaleString('es-AR')}*\n`;
+  msg += `Muchas gracias!`;
 
-  window.open('https://wa.me/5491131403844?text=' + encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/5491123593011?text=' + encodeURIComponent(msg), '_blank');
 }
 
 /* ---------- Ventana de detalle del producto ---------- */
-let pmId = null, pmQty = 1;
+let pmId = null, pmQty = 1, pmVariant = '';
 function openProduct(id) {
   pmId = id; pmQty = 1;
+  const p = products.find(x => x.id === id);
+  pmVariant = (p && p.variants) ? p.variants[0].l : '';
   renderProductModal();
   document.getElementById('pm-overlay').classList.add('open');
 }
@@ -1074,12 +1400,14 @@ function closeProduct() {
   document.getElementById('pm-overlay').classList.remove('open');
 }
 function pmChange(d) { pmQty = Math.max(1, pmQty + d); renderProductModal(); }
+function pmSelectVariant(l) { pmVariant = l; renderProductModal(); }
 function pmAdd() {
   const p = products.find(x => x.id === pmId);
   if (!p) return;
-  cart[pmId] = (cart[pmId] || 0) + pmQty;
+  const key = p.variants ? `${pmId}|${pmVariant}` : String(pmId);
+  cart[key] = (cart[key] || 0) + pmQty;
   saveCart(); updateCount(); refreshCard(pmId); updateCheckoutBar();
-  showToast(`✅ ${pmQty} x ${splitSize(p.name).name} agregado`);
+  showToast(`✅ ${pmQty} x ${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''} agregado`);
   closeProduct();
 }
 function modalSuggestions(p) {
@@ -1099,7 +1427,8 @@ function renderProductModal() {
   const p = products.find(x => x.id === pmId);
   if (!p) return;
   const { name, size } = splitSize(p.name);
-  const src = imgSrc(p);
+  const vobj = p.variants ? (p.variants.find(v => v.l === pmVariant) || p.variants[0]) : null;
+  const src = vobj ? vobj.img : imgSrc(p);
   const thumb = src
     ? `<img src="${src}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-emoji" style="display:none">${p.emoji}</span>`
     : `<span class="pm-emoji">${p.emoji}</span>`;
@@ -1127,6 +1456,7 @@ function renderProductModal() {
       ${p.category === 'promos' ? '<span class="pm-promo">🔥 PROMO</span>' : ''}
       <h3 class="pm-name">${name}</h3>
       <div class="pm-price">$${p.price.toLocaleString('es-AR')} <small>c/u</small></div>
+      ${p.variants ? `<div class="pm-vlabel">Elegí el sabor:</div><div class="pm-variants">${p.variants.map(v => `<button class="pm-var${v.l === pmVariant ? ' active' : ''}" onclick="pmSelectVariant('${v.l}')">${v.l}</button>`).join('')}</div>` : ''}
       <div class="pm-qtyrow">
         <div class="pm-qty">
           <button onclick="pmChange(-1)" aria-label="Menos">−</button>
@@ -1145,11 +1475,34 @@ window.addEventListener('scroll', () => {
   if (btn) btn.classList.toggle('show', window.scrollY > 600);
 });
 
+/* ---------- Banner: novedades deslizantes ---------- */
+let hsIdx = 0, hsTimer = null;
+function heroSlide(n) {
+  const slides = document.querySelectorAll('.hslide');
+  const dots = document.querySelectorAll('.hero-dot');
+  if (!slides.length) return;
+  hsIdx = (n + slides.length) % slides.length;
+  slides.forEach((s, i) => s.classList.toggle('active', i === hsIdx));
+  dots.forEach((d, i) => d.classList.toggle('active', i === hsIdx));
+}
+function heroGo(i) { heroSlide(i); restartHero(); }
+function restartHero() { clearInterval(hsTimer); hsTimer = setInterval(() => heroSlide(hsIdx + 1), 5000); }
+function heroInit() {
+  const slides = document.querySelectorAll('.hslide');
+  const dotsBox = document.getElementById('hero-dots');
+  if (!slides.length || !dotsBox) return;
+  dotsBox.innerHTML = Array.from(slides, (_, i) =>
+    `<span class="hero-dot ${i === 0 ? 'active' : ''}" onclick="heroGo(${i})"></span>`).join('');
+  restartHero();
+}
+
 /* ---------- Init ---------- */
 document.getElementById('year').textContent = new Date().getFullYear();
+buildBrandSelect();
 renderProducts();
 updateCount();
 updateCheckoutBar();
+heroInit();
 </script>
 </body>
 </html>
