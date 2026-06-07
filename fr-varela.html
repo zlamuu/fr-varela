@@ -650,6 +650,9 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 }
 @media (max-width:560px) { .hero-arrow { display:none; } }
 
+/* Accesibilidad: texto solo para lectores de pantalla (invisible en pantalla) */
+.sr-only { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
 /* Accesibilidad: contorno claro solo al navegar con teclado (Tab) */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline:3px solid var(--red); outline-offset:2px; border-radius:6px; }
 
@@ -661,6 +664,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 </style>
 </head>
 <body>
+<h1 class="sr-only">FR.VARELA — Maxikiosco abierto las 24 horas en Florencio Varela. Golosinas, chocolates, snacks, bebidas y almacén con envío a domicilio.</h1>
 
 <div class="topbar" id="top">
   <header>
@@ -755,7 +759,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <div class="search-wrap">
   <div class="search-box" id="search-box">
     <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
-    <input type="search" id="search-input" placeholder="Buscar producto…" oninput="onSearch(this.value)" autocomplete="off">
+    <input type="search" id="search-input" placeholder="Buscar producto…" aria-label="Buscar producto" oninput="onSearch(this.value)" autocomplete="off">
     <button class="search-clear" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
   </div>
 </div>
@@ -809,7 +813,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <div class="chat-body" id="chat-body"></div>
   <div class="chat-quick" id="chat-quick"></div>
   <div class="chat-input-row">
-    <input id="chat-input" class="chat-input" type="text" placeholder="Escribí tu consulta…" onkeydown="if(event.key==='Enter')chatSend()">
+    <input id="chat-input" class="chat-input" type="text" placeholder="Escribí tu consulta…" aria-label="Escribí tu consulta al asistente" onkeydown="if(event.key==='Enter')chatSend()">
     <button class="chat-send" onclick="chatSend()" aria-label="Enviar">➤</button>
   </div>
 </div>
@@ -864,8 +868,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <div class="ship-note">🛵 <b style="color:var(--green)">ENVÍO GRATIS</b> a domicilio · Abierto 24 hs</div>
     </div>
     <div class="checkout-fields">
-      <input id="ck-name" class="ck-input" type="text" placeholder="Tu nombre" autocomplete="name" oninput="saveCkFields()">
-      <input id="ck-addr" class="ck-input" type="text" placeholder="Dirección de entrega (o escribí: retiro en el local)" autocomplete="street-address" oninput="saveCkFields()">
+      <input id="ck-name" class="ck-input" type="text" placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="name" oninput="saveCkFields()">
+      <input id="ck-addr" class="ck-input" type="text" placeholder="Dirección de entrega (o escribí: retiro en el local)" aria-label="Dirección de entrega" autocomplete="street-address" oninput="saveCkFields()">
     </div>
     <div class="cart-total">
       <span class="label">Total estimado:</span>
