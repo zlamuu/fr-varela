@@ -586,6 +586,20 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .hs-cta { margin-top:20px; border:none; cursor:pointer; font-family:inherit; font-weight:800; font-size:0.95rem; padding:13px 28px; border-radius:50px; box-shadow:0 10px 26px rgba(0,0,0,0.35); transition:transform .15s, box-shadow .15s; }
 .hs-cta:hover { transform:translateY(-2px); box-shadow:0 14px 32px rgba(0,0,0,0.45); }
 .hs-art { position:absolute; right:-80px; top:50%; transform:translateY(-50%); width:380px; height:380px; border-radius:50%; z-index:1; pointer-events:none; }
+/* Banner 1: iconos + logo */
+.hs-feats { display:flex; gap:22px; margin-top:18px; flex-wrap:wrap; }
+.hs-feat b { display:block; color:var(--yellow); font-weight:800; font-size:1rem; line-height:1.1; }
+.hs-feat small { color:rgba(255,255,255,0.82); font-size:0.7rem; }
+.hs-art.hs-logo { background:none; width:clamp(150px,22vw,300px); height:clamp(150px,22vw,300px); right:5%; }
+.hs-art.hs-logo img { width:100%; height:100%; object-fit:contain; mix-blend-mode:screen; }
+/* Banner 3: foto del combo + ahorro */
+.hs-art.hs-prod { background:none; width:clamp(170px,24vw,310px); height:clamp(170px,24vw,310px); right:5%; border-radius:22px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.55), 0 0 0 6px rgba(255,255,255,0.06); }
+.hs-art.hs-prod img { width:100%; height:100%; object-fit:cover; }
+.hs-save { display:inline-block; background:var(--yellow); color:#161616; font-weight:900; font-size:0.82rem; padding:5px 13px; border-radius:8px; margin:12px 0 4px; transform:rotate(-3deg); box-shadow:0 6px 16px rgba(0,0,0,0.3); }
+@media (max-width:720px) {
+  .hs-art.hs-logo, .hs-art.hs-prod { width:190px; height:190px; right:-35px; opacity:0.32; }
+  .hs-feats { gap:14px; margin-top:14px; }
+}
 
 /* Temas por banner */
 .theme1 { background:linear-gradient(115deg, #161616 0%, #350a0d 45%, #B5202A 100%); }
@@ -670,13 +684,18 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
   <div class="hslides" id="hslides">
     <div class="hslide active theme1">
       <div class="hs-content">
-        <span class="hs-kicker">Abierto las 24 horas</span>
+        <span class="hs-kicker">Maxikiosco · Florencio Varela</span>
         <h2 class="hs-title">FR <span class="acc">VARELA</span> 24HS</h2>
         <div class="hs-sub">Todo lo que necesitás, cuando lo necesitás</div>
         <p class="hs-desc">Bebidas frías, golosinas, snacks y mucho más.</p>
         <button class="hs-cta" onclick="heroShop()">Ver productos</button>
+        <div class="hs-feats">
+          <div class="hs-feat"><b>24 HS</b><small>Siempre abierto</small></div>
+          <div class="hs-feat"><b>Envío gratis</b><small>A domicilio</small></div>
+          <div class="hs-feat"><b>+300</b><small>Productos</small></div>
+        </div>
       </div>
-      <div class="hs-art"></div>
+      <div class="hs-art hs-logo"><img src="img/logo.png" alt="FR Varela"></div>
     </div>
     <div class="hslide theme2">
       <div class="hs-content">
@@ -693,10 +712,11 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
         <span class="hs-kicker">Combo del día</span>
         <h2 class="hs-title">FRANUI + <span class="acc">ALFAJOR BARRIGÓN</span></h2>
         <div class="hs-sub">Llevá el combo por solo $12.100</div>
+        <span class="hs-save">¡AHORRÁS $2.500!</span>
         <p class="hs-desc">Tu antojo perfecto, a precio especial.</p>
         <button class="hs-cta" onclick="openProduct(1)">Comprar combo</button>
       </div>
-      <div class="hs-art"></div>
+      <div class="hs-art hs-prod"><img src="img/p1.png" alt="Combo Franui + Barrigón"></div>
     </div>
     <div class="hslide theme4">
       <div class="hs-content">
