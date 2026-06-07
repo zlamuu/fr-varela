@@ -476,12 +476,51 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 /* ===== Etiqueta NUEVO ===== */
 .nuevo-badge { position:absolute; top:8px; left:8px; z-index:3; background:#1FAA4E; color:#fff; font-size:0.6rem; font-weight:900; padding:4px 8px; border-radius:50px; letter-spacing:0.8px; box-shadow:0 2px 8px rgba(31,170,78,0.4); }
 
+/* ===== Menú superior ===== */
+.topnav { display:flex; gap:22px; margin:0 auto; }
+.topnav a { text-decoration:none; color:var(--text); font-weight:700; font-size:0.9rem; padding:6px 2px; border-bottom:2px solid transparent; transition:all .15s; white-space:nowrap; }
+.topnav a:hover { color:var(--red); border-bottom-color:var(--red); }
+@media (max-width:820px) { .topnav { display:none; } }
+#top, #comprar, #sucursales, #contacto { scroll-margin-top:88px; }
+
+/* ===== Hero carrusel ===== */
+.hero-carousel { max-width:760px; margin:0 auto; }
+.hero-carousel .hslides { height:130px; }
+.hero-carousel .hslide { text-align:center; align-items:center; }
+.hero-carousel .hs-kicker { font-family:'Outfit',sans-serif; font-weight:800; letter-spacing:2px; font-size:0.82rem; color:var(--yellow); margin-bottom:6px; }
+.hero-carousel .hs-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.4rem,6.5vw,3.8rem); letter-spacing:1px; color:#fff; line-height:0.95; text-shadow:0 4px 14px rgba(0,0,0,0.25); }
+.hero-carousel .hs-text { color:rgba(255,255,255,0.94); font-size:1rem; margin:8px auto 0; max-width:520px; }
+@media (max-width:640px) { .hero-carousel .hslides { height:160px; } .hero-carousel .hs-title { font-size:2.1rem; } .hero-carousel .hs-text { font-size:0.9rem; } }
+
+/* ===== Chatbot ===== */
+.chat-fab { position:fixed; right:16px; bottom:84px; z-index:170; width:56px; height:56px; border-radius:50%; border:none; cursor:pointer; background:var(--red); color:#fff; font-size:26px; box-shadow:0 8px 20px rgba(222,59,38,0.5); transition:transform .2s; }
+.chat-fab:hover { transform:scale(1.08); }
+.chat-panel { position:fixed; right:16px; bottom:84px; z-index:171; width:min(360px, calc(100vw - 32px)); height:min(520px, calc(100vh - 130px)); background:#fff; border-radius:18px; box-shadow:0 20px 50px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; transform:translateY(20px) scale(.96); opacity:0; pointer-events:none; transition:all .25s; }
+.chat-panel.open { transform:none; opacity:1; pointer-events:auto; }
+.chat-head { background:var(--red); color:#fff; padding:14px 16px; display:flex; align-items:center; justify-content:space-between; }
+.chat-title { font-weight:800; font-size:1rem; }
+.chat-status { font-size:0.72rem; opacity:0.95; display:flex; align-items:center; gap:6px; margin-top:2px; }
+.chat-status .live-dot { background:#9bff9b; box-shadow:0 0 8px #4dff4d; }
+.chat-close { background:rgba(255,255,255,0.22); border:none; color:#fff; width:28px; height:28px; border-radius:50%; cursor:pointer; font-size:0.85rem; }
+.chat-body { flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:8px; background:#FBF5EC; }
+.chat-msg { max-width:84%; padding:9px 13px; border-radius:14px; font-size:0.86rem; line-height:1.4; white-space:pre-line; }
+.chat-msg.bot { background:#fff; border:1px solid var(--line); color:var(--text); align-self:flex-start; border-bottom-left-radius:4px; }
+.chat-msg.me { background:var(--red); color:#fff; align-self:flex-end; border-bottom-right-radius:4px; }
+.chat-quick { display:flex; flex-wrap:wrap; gap:6px; padding:8px 12px; border-top:1px solid var(--line); background:#fff; }
+.chat-quick button { font-family:inherit; font-size:0.73rem; font-weight:700; color:var(--red); background:#fff; border:1px solid var(--red); border-radius:50px; padding:6px 11px; cursor:pointer; }
+.chat-quick button:hover { background:var(--red); color:#fff; }
+.chat-quick .cq-wa { color:#fff; background:var(--green); border-color:var(--green); }
+.chat-input-row { display:flex; gap:6px; padding:10px 12px; border-top:1px solid var(--line); background:#fff; }
+.chat-input { flex:1; border:1px solid var(--line); border-radius:50px; padding:9px 14px; font-family:inherit; font-size:0.86rem; outline:none; }
+.chat-input:focus { border-color:var(--red); }
+.chat-send { background:var(--red); color:#fff; border:none; width:38px; border-radius:50%; cursor:pointer; font-size:0.9rem; }
+
 @media (prefers-reduced-motion: reduce) { *, *::after, *::before { animation:none !important; } }
 </style>
 </head>
 <body>
 
-<div class="topbar">
+<div class="topbar" id="top">
   <header>
     <div class="logo-wrap">
       <span class="logo-mark-img"><img src="img/logo.png" alt="FR Varela 24hs" loading="lazy"></span>
@@ -490,6 +529,12 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
         <div class="logo-sub">Maxikiosco · 24hs · Florencio Varela</div>
       </div>
     </div>
+    <nav class="topnav">
+      <a href="#top">Inicio</a>
+      <a href="#comprar">Comprar</a>
+      <a href="#sucursales">Dónde estamos</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
     <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito">
       🛒 Carrito
       <span class="cart-count" id="cart-count">0</span>
@@ -505,21 +550,29 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-grid">
-      <div class="hero-brand">
-        <div class="brand-eyebrow">MAXIKIOSCO · 24 HORAS</div>
-        <div class="brand-name"><span class="bn-fr">FR</span> <span class="bn-va">VARELA</span></div>
-        <div class="brand-sub"><span class="live-dot"></span> Abierto ahora · Florencio Varela · 3 sucursales</div>
-      </div>
-      <div class="hero-slider">
-        <div class="hslides" id="hslides">
-          <div class="hslide active"><div class="hs-title">🔥 Promos de la semana</div><div class="hs-text">Combos Franui, Block y más a precio especial</div></div>
-          <div class="hslide"><div class="hs-title">🆕 Nuevos ingresos</div><div class="hs-text">Mr Beast, Takis, Cadbury, Kinder y más</div></div>
-          <div class="hslide"><div class="hs-title">🛵 Envío GRATIS</div><div class="hs-text">Te lo llevamos a domicilio · 24 horas</div></div>
-          <div class="hslide"><div class="hs-title">🍫 +300 productos</div><div class="hs-text">Golosinas, bebidas, snacks y almacén</div></div>
+    <div class="hero-carousel">
+      <div class="hslides" id="hslides">
+        <div class="hslide active">
+          <div class="hs-title">FRANUI VARELA</div>
+          <div class="hs-text">Tu maxikiosco abierto las 24 horas · Florencio Varela</div>
         </div>
-        <div class="hero-dots" id="hero-dots"></div>
+        <div class="hslide">
+          <div class="hs-kicker">🔥 COMBO DEL DÍA</div>
+          <div class="hs-title">Franui + Alfajor Barrigón</div>
+          <div class="hs-text">Llevá el combo por solo $12.100</div>
+        </div>
+        <div class="hslide">
+          <div class="hs-kicker">🏆 PROMO MUNDIAL</div>
+          <div class="hs-title">¡Sobre de figus de regalo!</div>
+          <div class="hs-text">Con tu compra mayor a $100.000 te regalamos un sobre</div>
+        </div>
+        <div class="hslide">
+          <div class="hs-kicker">🛵 ENVÍO GRATIS</div>
+          <div class="hs-title">Te lo llevamos a tu casa</div>
+          <div class="hs-text">Pedí por WhatsApp, las 24 horas</div>
+        </div>
       </div>
+      <div class="hero-dots" id="hero-dots"></div>
     </div>
   </div>
 </section>
@@ -531,29 +584,6 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
   <div class="benefit"><span class="b-ico">📲</span><div><b>WhatsApp</b><small>Pedido fácil</small></div></div>
 </section>
 
-<section class="sucursales">
-  <h2 class="block-title">📍 Nuestras 3 sucursales en Florencio Varela</h2>
-  <div class="suc-grid">
-    <div class="suc-card">
-      <div class="suc-ic">📍</div>
-      <div class="suc-name">España 2960</div>
-      <div class="suc-sub">Abierto las 24 hs</div>
-      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=Espa%C3%B1a%202960%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
-    </div>
-    <div class="suc-card">
-      <div class="suc-ic">📍</div>
-      <div class="suc-name">Hipólito Yrigoyen 1940</div>
-      <div class="suc-sub">Abierto las 24 hs</div>
-      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=Hip%C3%B3lito%20Yrigoyen%201940%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
-    </div>
-    <div class="suc-card">
-      <div class="suc-ic">📍</div>
-      <div class="suc-name">San Martín 3302</div>
-      <div class="suc-sub">Abierto las 24 hs</div>
-      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=San%20Mart%C3%ADn%203302%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
-    </div>
-  </div>
-</section>
 
 <div class="search-wrap">
   <div class="search-box" id="search-box">
@@ -576,7 +606,7 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <section class="featured" id="featured"></section>
 
-<div class="toolbar">
+<div class="toolbar" id="comprar">
   <span id="result-count" class="result-count"></span>
   <div class="toolbar-filters">
     <select id="brand-select" class="t-select" onchange="setBrand(this.value)" aria-label="Filtrar por marca">
@@ -600,9 +630,22 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <main id="main"></main>
 
-<a class="wa-float" href="https://wa.me/5491123593011" target="_blank" rel="noopener" aria-label="Escribinos por WhatsApp">
-  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+<button class="chat-fab" id="chat-fab" onclick="toggleChat()" aria-label="Abrir asistente">💬</button>
+<div class="chat-panel" id="chat-panel">
+  <div class="chat-head">
+    <div>
+      <div class="chat-title">Asistente FR.VARELA</div>
+      <div class="chat-status"><span class="live-dot"></span> En línea · 24 hs</div>
+    </div>
+    <button class="chat-close" onclick="toggleChat()" aria-label="Cerrar">✕</button>
+  </div>
+  <div class="chat-body" id="chat-body"></div>
+  <div class="chat-quick" id="chat-quick"></div>
+  <div class="chat-input-row">
+    <input id="chat-input" class="chat-input" type="text" placeholder="Escribí tu consulta…" onkeydown="if(event.key==='Enter')chatSend()">
+    <button class="chat-send" onclick="chatSend()" aria-label="Enviar">➤</button>
+  </div>
+</div>
 
 <button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">↑</button>
 
@@ -615,7 +658,31 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
   </div>
 </section>
 
-<footer>
+<section class="sucursales" id="sucursales">
+  <h2 class="block-title">📍 Nuestras 3 sucursales en Florencio Varela</h2>
+  <div class="suc-grid">
+    <div class="suc-card">
+      <div class="suc-ic">📍</div>
+      <div class="suc-name">España 2960</div>
+      <div class="suc-sub">Abierto las 24 hs</div>
+      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=Espa%C3%B1a%202960%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="suc-card">
+      <div class="suc-ic">📍</div>
+      <div class="suc-name">Hipólito Yrigoyen 1940</div>
+      <div class="suc-sub">Abierto las 24 hs</div>
+      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=Hip%C3%B3lito%20Yrigoyen%201940%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+    <div class="suc-card">
+      <div class="suc-ic">📍</div>
+      <div class="suc-name">San Martín 3302</div>
+      <div class="suc-sub">Abierto las 24 hs</div>
+      <a class="suc-btn" href="https://www.google.com/maps/search/?api=1&query=San%20Mart%C3%ADn%203302%20Florencio%20Varela" target="_blank" rel="noopener">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+<footer id="contacto">
   <div class="foot-col foot-brand">
     <img src="img/logo.png" class="foot-logo" alt="FR Varela 24hs" loading="lazy">
     <div class="logo-name"><span class="fr">FR</span> <span class="va">VARELA</span></div>
@@ -1467,6 +1534,56 @@ function renderProductModal() {
       </div>
       ${sugHtml}
     </div>`;
+}
+
+/* ---------- Chatbot asistente ---------- */
+let chatStarted = false;
+const chatAnswers = {
+  pedir: 'Súper fácil 👇\n1) Tocá ➕ en los productos que quieras\n2) Abrí tu carrito 🛒\n3) Escribí tu nombre y dirección\n4) Tocá "Pedir por WhatsApp" y nos llega tu pedido. ¡Listo!',
+  envio: '🛵 ¡El envío es GRATIS a domicilio! Y estamos abiertos las 24 horas, todos los días.',
+  pago: '💳 Aceptamos Efectivo, Transferencia y MercadoPago. Lo coordinás al confirmar el pedido.',
+  sucursales: '📍 Tenemos 3 sucursales en Florencio Varela:\n• España 2960\n• Hipólito Yrigoyen 1940\n• San Martín 3302\nMirá "Dónde estamos" para el mapa.',
+  promos: '🔥 Mirá la sección Promos arriba. Combos Franui, Blockazo y más. Y con compras mayores a $100.000 ¡te regalamos un sobre de figus! 🏆',
+};
+const chatQuick = [['¿Cómo hago un pedido?', 'pedir'], ['Envío y horarios', 'envio'], ['Medios de pago', 'pago'], ['Sucursales', 'sucursales'], ['Promos', 'promos']];
+function toggleChat() {
+  const panel = document.getElementById('chat-panel');
+  const open = panel.classList.toggle('open');
+  if (open && !chatStarted) {
+    chatStarted = true;
+    chatBot('¡Hola! 👋 Soy el asistente de FR.VARELA. ¿En qué te puedo ayudar?');
+    renderChatQuick();
+  }
+}
+function renderChatQuick() {
+  document.getElementById('chat-quick').innerHTML =
+    chatQuick.map(([label, key]) => `<button onclick="chatPick('${key}',\`${label}\`)">${label}</button>`).join('') +
+    `<button class="cq-wa" onclick="window.open('https://wa.me/5491123593011','_blank')">Hablar por WhatsApp</button>`;
+}
+function chatMsg(text, who) {
+  const body = document.getElementById('chat-body');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + who;
+  div.innerText = text;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+function chatBot(text) { chatMsg(text, 'bot'); }
+function chatPick(key, label) { chatMsg(label, 'me'); setTimeout(() => chatBot(chatAnswers[key] || 'Eso lo coordinamos por WhatsApp 📲'), 300); }
+function chatSend() {
+  const inp = document.getElementById('chat-input');
+  const t = inp.value.trim(); if (!t) return;
+  inp.value = '';
+  chatMsg(t, 'me');
+  const n = norm(t);
+  let key = null;
+  if (/pedi|comprar|orden|carrito|como/.test(n)) key = 'pedir';
+  else if (/envio|delivery|domicilio|horario|abierto|hora/.test(n)) key = 'envio';
+  else if (/pago|paga|transfer|efectivo|mercado|tarjeta/.test(n)) key = 'pago';
+  else if (/sucursal|donde|direccion|local|llegar|mapa/.test(n)) key = 'sucursales';
+  else if (/promo|oferta|descuento|combo|figu/.test(n)) key = 'promos';
+  else if (/hola|buenas|buenos/.test(n)) { setTimeout(() => chatBot('¡Hola! 😄 Preguntame sobre pedidos, envío, pagos, sucursales o promos. O tocá una opción de abajo.'), 300); return; }
+  setTimeout(() => chatBot(key ? chatAnswers[key] : 'Te puedo ayudar con: cómo pedir, envío, pagos, sucursales y promos 🙂. O tocá "Hablar por WhatsApp".'), 350);
 }
 
 /* ---------- Botón volver arriba ---------- */
