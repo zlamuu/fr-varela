@@ -155,7 +155,8 @@ header .logo-name .va { color:#241F1A; }
 .hero {
   position:relative; overflow:hidden; text-align:center;
   padding:42px 24px 40px; color:#fff;
-  background:linear-gradient(135deg, #CE5333 0%, #A63A1F 100%);
+  background:#BE4A2C;
+  transition: background-color .6s ease;
 }
 .hero::before {
   content:""; position:absolute; inset:0;
@@ -1646,6 +1647,7 @@ window.addEventListener('scroll', () => {
 
 /* ---------- Banner: novedades deslizantes ---------- */
 let hsIdx = 0, hsTimer = null;
+const heroColors = ['#BE4A2C', '#C46E1B', '#A52A1A', '#CB5636']; /* terracota · naranja · rojo vino · coral */
 function heroSlide(n) {
   const slides = document.querySelectorAll('.hslide');
   const dots = document.querySelectorAll('.hero-dot');
@@ -1653,6 +1655,8 @@ function heroSlide(n) {
   hsIdx = (n + slides.length) % slides.length;
   slides.forEach((s, i) => s.classList.toggle('active', i === hsIdx));
   dots.forEach((d, i) => d.classList.toggle('active', i === hsIdx));
+  const hero = document.querySelector('.hero');
+  if (hero) hero.style.background = heroColors[hsIdx % heroColors.length];
 }
 function heroGo(i) { heroSlide(i); restartHero(); }
 function restartHero() { clearInterval(hsTimer); hsTimer = setInterval(() => heroSlide(hsIdx + 1), 5000); }
