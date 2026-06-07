@@ -590,8 +590,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .hs-feats { display:flex; gap:22px; margin-top:18px; flex-wrap:wrap; }
 .hs-feat b { display:block; color:var(--yellow); font-weight:800; font-size:1rem; line-height:1.1; }
 .hs-feat small { color:rgba(255,255,255,0.82); font-size:0.7rem; }
-.hs-art.hs-logo { background:none; width:clamp(150px,22vw,300px); height:clamp(150px,22vw,300px); right:5%; }
-.hs-art.hs-logo img { width:100%; height:100%; object-fit:contain; mix-blend-mode:screen; }
+.hs-art.hs-logo { background:none; width:clamp(160px,22vw,300px); height:clamp(160px,22vw,300px); right:5%; border-radius:50%; overflow:hidden; box-shadow:0 0 70px 12px rgba(255,90,40,0.42), 0 0 0 4px rgba(255,255,255,0.08); }
+.hs-art.hs-logo img { width:100%; height:100%; object-fit:cover; }
 /* Banner 3: foto del combo + ahorro */
 .hs-art.hs-prod { background:none; width:clamp(170px,24vw,310px); height:clamp(170px,24vw,310px); right:5%; border-radius:22px; overflow:hidden; box-shadow:0 24px 60px rgba(0,0,0,0.55), 0 0 0 6px rgba(255,255,255,0.06); }
 .hs-art.hs-prod img { width:100%; height:100%; object-fit:cover; }
@@ -618,7 +618,7 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .theme3 .hs-cta { background:var(--yellow); color:#161616; }
 .theme3 .hs-art { background:radial-gradient(circle, rgba(226,144,43,0.34), transparent 68%); }
 
-.theme4 { background:linear-gradient(115deg, #0c3d2c 0%, #161616 52%, #B5202A 100%); }
+.theme4 { background:linear-gradient(115deg, rgba(12,61,44,0.93) 0%, rgba(22,22,22,0.9) 50%, rgba(181,32,42,0.92) 100%), url('img/mapa.jpg'); background-size:cover; background-position:center; }
 .theme4 .hs-kicker { background:#16c46a; color:#06351f; }
 .theme4 .hs-cta { background:#16c46a; color:#fff; }
 .theme4 .hs-title .acc { color:#7dffb0; }
@@ -705,7 +705,7 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
         <p class="hs-desc">Te regalamos un sobre de figus con tu pedido.</p>
         <button class="hs-cta" onclick="heroShop('promos')">Aprovechar promo</button>
       </div>
-      <div class="hs-art"></div>
+      <div class="hs-art hs-prod"><img src="img/figuritas.png" alt="Promo figuritas Mundial"></div>
     </div>
     <div class="hslide theme3">
       <div class="hs-content">
