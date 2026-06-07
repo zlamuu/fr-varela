@@ -216,7 +216,7 @@ header .logo-name .va { color:#241F1A; }
 
 /* ===== GRILLA ===== */
 .products-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(160px,1fr)); gap:14px; padding:10px 16px 24px; }
-.product-card { background:#fff; border-radius:16px; overflow:hidden; border:1px solid var(--line); transition:transform .18s ease, box-shadow .18s ease; display:flex; flex-direction:column; position:relative; box-shadow:0 2px 10px rgba(0,0,0,0.05); animation:cardin .4s ease; }
+.product-card { background:#fff; border-radius:16px; overflow:hidden; border:1px solid var(--line); transition:transform .18s ease, box-shadow .18s ease; display:flex; flex-direction:column; position:relative; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
 @keyframes cardin { from{opacity:0; transform:translateY(8px)} to{opacity:1; transform:none} }
 .product-card:hover { transform:translateY(-4px) scale(1.03); box-shadow:0 14px 30px rgba(0,0,0,0.16); z-index:5; }
 .product-img-wrap, .product-info { cursor:pointer; }
@@ -647,7 +647,11 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 }
 @media (max-width:560px) { .hero-arrow { display:none; } }
 
-@media (prefers-reduced-motion: reduce) { *, *::after, *::before { animation:none !important; } }
+/* Reveal al scrollear (fade-up suave). Solo entrada; no afecta hover. */
+[data-reveal] { opacity:0; transform:translateY(24px); transition:opacity .55s ease, transform .6s cubic-bezier(.22,.61,.36,1); }
+[data-reveal].is-revealed { opacity:1; transform:none; }
+
+@media (prefers-reduced-motion: reduce) { *, *::after, *::before { animation:none !important; } [data-reveal] { opacity:1 !important; transform:none !important; transition:none !important; } }
 </style>
 </head>
 <body>
@@ -1207,7 +1211,7 @@ function renderProducts() {
       return;
     }
     count = found.length;
-    html = `<div class="section-title">Resultados (${found.length})</div>
+    html = `<div class="section-title" data-reveal>Resultados (${found.length})</div>
       <div class="products-grid">${found.map(renderCard).join('')}</div>`;
   } else {
     const cats = currentCat === 'all' ? Object.keys(catNames) : [currentCat];
@@ -1215,7 +1219,7 @@ function renderProducts() {
       const prods = sortList(products.filter(p => p.category === cat && passFilters(p)));
       if (!prods.length) return '';
       count += prods.length;
-      return `<div class="section-title">${catNames[cat]}</div>
+      return `<div class="section-title" data-reveal>${catNames[cat]}</div>
         <div class="products-grid">${prods.map(renderCard).join('')}</div>`;
     }).join('');
     if (!count) {
@@ -1228,6 +1232,37 @@ function renderProducts() {
   main.innerHTML = html;
   updateResultCount(count);
   renderFeatured();
+  initReveals();
+}
+
+/* Reveal al scroll: las tarjetas/títulos aparecen al entrar en pantalla.
+   Tras revelar, se quita data-reveal para que el hover use su transición propia. */
+let _revealIO = null;
+function initReveals() {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    document.querySelectorAll('[data-reveal]').forEach(el => { el.classList.add('is-revealed'); el.removeAttribute('data-reveal'); });
+    return;
+  }
+  if (!_revealIO) {
+    _revealIO = new IntersectionObserver((entries, obs) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const t = e.target;
+          t.classList.add('is-revealed');
+          obs.unobserve(t);
+          setTimeout(() => t.removeAttribute('data-reveal'), 650);
+        }
+      });
+    }, { threshold: 0.04, rootMargin: '0px 0px -3% 0px' });
+  }
+  document.querySelectorAll('[data-reveal]:not(.is-revealed)').forEach(el => _revealIO.observe(el));
+  // Red de seguridad: a los 5s revela lo que quedó visible pero sin disparar
+  setTimeout(() => {
+    document.querySelectorAll('[data-reveal]:not(.is-revealed)').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-revealed');
+    });
+  }, 5000);
 }
 
 function escapeHtml(s) {
@@ -1279,7 +1314,7 @@ function renderCard(p) {
   const meta = p.variants
     ? `<div class="product-meta var">${p.variants.length} sabores · elegí</div>`
     : (size ? `<div class="product-meta">${size}</div>` : '');
-  return `<div class="product-card" id="card-${p.id}">
+  return `<div class="product-card" data-reveal id="card-${p.id}">
     ${badge}
     <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${thumbHtml(p)}</div>
     <div class="product-info" onclick="openProduct(${p.id})">
@@ -1327,7 +1362,10 @@ function refreshCard(id) {
   if (!el) return;
   const tmp = document.createElement('div');
   tmp.innerHTML = renderCard(p);
-  el.replaceWith(tmp.firstElementChild);
+  const node = tmp.firstElementChild;
+  node.classList.add('is-revealed');      // ya está en pantalla: visible al toque, sin re-animar
+  node.removeAttribute('data-reveal');     // hover queda con su transición propia (.18s)
+  el.replaceWith(node);
 }
 
 function cartCount() { return Object.values(cart).reduce((a, b) => a + b, 0); }
