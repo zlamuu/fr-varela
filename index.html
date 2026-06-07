@@ -276,11 +276,11 @@ header .logo-name .va { color:#241F1A; }
 .cart-suggest h4 { font-size:0.8rem; font-weight:800; color:var(--text); margin:8px 0; display:flex; align-items:center; gap:6px; }
 .suggest-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:10px; scrollbar-width:none; }
 .suggest-row::-webkit-scrollbar { display:none; }
-.suggest-card { flex:0 0 auto; width:94px; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; display:flex; flex-direction:column; }
-.suggest-thumb { height:52px; display:flex; align-items:center; justify-content:center; font-size:30px; overflow:hidden; }
+.suggest-card { flex:0 0 auto; width:120px; background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+.suggest-thumb { height:90px; display:flex; align-items:center; justify-content:center; font-size:40px; overflow:hidden; }
 .suggest-thumb img { width:100%; height:100%; object-fit:cover; }
 .suggest-body { padding:6px 7px 8px; display:flex; flex-direction:column; gap:3px; }
-.suggest-name { font-size:0.66rem; color:#444; line-height:1.2; height:2.4em; overflow:hidden; }
+.suggest-name { font-size:0.72rem; color:#444; line-height:1.25; height:2.5em; overflow:hidden; }
 .suggest-price { font-size:0.74rem; color:var(--text); font-weight:800; }
 .suggest-add { margin-top:3px; background:var(--red); color:#fff; border:none; border-radius:8px; padding:5px; font-weight:800; font-size:0.72rem; cursor:pointer; }
 .suggest-add:hover { background:#c4151b; }
@@ -369,7 +369,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .feat-add { position:absolute; right:8px; bottom:8px; width:34px; height:34px; font-size:1.3rem; }
 
 /* ===== Barra de orden ===== */
-.toolbar { max-width:1100px; margin:0 auto; padding:8px 16px 0; display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; }
+.toolbar { max-width:1100px; margin:18px auto 8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+@media (max-width:520px){ .toolbar { margin:14px 12px 8px; } .toolbar-filters { width:100%; } .t-select { flex:1; } }
 .result-count { font-size:0.8rem; color:var(--muted); font-weight:600; }
 .sort-label { font-size:0.8rem; color:var(--muted); display:flex; align-items:center; gap:6px; }
 .sort-label select {
@@ -1297,17 +1298,21 @@ document.addEventListener('keydown', e => {
 });
 
 /* ---------- Venta cruzada ---------- */
+function shuffleArr(a) {
+  for (let j = a.length - 1; j > 0; j--) { const k = Math.floor(Math.random() * (j + 1)); [a[j], a[k]] = [a[k], a[j]]; }
+  return a;
+}
 function getSuggestions(limit = 6) {
-  const cartIds = Object.keys(cart).map(Number);
+  const cartIds = Object.keys(cart).map(keyId);
   if (!cartIds.length) return [];
-  // categorías que hay en el carrito
+  const inCart = new Set(cartIds);
   const cartCats = new Set(cartIds.map(id => products.find(p => p.id === id)?.category));
-  // categorías recomendadas (sin repetir)
+  // categorías recomendadas (complementarias) sin repetir
   const wanted = [];
   cartCats.forEach(c => (pairs[c] || []).forEach(w => { if (!wanted.includes(w)) wanted.push(w); }));
-  // una cola de candidatos por categoría (que no estén ya en el carrito)
-  const queues = wanted.map(cat => products.filter(p => p.category === cat && !cart[p.id]));
-  // intercalo categorías para que la mezcla sea variada (ej: snack, golosina, snack…)
+  // colas por categoría, MEZCLADAS al azar (así varían en cada apertura)
+  const queues = shuffleArr(wanted).map(cat => shuffleArr(products.filter(p => p.category === cat && !inCart.has(p.id))));
+  // intercalo categorías para una mezcla variada
   const out = [];
   let i = 0;
   while (out.length < limit && queues.some(q => q.length)) {
