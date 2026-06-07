@@ -227,6 +227,8 @@ header .logo-name .va { color:#241F1A; }
 
 .product-info { padding:11px 12px 6px; flex:1; display:flex; flex-direction:column; gap:4px; }
 .product-name { font-size:0.85rem; font-weight:700; color:var(--text); line-height:1.3; }
+.product-meta { font-size:0.7rem; color:var(--muted); line-height:1.2; }
+.product-meta.var { color:var(--red); font-weight:700; }
 .product-desc { font-size:0.7rem; color:var(--muted); }
 .product-price { font-size:1.1rem; font-weight:900; color:var(--red); margin-top:4px; }
 
@@ -1167,14 +1169,15 @@ function renderCard(p) {
     ? '<span class="promo-badge">🔥 PROMO</span>'
     : (nuevoIds.includes(p.id) ? '<span class="nuevo-badge">NUEVO</span>' : '');
   const { name, size } = splitSize(p.name);
-  const sizeTag = p.variants
-    ? `<span class="size-tag var-tag">${p.variants.length} sabores</span>`
-    : (size ? `<span class="size-tag">${size}</span>` : '');
+  const meta = p.variants
+    ? `<div class="product-meta var">${p.variants.length} sabores · elegí</div>`
+    : (size ? `<div class="product-meta">${size}</div>` : '');
   return `<div class="product-card" id="card-${p.id}">
     ${badge}
-    <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${sizeTag}${thumbHtml(p)}</div>
+    <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${thumbHtml(p)}</div>
     <div class="product-info" onclick="openProduct(${p.id})">
       <div class="product-name">${name}</div>
+      ${meta}
       <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
     </div>
     <div class="product-footer">${footer}</div>
