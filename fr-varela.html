@@ -430,6 +430,22 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .feat-card .product-img-wrap, .feat-body { cursor:pointer; }
 .feat-card:hover { transform:translateY(-3px); box-shadow:0 12px 26px rgba(0,0,0,0.14); }
 
+/* ===== Popup info (sucursales / contacto) ===== */
+.info-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:320; align-items:center; justify-content:center; padding:20px; }
+.info-overlay.open { display:flex; }
+.info-card { position:relative; background:var(--card); border-radius:18px; width:min(380px,100%); padding:24px; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:pmin .25s ease; }
+.info-close { position:absolute; top:12px; right:12px; width:32px; height:32px; border-radius:50%; border:none; background:#F4ECDD; color:var(--text); font-size:0.9rem; cursor:pointer; }
+.info-title { font-size:1.2rem; font-weight:800; color:var(--text); margin-bottom:4px; }
+.info-sub { color:var(--muted); font-size:0.85rem; margin-bottom:16px; }
+.info-list { display:flex; flex-direction:column; gap:10px; }
+.info-row { display:flex; align-items:center; justify-content:space-between; gap:10px; background:#F8F1E6; border:1px solid var(--line); border-radius:12px; padding:10px 14px; font-weight:700; color:var(--text); font-size:0.9rem; }
+.info-btn { background:var(--red); color:#fff; text-decoration:none; padding:7px 14px; border-radius:50px; font-weight:800; font-size:0.78rem; white-space:nowrap; }
+.info-btn:hover { background:#B23A1C; }
+.info-cta { display:block; text-align:center; text-decoration:none; padding:13px; border-radius:12px; font-weight:800; font-size:0.92rem; }
+.info-cta.wa { background:var(--green); color:#fff; }
+.info-cta.ig { background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045); color:#fff; }
+.info-foot { color:var(--muted); font-size:0.8rem; text-align:center; margin-top:14px; }
+
 /* ===== Cartel de confirmación (vaciar) ===== */
 .cf-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:320; align-items:center; justify-content:center; padding:20px; }
 .cf-overlay.open { display:flex; }
@@ -560,8 +576,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
     <nav class="topnav">
       <a href="#top">Inicio</a>
       <a href="#comprar">Comprar</a>
-      <a href="#contacto">Dónde estamos</a>
-      <a href="#contacto">Contacto</a>
+      <a href="#" onclick="openSucursales();return false;">Dónde estamos</a>
+      <a href="#" onclick="openContacto();return false;">Contacto</a>
     </nav>
     <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito">
       🛒 Carrito
@@ -749,6 +765,10 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 <div class="pm-overlay" id="pm-overlay" onclick="if(event.target===this)closeProduct()">
   <div class="pm-card" id="pm-card"></div>
+</div>
+
+<div class="info-overlay" id="info-overlay" onclick="if(event.target===this)closeInfo()">
+  <div class="info-card" id="info-card"></div>
 </div>
 
 <div class="cf-overlay" id="cf-overlay" onclick="if(event.target===this)closeConfirm()">
@@ -1294,7 +1314,7 @@ function closeCart() {
 }
 
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeConfirm(); closeProduct(); closeCart(); }
+  if (e.key === 'Escape') { closeInfo(); closeConfirm(); closeProduct(); closeCart(); }
 });
 
 /* ---------- Venta cruzada ---------- */
@@ -1586,6 +1606,36 @@ function chatSend() {
   else if (/promo|oferta|descuento|combo|figu/.test(n)) key = 'promos';
   else if (/hola|buenas|buenos/.test(n)) { setTimeout(() => chatBot('¡Hola! 😄 Preguntame sobre pedidos, envío, pagos, sucursales o promos. O tocá una opción de abajo.'), 300); return; }
   setTimeout(() => chatBot(key ? chatAnswers[key] : 'Te puedo ayudar con: cómo pedir, envío, pagos, sucursales y promos 🙂. O tocá "Hablar por WhatsApp".'), 350);
+}
+
+/* ---------- Popups de Sucursales / Contacto ---------- */
+function openInfo(html) {
+  document.getElementById('info-card').innerHTML = html;
+  document.getElementById('info-overlay').classList.add('open');
+}
+function closeInfo() { document.getElementById('info-overlay').classList.remove('open'); }
+function openSucursales() {
+  const sucs = [
+    ['España 2960', 'España 2960 Florencio Varela'],
+    ['Hipólito Yrigoyen 1940', 'Hipólito Yrigoyen 1940 Florencio Varela'],
+    ['San Martín 3302', 'San Martín 3302 Florencio Varela'],
+  ];
+  openInfo(`<button class="info-close" onclick="closeInfo()" aria-label="Cerrar">✕</button>
+    <h3 class="info-title">📍 Nuestras sucursales</h3>
+    <p class="info-sub">Florencio Varela · Abierto las 24 hs</p>
+    <div class="info-list">${sucs.map(([n, q]) => `
+      <div class="info-row"><span>${n}</span><a class="info-btn" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}" target="_blank" rel="noopener">Cómo llegar</a></div>`).join('')}
+    </div>`);
+}
+function openContacto() {
+  openInfo(`<button class="info-close" onclick="closeInfo()" aria-label="Cerrar">✕</button>
+    <h3 class="info-title">Contacto</h3>
+    <p class="info-sub">Estamos para ayudarte, las 24 hs</p>
+    <div class="info-list">
+      <a class="info-cta wa" href="https://wa.me/5491123593011" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+      <a class="info-cta ig" href="https://instagram.com/fr.varela" target="_blank" rel="noopener">Instagram @fr.varela</a>
+    </div>
+    <p class="info-foot">📍 Florencio Varela, Buenos Aires</p>`);
 }
 
 /* ---------- Botón volver arriba ---------- */
