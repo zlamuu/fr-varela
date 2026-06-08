@@ -388,6 +388,7 @@ header .logo-name .va { color:#241F1A; }
 .cart-panel.open { transform:translateX(0); }
 .cart-header { background:#fff; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
 .cart-header h2 { font-family:'Bebas Neue', sans-serif; font-size:1.5rem; letter-spacing:0.5px; color:var(--text); }
+.cart-h-count { font-family:'Outfit',sans-serif; font-size:0.8rem; font-weight:700; color:var(--muted); letter-spacing:0; }
 .cart-header-actions { display:flex; align-items:center; gap:8px; }
 .clear-btn { background:none; border:1px solid var(--line); color:#d33; border-radius:8px; padding:6px 10px; cursor:pointer; font-size:0.78rem; }
 .clear-btn:hover { border-color:#d33; }
@@ -1040,9 +1041,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 <div class="cart-overlay" id="cart-overlay" onclick="closeCart()"></div>
 
-<div class="cart-panel" id="cart-panel" role="dialog" aria-label="Tu pedido">
+<div class="cart-panel" id="cart-panel" role="dialog" aria-modal="true" aria-label="Tu pedido">
   <div class="cart-header">
-    <h2>Tu pedido</h2>
+    <h2>Tu pedido <span class="cart-h-count" id="cart-h-count"></span></h2>
     <div class="cart-header-actions">
       <button class="clear-btn" id="clear-btn" onclick="clearCart()">Vaciar</button>
       <button class="close-btn" onclick="closeCart()">✕ Cerrar</button>
@@ -1084,7 +1085,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <span class="cb-total" id="cb-total">$0</span>
 </button>
 
-<div class="pm-overlay" id="pm-overlay" onclick="if(event.target===this)closeProduct()">
+<div class="pm-overlay" id="pm-overlay" role="dialog" aria-modal="true" aria-label="Detalle del producto" onclick="if(event.target===this)closeProduct()">
   <div class="pm-card" id="pm-card"></div>
 </div>
 
@@ -1092,7 +1093,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <div class="info-card" id="info-card"></div>
 </div>
 
-<div class="cf-overlay" id="cf-overlay" onclick="if(event.target===this)closeConfirm()">
+<div class="cf-overlay" id="cf-overlay" role="alertdialog" aria-modal="true" aria-label="Confirmación" onclick="if(event.target===this)closeConfirm()">
   <div class="cf-card">
     <div class="cf-icon">🗑️</div>
     <h3 class="cf-title">¿Vaciar el carrito?</h3>
@@ -1690,8 +1691,9 @@ function filterCat(cat, btn) {
   syncSearchUI();
   hideSuggest();
   document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active'));
-  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.cat-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
   btn.classList.add('active');
+  btn.setAttribute('aria-current', 'true');
   renderProducts();
   scrollToGrid();
 }
@@ -1891,6 +1893,8 @@ function renderCartPanel() {
   const el = document.getElementById('cart-items');
   renderSuggestions();
   document.getElementById('clear-btn').style.display = items.length ? 'block' : 'none';
+  const hc = document.getElementById('cart-h-count');
+  if (hc) { const n = cartCount(); hc.textContent = n ? `· ${n} ${n === 1 ? 'ítem' : 'ítems'}` : ''; }
 
   if (!items.length) {
     el.innerHTML = `<div class="cart-empty">
