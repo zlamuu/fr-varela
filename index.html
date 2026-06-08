@@ -223,6 +223,19 @@ header .logo-name .va { color:#241F1A; }
 .benefit small { color:var(--muted); font-size:0.7rem; }
 @media (max-width:620px){ .benefits { grid-template-columns:repeat(2,1fr); } }
 
+/* ===== VISTOS RECIENTEMENTE ===== */
+.recent { max-width:1100px; margin:8px auto 0; padding:6px 16px 4px; }
+.recent-head { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:1px; color:var(--text); text-transform:uppercase; margin-bottom:8px; }
+.recent-row { display:flex; gap:10px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none; }
+.recent-row::-webkit-scrollbar { display:none; }
+.recent-card { flex:0 0 auto; width:108px; background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; cursor:pointer; text-align:left; padding:0; display:flex; flex-direction:column; transition:transform .15s, box-shadow .15s; }
+.recent-card:hover { transform:translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.12); }
+.recent-thumb { height:78px; display:flex; align-items:center; justify-content:center; overflow:hidden; background:#F4ECDD; }
+.recent-thumb img { width:100%; height:100%; object-fit:cover; }
+.rc-emoji { font-size:34px; }
+.recent-name { font-size:0.72rem; font-weight:600; color:var(--text); line-height:1.2; padding:6px 8px 2px; height:2.6em; overflow:hidden; }
+.recent-price { font-size:0.8rem; font-weight:800; color:var(--red); padding:0 8px 8px; }
+
 /* ===== CÓMO PEDIR (3 pasos) ===== */
 .howto { max-width:1100px; margin:30px auto 8px; padding:0 16px; }
 .howto-title { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:1px; color:var(--text); text-transform:uppercase; margin-bottom:14px; text-align:center; }
@@ -858,7 +871,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
           <div class="hs-feat"><b>~30 min</b><small>Y lo tenés en casa</small></div>
         </div>
       </div>
-      <div class="hs-art hs-logo"><img src="img/logo.png" alt="FR Varela"></div>
+      <div class="hs-art hs-logo"><img src="img/logo.png" alt="FR Varela" fetchpriority="high" decoding="async"></div>
     </div>
     <div class="hslide theme2">
       <div class="hs-content">
@@ -924,6 +937,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <button class="cat-btn" onclick="filterCat('almacen',this)">Almacén</button>
   <button class="cat-btn" onclick="filterCat('cigarrillos',this)">Cigarrillos</button>
 </nav>
+
+<section class="recent" id="recent" style="display:none"></section>
 
 <section class="featured" id="featured"></section>
 
@@ -1977,6 +1992,35 @@ function openProduct(id) {
   pmVariant = (p && p.variants) ? p.variants[0].l : '';
   renderProductModal();
   document.getElementById('pm-overlay').classList.add('open');
+  trackRecent(id);
+}
+
+/* ---------- Vistos recientemente ---------- */
+let recentIds = [];
+try { recentIds = JSON.parse(localStorage.getItem('frvarela_recent') || '[]'); } catch (e) { recentIds = []; }
+function trackRecent(id) {
+  recentIds = [id, ...recentIds.filter(x => x !== id)].slice(0, 10);
+  try { localStorage.setItem('frvarela_recent', JSON.stringify(recentIds)); } catch (e) {}
+  renderRecent();
+}
+function renderRecent() {
+  const el = document.getElementById('recent');
+  if (!el) return;
+  const items = recentIds.map(id => products.find(p => p.id === id)).filter(Boolean).slice(0, 10);
+  if (items.length < 2) { el.style.display = 'none'; el.innerHTML = ''; return; }
+  el.style.display = 'block';
+  el.innerHTML = `<div class="recent-head">Seguí viendo</div>
+    <div class="recent-row">${items.map(p => {
+      const src = imgSrc(p);
+      const thumb = src
+        ? `<img src="${src}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><span class="rc-emoji" style="display:none">${p.emoji}</span>`
+        : `<span class="rc-emoji">${p.emoji}</span>`;
+      return `<button class="recent-card" onclick="openProduct(${p.id})">
+        <span class="recent-thumb t-${p.category}">${thumb}</span>
+        <span class="recent-name">${escapeHtml(splitSize(p.name).name)}</span>
+        <span class="recent-price">$${p.price.toLocaleString('es-AR')}</span>
+      </button>`;
+    }).join('')}</div>`;
 }
 function closeProduct() {
   document.getElementById('pm-overlay').classList.remove('open');
@@ -2217,6 +2261,7 @@ updateCount();
 updateCheckoutBar();
 heroInit();
 initCountUp();
+renderRecent();
 </script>
 </body>
 </html>
