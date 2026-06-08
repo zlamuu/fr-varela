@@ -296,7 +296,8 @@ header .logo-name .va { color:#241F1A; }
 .search-suggest.show { display:block; }
 .ss-item { display:flex; align-items:center; gap:11px; padding:9px 14px; cursor:pointer; border-bottom:1px solid var(--line); }
 .ss-item:last-child { border-bottom:none; }
-.ss-item:hover { background:#F8F1E6; }
+.ss-item:hover, .ss-item.sel { background:#F8F1E6; }
+.product-name mark { background:transparent; color:var(--red); font-weight:800; }
 .ss-thumb { width:38px; height:38px; border-radius:8px; background:#F4ECDD center/cover no-repeat; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:19px; }
 .ss-name { flex:1; font-size:0.85rem; font-weight:600; color:var(--text); line-height:1.2; }
 .ss-name mark { background:transparent; color:var(--red); font-weight:800; }
@@ -819,7 +820,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     <h2 class="ts-title">+300 productos. <span>De todo, las 24 horas.</span></h2>
     <div class="search-box big" id="search-box">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
-      <input type="search" id="search-input" placeholder="Buscá entre +300 productos…" aria-label="Buscar producto" oninput="onSearch(this.value)" onblur="setTimeout(hideSuggest,150)" onkeydown="if(event.key==='Enter')searchEnter();if(event.key==='Escape')hideSuggest()" autocomplete="off">
+      <input type="search" id="search-input" placeholder="Buscá entre +300 productos…" aria-label="Buscar producto" oninput="onSearch(this.value)" onblur="setTimeout(hideSuggest,150)" onkeydown="ssKey(event)" autocomplete="off">
       <button class="search-clear" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
       <div class="search-suggest" id="search-suggest"></div>
     </div>
@@ -1519,7 +1520,7 @@ function renderCard(p) {
     ${badge}
     <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${thumbHtml(p)}</div>
     <div class="product-info" onclick="openProduct(${p.id})">
-      <div class="product-name">${name}</div>
+      <div class="product-name">${searchTerm.trim() ? hlMatch(name, searchTerm) : escapeHtml(name)}</div>
       ${meta}
       <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
     </div>
@@ -1635,15 +1636,23 @@ function scrollToShop() {
     t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
+function scrollToGrid() {
+  const t = document.getElementById('comprar');
+  if (!t) return;
+  const y = t.getBoundingClientRect().top + window.scrollY - 108;
+  window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+}
 function filterCat(cat, btn) {
   currentCat = cat;
   currentCollection = null;
   searchTerm = '';
   syncSearchUI();
+  hideSuggest();
   document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active'));
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderProducts();
+  scrollToGrid();
 }
 
 function onSearch(value) {
@@ -1668,7 +1677,8 @@ function renderSearchSuggest(value) {
   const t = norm((value || '').trim());
   if (t.length < 2) { box.className = 'search-suggest'; box.innerHTML = ''; return; }
   const matches = products.filter(p => norm(p.name).includes(t)).slice(0, 6);
-  if (!matches.length) { box.className = 'search-suggest'; box.innerHTML = ''; return; }
+  if (!matches.length) { box.className = 'search-suggest'; box.innerHTML = ''; suggestIds = []; suggestIdx = -1; return; }
+  suggestIds = matches.map(p => p.id); suggestIdx = -1;
   box.innerHTML = matches.map(p => {
     const src = imgSrc(p);
     const thumb = src ? `style="background-image:url('${src}')"` : '';
@@ -1688,6 +1698,21 @@ function hlMatch(text, term) {
   const i = text.toLowerCase().indexOf(t.toLowerCase());
   if (i < 0) return escapeHtml(text);
   return escapeHtml(text.slice(0, i)) + '<mark>' + escapeHtml(text.slice(i, i + t.length)) + '</mark>' + escapeHtml(text.slice(i + t.length));
+}
+let suggestIds = [], suggestIdx = -1;
+function ssKey(e) {
+  const box = document.getElementById('search-suggest');
+  const open = box && box.classList.contains('show');
+  if (e.key === 'Escape') { hideSuggest(); return; }
+  if (e.key === 'ArrowDown' && open) { e.preventDefault(); suggestIdx = Math.min(suggestIds.length - 1, suggestIdx + 1); updateSuggestSel(); }
+  else if (e.key === 'ArrowUp' && open) { e.preventDefault(); suggestIdx = Math.max(-1, suggestIdx - 1); updateSuggestSel(); }
+  else if (e.key === 'Enter') {
+    if (open && suggestIdx >= 0) openFromSuggest(suggestIds[suggestIdx]);
+    else searchEnter();
+  }
+}
+function updateSuggestSel() {
+  document.querySelectorAll('#search-suggest .ss-item').forEach((el, i) => el.classList.toggle('sel', i === suggestIdx));
 }
 function shareSite() {
   const data = { title: 'FR.VARELA', text: 'El kiosco con más variedad de Florencio Varela. +300 productos, abierto 24 hs, envío gratis.', url: 'https://fr-varela.vercel.app' };
