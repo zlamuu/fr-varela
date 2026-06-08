@@ -624,9 +624,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .theme3 .hs-cta { background:var(--yellow); color:#161616; }
 
 .theme4 { background:
-  radial-gradient(130% 130% at 62% 45%, rgba(8,8,8,0) 0%, rgba(8,8,8,0.55) 72%),
-  linear-gradient(115deg, rgba(9,52,36,0.96) 0%, rgba(15,15,15,0.95) 50%, rgba(178,30,40,0.95) 100%),
-  url('img/mapa.jpg'); background-size:cover; background-position:center; }
+  radial-gradient(120% 130% at 74% 42%, rgba(37,211,102,0.18) 0%, transparent 58%),
+  linear-gradient(115deg, #0a3f2b 0%, #0c1410 52%, #8f1f17 100%); }
 .theme4 .hs-kicker { background:#16c46a; color:#06351f; }
 .theme4 .hs-cta { background:#16c46a; color:#fff; }
 .theme4 .hs-title .acc { color:#7dffb0; }
@@ -641,6 +640,10 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 /* las imágenes del banner flotan suavemente (no quedan duras) */
 .hero .hslide.active .hs-art img { animation:artFloat 8s ease-in-out infinite; }
 @keyframes artFloat { 0%,100%{transform:scale(1.03)} 50%{transform:scale(1.09)} }
+/* Banner 4: moto delivery (sin imagen, identidad clara) */
+.hs-art.hs-emoji { display:flex; align-items:center; justify-content:center; overflow:visible; font-size:clamp(120px, 19vw, 250px); line-height:1; filter:drop-shadow(0 16px 34px rgba(0,0,0,0.55)); }
+.hero .hslide.active .hs-art.hs-emoji { animation:emojiFloat 4.5s ease-in-out infinite; }
+@keyframes emojiFloat { 0%,100%{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-14px) rotate(3deg)} }
 
 /* Flechas y puntitos */
 .hero-arrow { position:absolute; top:50%; transform:translateY(-50%); z-index:4; width:42px; height:42px; border-radius:50%; border:1px solid rgba(255,255,255,0.22); background:rgba(255,255,255,0.14); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); color:#fff; font-size:1.7rem; line-height:1; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s, transform .2s; }
@@ -753,7 +756,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         <p class="hs-desc">Sin moverte, las 24 horas. Pagás como quieras.</p>
         <button class="hs-cta" onclick="heroShop()">Pedir ahora</button>
       </div>
-      <div class="hs-art"></div>
+      <div class="hs-art hs-emoji" aria-hidden="true">🛵</div>
     </div>
   </div>
   <button class="hero-arrow prev" onclick="heroGo(hsIdx-1)" aria-label="Anterior">‹</button>
