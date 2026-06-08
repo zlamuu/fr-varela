@@ -256,6 +256,16 @@ header .logo-name .va { color:#241F1A; }
 .search-box.big svg { width:22px; height:22px; }
 .ts-scale { display:flex; flex-wrap:wrap; justify-content:center; gap:7px; margin-top:13px; }
 .ts-scale span { font-size:0.74rem; font-weight:700; color:var(--text); background:#fff; border:1px solid var(--line); border-radius:50px; padding:6px 13px; }
+/* Sugerencias del buscador */
+.search-box { position:relative; }
+.search-suggest { position:absolute; left:0; right:0; top:calc(100% + 8px); background:#fff; border:1px solid var(--line); border-radius:16px; box-shadow:0 16px 36px rgba(0,0,0,0.16); overflow:hidden; z-index:130; display:none; text-align:left; }
+.search-suggest.show { display:block; }
+.ss-item { display:flex; align-items:center; gap:11px; padding:9px 14px; cursor:pointer; border-bottom:1px solid var(--line); }
+.ss-item:last-child { border-bottom:none; }
+.ss-item:hover { background:#F8F1E6; }
+.ss-thumb { width:38px; height:38px; border-radius:8px; background:#F4ECDD center/cover no-repeat; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:19px; }
+.ss-name { flex:1; font-size:0.85rem; font-weight:600; color:var(--text); line-height:1.2; }
+.ss-price { font-size:0.85rem; font-weight:800; color:var(--red); white-space:nowrap; }
 
 /* ===== CATEGORIAS ===== */
 .cat-bar { position:sticky; top:62px; z-index:90; background:var(--bg); padding:10px 16px 12px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; max-width:1100px; margin:0 auto; }
@@ -614,7 +624,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 @keyframes slidePop { from{opacity:0; transform:translateY(20px) scale(.98); filter:blur(3px)} to{opacity:1; transform:none; filter:none} }
 
 /* ===== Chatbot ===== */
-.chat-fab { position:fixed; right:16px; bottom:84px; z-index:170; width:56px; height:56px; border-radius:50%; border:none; cursor:pointer; background:var(--red); color:#fff; font-size:26px; box-shadow:0 8px 20px rgba(222,59,38,0.5); transition:transform .2s; }
+.chat-fab { position:fixed; right:16px; bottom:84px; z-index:170; width:56px; height:56px; border-radius:50%; border:none; cursor:pointer; background:var(--red); color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(222,59,38,0.5); transition:transform .2s; }
+.chat-fab svg { width:25px; height:25px; }
 .chat-fab:hover { transform:scale(1.08); }
 .chat-panel { position:fixed; right:16px; bottom:84px; z-index:171; width:min(360px, calc(100vw - 32px)); height:min(520px, calc(100vh - 130px)); background:#fff; border-radius:18px; box-shadow:0 20px 50px rgba(0,0,0,0.3); display:flex; flex-direction:column; overflow:hidden; transform:translateY(20px) scale(.96); opacity:0; pointer-events:none; transition:all .25s; }
 .chat-panel.open { transform:none; opacity:1; pointer-events:auto; }
@@ -770,8 +781,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     <h2 class="ts-title">+300 productos. <span>De todo, las 24 horas.</span></h2>
     <div class="search-box big" id="search-box">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
-      <input type="search" id="search-input" placeholder="Buscá entre +300 productos…" aria-label="Buscar producto" oninput="onSearch(this.value)" onfocus="scrollToShop()" autocomplete="off">
+      <input type="search" id="search-input" placeholder="Buscá entre +300 productos…" aria-label="Buscar producto" oninput="onSearch(this.value)" onblur="setTimeout(hideSuggest,150)" onkeydown="if(event.key==='Escape')hideSuggest()" autocomplete="off">
       <button class="search-clear" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
+      <div class="search-suggest" id="search-suggest"></div>
     </div>
     <div class="ts-scale"><span>Envío gratis</span><span>Abierto 24 hs</span><span>Te llega en ~30 min</span><span>De todo en un solo lugar</span></div>
   </div>
@@ -885,7 +897,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 <main id="main"></main>
 
-<button class="chat-fab" id="chat-fab" onclick="toggleChat()" aria-label="Abrir asistente">💬</button>
+<button class="chat-fab" id="chat-fab" onclick="toggleChat()" aria-label="Abrir asistente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 20.5l1.4-5.6A8.5 8.5 0 1 1 21 11.5z"/></svg></button>
 <div class="chat-panel" id="chat-panel">
   <div class="chat-head">
     <div>
@@ -1323,7 +1335,6 @@ function renderProducts() {
       (norm(p.name).includes(term) || norm(p.desc).includes(term)) && passFilters(p)));
     if (!found.length) {
       main.innerHTML = `<div class="no-results">
-        <span class="big-e">🔍</span>
         No encontramos "<b>${escapeHtml(searchTerm)}</b>".<br>Probá con otra palabra.
       </div>`;
       updateResultCount(0);
@@ -1343,7 +1354,9 @@ function renderProducts() {
       : `<div class="no-results">No hay productos en esta colección ahora.<br>
          <button class="cf-cancel" style="margin-top:14px;max-width:200px" onclick="clearCollection()">Ver todo</button></div>`;
   } else {
-    const cats = currentCat === 'all' ? Object.keys(catNames) : [currentCat];
+    // En "Todos" lideramos con las categorías más grandes (muro de abundancia inmediato)
+    const catOrder = ['golosinas', 'snacks', 'bebidas', 'promos', 'comida', 'almacen', 'cigarrillos'];
+    const cats = currentCat === 'all' ? catOrder : [currentCat];
     html = cats.map(cat => {
       const prods = sortList(products.filter(p => p.category === cat && passFilters(p)));
       if (!prods.length) return '';
@@ -1352,7 +1365,7 @@ function renderProducts() {
         <div class="products-grid">${prods.map(renderCard).join('')}</div>`;
     }).join('');
     if (!count) {
-      html = `<div class="no-results"><span class="big-e">🔎</span>
+      html = `<div class="no-results">
         No hay productos con esos filtros.<br>
         <button class="cf-cancel" style="margin-top:14px;max-width:200px" onclick="resetFilters()">Quitar filtros</button>
       </div>`;
@@ -1465,7 +1478,7 @@ function addToCart(id) {
   if (p && p.variants) { openProduct(id); return; } // tiene sabores: abrir para elegir
   cart[id] = (cart[id] || 0) + 1;
   afterCartChange(id);
-  showToast(`✅ ${p.name} agregado`);
+  showToast(`${p.name} agregado al pedido`);
 }
 
 function changeQty(key, delta) {
@@ -1579,13 +1592,38 @@ function onSearch(value) {
   if (value.trim()) { currentCollection = null; document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active')); }
   document.getElementById('search-box').classList.toggle('has-text', value.length > 0);
   renderProducts();
+  renderSearchSuggest(value);
 }
 
 function clearSearch() {
   searchTerm = '';
   syncSearchUI();
+  hideSuggest();
   renderProducts();
 }
+
+/* ---------- Sugerencias del buscador (autocompletar) ---------- */
+function renderSearchSuggest(value) {
+  const box = document.getElementById('search-suggest');
+  if (!box) return;
+  const t = norm((value || '').trim());
+  if (t.length < 2) { box.className = 'search-suggest'; box.innerHTML = ''; return; }
+  const matches = products.filter(p => norm(p.name).includes(t)).slice(0, 6);
+  if (!matches.length) { box.className = 'search-suggest'; box.innerHTML = ''; return; }
+  box.innerHTML = matches.map(p => {
+    const src = imgSrc(p);
+    const thumb = src ? `style="background-image:url('${src}')"` : '';
+    const fb = src ? '' : p.emoji;
+    return `<div class="ss-item" onmousedown="openFromSuggest(${p.id})">
+      <span class="ss-thumb" ${thumb}>${fb}</span>
+      <span class="ss-name">${splitSize(p.name).name}</span>
+      <span class="ss-price">$${p.price.toLocaleString('es-AR')}</span>
+    </div>`;
+  }).join('');
+  box.className = 'search-suggest show';
+}
+function openFromSuggest(id) { hideSuggest(); openProduct(id); }
+function hideSuggest() { const b = document.getElementById('search-suggest'); if (b) b.className = 'search-suggest'; }
 
 function syncSearchUI() {
   const input = document.getElementById('search-input');
@@ -1821,7 +1859,7 @@ function pmAdd() {
   const key = p.variants ? `${pmId}|${pmVariant}` : String(pmId);
   cart[key] = (cart[key] || 0) + pmQty;
   saveCart(); updateCount(); refreshCard(pmId); updateCheckoutBar();
-  showToast(`✅ ${pmQty} x ${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''} agregado`);
+  showToast(`${pmQty} x ${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''} agregado al pedido`);
   closeProduct();
 }
 // nombre base de un producto (sin tamaño/formato) para evitar duplicados tipo "Sprite" / "Sprite Lata"
