@@ -46,7 +46,7 @@ body {
 
 /* ===== TOPBAR ===== */
 .topbar { position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.92); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow:0 2px 16px rgba(0,0,0,0.06); }
-header { padding:12px 18px; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; }
+header { padding:12px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; max-width:1100px; margin:0 auto; }
 .logo-wrap { display:flex; align-items:center; gap:10px; justify-self:start; }
 .cart-btn { justify-self:end; }
 .logo-mark {
@@ -751,12 +751,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         <div class="logo-sub">Maxikiosco · 24hs · Florencio Varela</div>
       </div>
     </div>
-    <nav class="topnav">
-      <a href="#top">Inicio</a>
-      <a href="#comprar">Comprar</a>
-      <a href="#" onclick="openSucursales();return false;">Dónde estamos</a>
-      <a href="#" onclick="openContacto();return false;">Contacto</a>
-    </nav>
     <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito">
       <svg class="cart-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.2l2.3 12.2a1.6 1.6 0 0 0 1.6 1.3h8.9a1.6 1.6 0 0 0 1.6-1.3L20.5 7H6"/></svg>
       Carrito
@@ -844,19 +838,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <div class="hero-dots" id="hero-dots"></div>
 </section>
 
-<section class="community">
-  <div class="comm-inner">
-    <div class="comm-lead">
-      <span class="comm-num" data-countup="100000">+100.000</span>
-      <span class="comm-sub">vecinos de Florencio Varela<br>ya nos eligen</span>
-    </div>
-    <div class="comm-facts">
-      <span>Abierto 24 hs</span><span>Envío gratis</span><span>Entrega en ~30 min</span><span>Pedí por WhatsApp</span>
-    </div>
-    <a class="comm-ig" href="https://instagram.com/fr.varela" target="_blank" rel="noopener">Seguinos en @fr.varela →</a>
-  </div>
-</section>
-
 <div class="coll-wrap">
   <div class="coll-head">Elegí por antojo</div>
   <section class="collections" aria-label="Colecciones">
@@ -923,6 +904,16 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 <button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">↑</button>
 
+
+<section class="community">
+  <div class="comm-inner">
+    <div class="comm-lead">
+      <span class="comm-num" data-countup="100000">+100.000</span>
+      <span class="comm-sub">vecinos de Florencio Varela ya nos eligen</span>
+    </div>
+    <a class="comm-ig" href="https://instagram.com/fr.varela" target="_blank" rel="noopener">Seguinos en @fr.varela →</a>
+  </div>
+</section>
 
 <footer id="contacto">
   <div class="foot-col foot-brand">
