@@ -650,6 +650,11 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 }
 @media (max-width:560px) { .hero-arrow { display:none; } }
 
+/* Prueba social y microcopy del checkout */
+.min-order.bump { animation:cartBump .45s cubic-bezier(.34,1.56,.64,1); }
+.wa-proof { text-align:center; font-size:0.74rem; font-weight:800; color:var(--text); margin-bottom:7px; }
+.wa-sub { text-align:center; font-size:0.66rem; color:var(--muted); margin-top:7px; line-height:1.3; }
+
 /* Accesibilidad: texto solo para lectores de pantalla (invisible en pantalla) */
 .sr-only { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
@@ -688,8 +693,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   </header>
   <div class="ticker">
     <div class="ticker-track">
-      <span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 ENVÍO GRATIS A DOMICILIO</span>
-      <span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 ENVÍO GRATIS A DOMICILIO</span>
+      <span>💛 +100.000 NOS ELIGEN</span><span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 ENVÍO GRATIS A DOMICILIO</span>
+      <span>💛 +100.000 NOS ELIGEN</span><span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 ENVÍO GRATIS A DOMICILIO</span>
     </div>
   </div>
 </div>
@@ -751,7 +756,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <section class="benefits">
   <div class="benefit"><span class="b-ico">🕐</span><div><b>24 horas</b><small>Siempre abierto</small></div></div>
   <div class="benefit"><span class="b-ico">🛵</span><div><b>Envío gratis</b><small>A domicilio</small></div></div>
-  <div class="benefit"><span class="b-ico">📦</span><div><b>+300</b><small>Productos</small></div></div>
+  <div class="benefit"><span class="b-ico">💛</span><div><b>+100.000</b><small>Nos eligen</small></div></div>
   <div class="benefit"><span class="b-ico">📲</span><div><b>WhatsApp</b><small>Pedido fácil</small></div></div>
 </section>
 
@@ -865,7 +870,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         <span class="pay-chip">Transferencia</span>
         <span class="pay-chip">MercadoPago</span>
       </div>
-      <div class="ship-note">🛵 <b style="color:var(--green)">ENVÍO GRATIS</b> a domicilio · Abierto 24 hs</div>
+      <div class="ship-note">🛵 <b style="color:var(--green)">ENVÍO GRATIS</b> · Te llega en ~30 min · Abierto 24 hs</div>
     </div>
     <div class="checkout-fields">
       <input id="ck-name" class="ck-input" type="text" placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="name" oninput="saveCkFields()">
@@ -875,12 +880,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <span class="label">Total estimado:</span>
       <span class="amount" id="cart-total">$0</span>
     </div>
+    <div class="wa-proof">💛 +100.000 clientes ya nos hicieron su pedido</div>
     <button class="whatsapp-btn" onclick="sendToWhatsApp()">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
       </svg>
       Pedir por WhatsApp
     </button>
+    <div class="wa-sub">Sin registrarte · Coordinás pago y entrega por el chat</div>
   </div>
 </div>
 
@@ -1499,11 +1506,16 @@ function getSuggestions(limit = 6) {
   const queues = shuffleArr(wanted).map(cat => shuffleArr(products.filter(p => p.category === cat && !inCart.has(p.id))));
   // intercalo categorías para una mezcla variada
   const out = [];
-  let i = 0;
-  while (out.length < limit && queues.some(q => q.length)) {
-    const q = queues[i % queues.length];
-    if (q.length) out.push(q.shift());
-    i++;
+  const seenBase = new Set(cartIds.map(id => { const pp = products.find(p => p.id === id); return pp ? prodBase(pp) : ''; }));
+  let i = 0, guard = 0;
+  while (out.length < limit && queues.some(q => q.length) && guard++ < 300) {
+    const q = queues[i++ % queues.length];
+    if (!q.length) continue;
+    const cand = q.shift();
+    const b = prodBase(cand);
+    if (seenBase.has(b)) continue;   // sin duplicados (Sprite / Sprite Lata)
+    seenBase.add(b);
+    out.push(cand);
   }
   return out;
 }
@@ -1615,6 +1627,15 @@ function sendToWhatsApp() {
   const items = Object.entries(cart);
   if (!items.length) { showToast('¡Agregá al menos un producto!'); return; }
 
+  const totalNow = cartTotal();
+  if (totalNow < MIN_ORDER) {
+    const falta = MIN_ORDER - totalNow;
+    showToast(`Te faltan $${falta.toLocaleString('es-AR')} para el pedido mínimo de $${MIN_ORDER.toLocaleString('es-AR')} 🛒`);
+    const moEl = document.getElementById('min-order');
+    if (moEl) { moEl.classList.remove('bump'); void moEl.offsetWidth; moEl.classList.add('bump'); }
+    return;
+  }
+
   let num = parseInt(localStorage.getItem('frvarela_order_n') || '1000', 10) + 1;
   localStorage.setItem('frvarela_order_n', num);
   const ckName = (document.getElementById('ck-name')?.value || '').trim();
@@ -1664,17 +1685,32 @@ function pmAdd() {
   showToast(`✅ ${pmQty} x ${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''} agregado`);
   closeProduct();
 }
-function modalSuggestions(p) {
-  const cats = (pairs[p.category] || []).concat(p.category);
-  const seen = {}; const out = [];
-  for (const c of cats) {
-    for (const x of products) {
-      if (x.category === c && x.id !== p.id && !seen[x.id]) { seen[x.id] = 1; out.push(x); }
-      if (out.length >= 6) break;
-    }
-    if (out.length >= 6) break;
+// nombre base de un producto (sin tamaño/formato) para evitar duplicados tipo "Sprite" / "Sprite Lata"
+function prodBase(p) {
+  return splitSize(p.name).name.toLowerCase()
+    .replace(/\b(lata|botella|retornable|descartable|sixpack|pack|six|x\s?\d+)\b.*/g, '')
+    .replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
+}
+
+function modalSuggestions(p, limit = 4) {
+  // solo categorías COMPLEMENTARIAS (no sugerir más de lo mismo)
+  const cats = pairs[p.category] || [];
+  // una cola por categoría, mezclada al azar para que varíe en cada apertura
+  const queues = shuffleArr(cats.slice()).map(c =>
+    shuffleArr(products.filter(x => x.category === c && x.id !== p.id)));
+  const out = [], seenBase = new Set([prodBase(p)]);
+  let i = 0, guard = 0;
+  // intercalo categorías (un producto de cada una por vuelta) → mezcla variada
+  while (out.length < limit && queues.some(q => q.length) && guard++ < 300) {
+    const q = queues[i++ % queues.length];
+    if (!q.length) continue;
+    const cand = q.shift();
+    const b = prodBase(cand);
+    if (seenBase.has(b)) continue;   // evita duplicados (Sprite / Sprite Lata)
+    seenBase.add(b);
+    out.push(cand);
   }
-  return out.slice(0, 6);
+  return out;
 }
 
 function renderProductModal() {
