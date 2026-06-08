@@ -3,15 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FR.VARELA — Maxikiosco 24hs en Florencio Varela</title>
-<meta name="description" content="Maxikiosco FR.VARELA abierto las 24 horas en Florencio Varela. Golosinas, chocolates, snacks, bebidas y almacén. 3 sucursales. Pedí por WhatsApp y te lo llevamos.">
-<meta name="theme-color" content="#E11B22">
+<title>FR.VARELA — Maxikiosco 24hs en Florencio Varela · +300 productos, envío gratis</title>
+<meta name="description" content="El maxikiosco con más variedad de Florencio Varela. +300 productos: golosinas, chocolates, snacks, bebidas y almacén. Abierto las 24 horas. Pedí por WhatsApp con envío gratis y te llega en ~30 min.">
+<meta name="theme-color" content="#C8331E">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="FR.VARELA">
+<meta name="mobile-web-app-capable" content="yes">
 <!-- Para compartir por WhatsApp / redes -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="FR.VARELA — Maxikiosco 24hs">
-<meta property="og:description" content="Pedí bebidas, golosinas, snacks y más. Abierto las 24 horas en Florencio Varela.">
-<!-- Ícono (emoji como favicon) -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌭</text></svg>">
+<meta property="og:title" content="FR.VARELA — Maxikiosco 24hs · +300 productos">
+<meta property="og:description" content="El kiosco con más variedad de Florencio Varela. Abierto 24 hs, envío gratis. Pedí por WhatsApp.">
+<meta property="og:image" content="https://fr-varela.vercel.app/img/logo.png">
+<meta property="og:url" content="https://fr-varela.vercel.app">
+<!-- Íconos -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23C8331E'/><text x='50' y='63' font-family='Arial,sans-serif' font-size='46' font-weight='bold' fill='white' text-anchor='middle'>FR</text></svg>">
+<link rel="apple-touch-icon" href="img/logo.png">
+<link rel="manifest" href="manifest.json">
+<!-- Datos estructurados para Google (negocio local) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "FR.VARELA",
+  "description": "Maxikiosco abierto las 24 horas en Florencio Varela. +300 productos con envío gratis a domicilio.",
+  "image": "https://fr-varela.vercel.app/img/logo.png",
+  "url": "https://fr-varela.vercel.app",
+  "telephone": "+5491123593011",
+  "priceRange": "$",
+  "openingHours": "Mo-Su 00:00-23:59",
+  "address": { "@type": "PostalAddress", "streetAddress": "España 2960", "addressLocality": "Florencio Varela", "addressRegion": "Buenos Aires", "addressCountry": "AR" },
+  "areaServed": "Florencio Varela",
+  "sameAs": ["https://instagram.com/fr.varela", "https://www.facebook.com/franui.varela/"]
+}
+</script>
 <!-- Fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -227,6 +252,12 @@ header .logo-name .va { color:#241F1A; }
 .coll-clear:hover { border-color:var(--red); color:var(--red); }
 @media (max-width:780px){ .collections { grid-template-columns:repeat(2,1fr); } }
 
+/* ===== FRANJA DE MARCAS ===== */
+.brands-wrap { max-width:1100px; margin:18px auto 6px; padding:0 16px; }
+.brand-strip { display:flex; flex-wrap:wrap; gap:8px; }
+.brand-chip { background:#fff; border:1px solid var(--line); color:var(--text); border-radius:50px; padding:8px 16px; font-size:0.82rem; font-weight:700; cursor:pointer; transition:transform .15s, border-color .15s, color .15s; white-space:nowrap; }
+.brand-chip:hover { border-color:var(--red); color:var(--red); transform:translateY(-2px); }
+
 /* ===== ZONAS DE ENTREGA (rooting local) ===== */
 .zones { max-width:1100px; margin:34px auto; padding:28px 22px; background:var(--bg2); border:1px solid var(--line); border-radius:22px; text-align:center; }
 .zones-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(1.8rem,4.5vw,2.7rem); letter-spacing:1px; color:var(--text); text-transform:uppercase; line-height:1; }
@@ -337,6 +368,8 @@ header .logo-name .va { color:#241F1A; }
 .cart-items::-webkit-scrollbar-thumb { background:#ccc; border-radius:10px; }
 .cart-empty { text-align:center; color:var(--muted); padding:50px 20px; }
 .cart-empty .big-e { font-size:52px; display:block; margin-bottom:12px; }
+.empty-cta { margin-top:18px; background:var(--red); color:#fff; border:none; border-radius:50px; padding:12px 24px; font-weight:800; font-size:0.9rem; cursor:pointer; box-shadow:0 6px 16px rgba(200,51,30,0.3); transition:transform .15s; }
+.empty-cta:hover { transform:translateY(-2px); }
 .cart-item { background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px; display:flex; align-items:center; gap:10px; }
 .ci-img { width:52px; height:52px; border-radius:8px; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center; background:#F4ECDD; }
 .ci-img img { width:100%; height:100%; object-fit:cover; }
@@ -782,7 +815,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     <h2 class="ts-title">+300 productos. <span>De todo, las 24 horas.</span></h2>
     <div class="search-box big" id="search-box">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
-      <input type="search" id="search-input" placeholder="Buscá entre +300 productos…" aria-label="Buscar producto" oninput="onSearch(this.value)" onblur="setTimeout(hideSuggest,150)" onkeydown="if(event.key==='Escape')hideSuggest()" autocomplete="off">
+      <input type="search" id="search-input" placeholder="Buscá entre +300 productos…" aria-label="Buscar producto" oninput="onSearch(this.value)" onblur="setTimeout(hideSuggest,150)" onkeydown="if(event.key==='Enter')searchEnter();if(event.key==='Escape')hideSuggest()" autocomplete="off">
       <button class="search-clear" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
       <div class="search-suggest" id="search-suggest"></div>
     </div>
@@ -859,6 +892,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     <button class="coll-card c-dulce" data-coll="dulce" onclick="filterCollection('dulce')"><span class="coll-name">Antojo dulce</span><span class="coll-desc">Chocolates y golosinas</span></button>
     <button class="coll-card c-top" data-coll="top" onclick="filterCollection('top')"><span class="coll-name">Lo más pedido</span><span class="coll-desc">Lo que se llevan todos</span></button>
   </section>
+</div>
+
+<div class="brands-wrap">
+  <div class="coll-head">Las marcas que buscás</div>
+  <div class="brand-strip" id="brand-strip"></div>
 </div>
 
 <nav class="cat-bar" id="cat-bar">
@@ -1325,6 +1363,22 @@ function buildBrandSelect() {
     brands.map(b => `<option value="${b}">${b} (${counts[b]})</option>`).join('');
 }
 
+function buildBrandStrip() {
+  const el = document.getElementById('brand-strip');
+  if (!el) return;
+  const counts = {};
+  products.forEach(p => { const b = brandOf(p.name); if (b !== 'Otros') counts[b] = (counts[b] || 0) + 1; });
+  const brands = Object.keys(counts).sort((a, b) => counts[b] - counts[a]).slice(0, 14);
+  el.innerHTML = brands.map(b => `<button class="brand-chip" onclick="pickBrand(this.dataset.b)" data-b="${escapeHtml(b)}">${b}</button>`).join('');
+}
+function pickBrand(b) {
+  brandFilter = b; currentCollection = null; searchTerm = ''; syncSearchUI();
+  document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active'));
+  const sel = document.getElementById('brand-select'); if (sel) sel.value = b;
+  renderProducts();
+  document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 /* ---------- Render de productos ---------- */
 function renderProducts() {
   const main = document.getElementById('main');
@@ -1423,7 +1477,7 @@ function imgSrc(p) {
 function thumbHtml(p) {
   const src = imgSrc(p);
   if (src) {
-    return `<img src="${src}" alt="${p.name}" loading="lazy"
+    return `<img src="${src}" alt="${p.name}" loading="lazy" decoding="async"
       onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
       <span class="product-emoji-fb" style="display:none">${p.emoji}</span>`;
   }
@@ -1626,6 +1680,13 @@ function renderSearchSuggest(value) {
 }
 function openFromSuggest(id) { hideSuggest(); openProduct(id); }
 function hideSuggest() { const b = document.getElementById('search-suggest'); if (b) b.className = 'search-suggest'; }
+function searchEnter() {
+  const t = norm((document.getElementById('search-input').value || '').trim());
+  if (t.length < 1) return;
+  const first = products.find(p => norm(p.name).includes(t));
+  if (first) { hideSuggest(); openProduct(first.id); }
+  else { document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+}
 
 function syncSearchUI() {
   const input = document.getElementById('search-input');
@@ -1751,8 +1812,8 @@ function renderCartPanel() {
 
   if (!items.length) {
     el.innerHTML = `<div class="cart-empty">
-      <span class="big-e">🛒</span>
-      Tu carrito está vacío.<br>Arrancá tu pedido, que estamos abiertos.
+      <p><b>Tu carrito está vacío.</b><br>Arrancá tu pedido, que estamos abiertos.</p>
+      <button class="empty-cta" onclick="closeCart();filterCollection('top')">Ver lo más pedido</button>
     </div>`;
     document.getElementById('cart-total').textContent = '$0';
     updateMinOrder(0);
@@ -2083,6 +2144,7 @@ function initCountUp() {
 /* ---------- Init ---------- */
 document.getElementById('year').textContent = new Date().getFullYear();
 buildBrandSelect();
+buildBrandStrip();
 renderProducts();
 updateCount();
 updateCheckoutBar();
