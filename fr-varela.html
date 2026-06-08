@@ -265,6 +265,7 @@ header .logo-name .va { color:#241F1A; }
 .ss-item:hover { background:#F8F1E6; }
 .ss-thumb { width:38px; height:38px; border-radius:8px; background:#F4ECDD center/cover no-repeat; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:19px; }
 .ss-name { flex:1; font-size:0.85rem; font-weight:600; color:var(--text); line-height:1.2; }
+.ss-size { display:inline-block; color:var(--muted); font-weight:700; font-size:0.72rem; background:#F4ECDD; border-radius:50px; padding:1px 8px; margin-left:4px; }
 .ss-price { font-size:0.85rem; font-weight:800; color:var(--red); white-space:nowrap; }
 
 /* ===== CATEGORIAS ===== */
@@ -1614,9 +1615,10 @@ function renderSearchSuggest(value) {
     const src = imgSrc(p);
     const thumb = src ? `style="background-image:url('${src}')"` : '';
     const fb = src ? '' : p.emoji;
+    const { name, size } = splitSize(p.name);
     return `<div class="ss-item" onmousedown="openFromSuggest(${p.id})">
       <span class="ss-thumb" ${thumb}>${fb}</span>
-      <span class="ss-name">${splitSize(p.name).name}</span>
+      <span class="ss-name">${name}${size ? ` <span class="ss-size">${size}</span>` : ''}</span>
       <span class="ss-price">$${p.price.toLocaleString('es-AR')}</span>
     </div>`;
   }).join('');
