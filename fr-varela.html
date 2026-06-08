@@ -1427,14 +1427,19 @@ function pickBrand(b) {
 }
 
 /* ---------- Render de productos ---------- */
+// Busca por nombre, descripción, categoría y marca (más resultados = catálogo más grande)
+function matchesSearch(p, t) {
+  return norm(p.name).includes(t) || norm(p.desc).includes(t)
+    || norm(catNames[p.category] || '').includes(t)
+    || norm(brandOf(p.name)).includes(t);
+}
 function renderProducts() {
   const main = document.getElementById('main');
   const term = norm(searchTerm.trim());
   let count = 0;
   let html = '';
   if (term) {
-    const found = sortList(products.filter(p =>
-      (norm(p.name).includes(term) || norm(p.desc).includes(term)) && passFilters(p)));
+    const found = sortList(products.filter(p => matchesSearch(p, term) && passFilters(p)));
     if (!found.length) {
       main.innerHTML = `<div class="no-results">
         No encontramos "<b>${escapeHtml(searchTerm)}</b>".<br>Probá con otra palabra.
@@ -1719,7 +1724,7 @@ function renderSearchSuggest(value) {
   if (!box) return;
   const t = norm((value || '').trim());
   if (t.length < 2) { box.className = 'search-suggest'; box.innerHTML = ''; return; }
-  const matches = products.filter(p => norm(p.name).includes(t)).slice(0, 6);
+  const matches = products.filter(p => matchesSearch(p, t)).slice(0, 6);
   if (!matches.length) { box.className = 'search-suggest'; box.innerHTML = ''; suggestIds = []; suggestIdx = -1; return; }
   suggestIds = matches.map(p => p.id); suggestIdx = -1;
   box.innerHTML = matches.map(p => {
@@ -1767,7 +1772,7 @@ function hideSuggest() { const b = document.getElementById('search-suggest'); if
 function searchEnter() {
   const t = norm((document.getElementById('search-input').value || '').trim());
   if (t.length < 1) return;
-  const first = products.find(p => norm(p.name).includes(t));
+  const first = products.find(p => matchesSearch(p, t));
   if (first) { hideSuggest(); openProduct(first.id); }
   else { document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
 }
