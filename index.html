@@ -2267,6 +2267,93 @@ function initCountUp() {
   });
 }
 
+/* ============================================================
+   CATÁLOGO EN VIVO (Google Sheets)
+   El dueño edita una planilla de Google y la web se actualiza
+   sola. Si la planilla no está configurada o falla, la web usa
+   el catálogo de respaldo de arriba. NUNCA se rompe.
+   Para activarlo: pegá el link CSV de tu planilla en SHEET_CSV_URL.
+   ============================================================ */
+const SHEET_CSV_URL = ''; // ← pegá acá el link CSV de tu Google Sheet (entre las comillas)
+
+// Respaldo: copia del catálogo original. También conserva los sabores.
+const FALLBACK_PRODUCTS = products.map(p => ({ ...p }));
+
+// Parser de CSV (soporta comas y comillas dentro de los campos)
+function parseCSV(text) {
+  const rows = []; let row = [], field = '', i = 0, inQ = false;
+  while (i < text.length) {
+    const c = text[i];
+    if (inQ) {
+      if (c === '"') { if (text[i + 1] === '"') { field += '"'; i += 2; continue; } inQ = false; i++; continue; }
+      field += c; i++; continue;
+    }
+    if (c === '"') { inQ = true; i++; continue; }
+    if (c === ',') { row.push(field); field = ''; i++; continue; }
+    if (c === '\r') { i++; continue; }
+    if (c === '\n') { row.push(field); rows.push(row); row = []; field = ''; i++; continue; }
+    field += c; i++;
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+async function loadCatalogFromSheet() {
+  if (!SHEET_CSV_URL) return; // sin planilla configurada → usa el respaldo
+  try {
+    const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const rows = parseCSV(await res.text());
+    if (rows.length < 2) throw new Error('planilla vacía');
+
+    const head = rows[0].map(h => norm(h).trim());
+    const ci = {
+      id: head.indexOf('id'), nombre: head.indexOf('nombre'), precio: head.indexOf('precio'),
+      categoria: head.indexOf('categoria'), activo: head.indexOf('activo'),
+      emoji: head.indexOf('emoji'), img: head.indexOf('img')
+    };
+    if (ci.id < 0 || ci.nombre < 0 || ci.precio < 0) throw new Error('faltan columnas id/nombre/precio');
+
+    // Conservar los sabores del catálogo original (no se editan desde la planilla)
+    const variantsById = {};
+    FALLBACK_PRODUCTS.forEach(p => { if (p.variants) variantsById[p.id] = p.variants; });
+
+    const next = [];
+    for (let r = 1; r < rows.length; r++) {
+      const row = rows[r]; if (!row || !row.length) continue;
+      const id = parseInt(String(row[ci.id] || '').trim(), 10);
+      const nombre = String(row[ci.nombre] || '').trim();
+      const precio = parseInt(String(row[ci.precio] || '').replace(/[^\d]/g, ''), 10);
+      if (!id || !nombre || !precio) continue; // fila incompleta → la salteamos
+      const activo = ci.activo < 0 ? 'si' : norm(String(row[ci.activo] || 'si').trim());
+      if (['no', 'n', 'false', '0', 'oculto'].includes(activo)) continue; // ocultar producto
+      const prod = {
+        id, name: nombre, price: precio,
+        category: ci.categoria >= 0 ? (norm(String(row[ci.categoria] || '').trim()) || 'golosinas') : 'golosinas',
+        emoji: ci.emoji >= 0 ? (String(row[ci.emoji] || '').trim() || '🛒') : '🛒'
+      };
+      const img = ci.img >= 0 ? String(row[ci.img] || '').trim() : '';
+      if (img) prod.img = img;
+      if (variantsById[id]) prod.variants = variantsById[id];
+      next.push(prod);
+    }
+    if (next.length < 5) throw new Error('muy pocos productos válidos en la planilla');
+
+    // Reemplazar el catálogo en vivo (mutando el mismo array para no romper referencias)
+    products.length = 0; next.forEach(p => products.push(p));
+
+    // Re-dibujar todo lo que depende del catálogo
+    buildBrandSelect();
+    renderProducts();
+    updateCount();
+    updateCheckoutBar();
+    console.info('[FR.VARELA] Catálogo cargado desde la planilla: ' + products.length + ' productos.');
+  } catch (err) {
+    console.warn('[FR.VARELA] No se pudo leer la planilla; uso el catálogo de respaldo. Motivo:', err && err.message);
+    // products queda intacto (respaldo): la web sigue funcionando normal.
+  }
+}
+
 /* ---------- Init ---------- */
 document.getElementById('year').textContent = new Date().getFullYear();
 buildBrandSelect();
@@ -2277,6 +2364,7 @@ updateCheckoutBar();
 heroInit();
 initCountUp();
 renderRecent();
+loadCatalogFromSheet(); // intenta cargar el catálogo en vivo (no bloquea la página)
 </script>
 </body>
 </html>
