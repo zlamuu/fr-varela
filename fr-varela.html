@@ -16,6 +16,8 @@
 <meta property="og:description" content="El kiosco con más variedad de Florencio Varela. Abierto 24 hs, envío gratis. Pedí por WhatsApp.">
 <meta property="og:image" content="https://fr-varela.vercel.app/img/logo.png">
 <meta property="og:url" content="https://fr-varela.vercel.app">
+<link rel="canonical" href="https://fr-varela.vercel.app">
+<meta name="robots" content="index, follow">
 <!-- Íconos -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23C8331E'/><text x='50' y='63' font-family='Arial,sans-serif' font-size='46' font-weight='bold' fill='white' text-anchor='middle'>FR</text></svg>">
 <link rel="apple-touch-icon" href="img/logo.png">
@@ -220,6 +222,16 @@ header .logo-name .va { color:#241F1A; }
 .benefit b { display:block; font-size:0.9rem; color:var(--text); line-height:1.1; }
 .benefit small { color:var(--muted); font-size:0.7rem; }
 @media (max-width:620px){ .benefits { grid-template-columns:repeat(2,1fr); } }
+
+/* ===== CÓMO PEDIR (3 pasos) ===== */
+.howto { max-width:1100px; margin:30px auto 8px; padding:0 16px; }
+.howto-title { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:1px; color:var(--text); text-transform:uppercase; margin-bottom:14px; text-align:center; }
+.howto-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.howto-step { display:flex; align-items:center; gap:12px; background:var(--bg2); border:1px solid var(--line); border-radius:16px; padding:16px; }
+.howto-n { flex-shrink:0; width:38px; height:38px; border-radius:50%; background:var(--red); color:#fff; font-family:'Bebas Neue',sans-serif; font-size:1.4rem; display:flex; align-items:center; justify-content:center; }
+.howto-tx b { display:block; font-size:0.95rem; color:var(--text); line-height:1.1; }
+.howto-tx small { color:var(--muted); font-size:0.74rem; }
+@media (max-width:680px){ .howto-steps { grid-template-columns:1fr; } }
 
 /* ===== FRANJA DE COMUNIDAD "Lo elige Varela" ===== */
 .community { background:var(--bg2); padding:24px 20px; border-bottom:1px solid var(--line); }
@@ -778,6 +790,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 
 /* Accesibilidad: texto solo para lectores de pantalla (invisible en pantalla) */
 .sr-only { position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.skip-link { position:absolute; left:-9999px; top:0; background:var(--red); color:#fff; padding:10px 16px; border-radius:0 0 10px 0; font-weight:800; font-size:0.85rem; text-decoration:none; z-index:300; }
+.skip-link:focus { left:0; }
 
 /* Accesibilidad: contorno claro solo al navegar con teclado (Tab) */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline:3px solid var(--red); outline-offset:2px; border-radius:6px; }
@@ -790,6 +804,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 </style>
 </head>
 <body>
+<a class="skip-link" href="#comprar">Saltar a los productos</a>
 <h1 class="sr-only">FR.VARELA — Maxikiosco abierto las 24 horas en Florencio Varela. Golosinas, chocolates, snacks, bebidas y almacén con envío a domicilio.</h1>
 
 <div class="topbar" id="top">
@@ -955,6 +970,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 <button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">↑</button>
 
+
+<section class="howto">
+  <div class="howto-inner">
+    <h2 class="howto-title">Pedir es facilísimo</h2>
+    <div class="howto-steps">
+      <div class="howto-step"><span class="howto-n">1</span><div class="howto-tx"><b>Elegí</b><small>Buscá entre +300 productos</small></div></div>
+      <div class="howto-step"><span class="howto-n">2</span><div class="howto-tx"><b>Sumá al carrito</b><small>Las veces que quieras</small></div></div>
+      <div class="howto-step"><span class="howto-n">3</span><div class="howto-tx"><b>Pedí por WhatsApp</b><small>Te llega en ~30 min, gratis</small></div></div>
+    </div>
+  </div>
+</section>
 
 <section class="community">
   <div class="comm-inner">
