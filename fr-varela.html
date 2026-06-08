@@ -197,16 +197,44 @@ header .logo-name .va { color:#241F1A; }
 @media (max-width:620px){ .benefits { grid-template-columns:repeat(2,1fr); } }
 
 /* ===== FRANJA DE COMUNIDAD "Lo elige Varela" ===== */
-.community { background:linear-gradient(115deg, #1a1311 0%, #3a0f0c 55%, #C8331E 100%); color:#fff; padding:26px 20px; }
+.community { background:var(--bg2); padding:24px 20px; border-bottom:1px solid var(--line); }
 .comm-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:26px; flex-wrap:wrap; }
 .comm-lead { display:flex; align-items:center; gap:14px; }
-.comm-num { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.8rem,6vw,4.2rem); line-height:0.85; color:var(--yellow); letter-spacing:1px; text-shadow:0 3px 14px rgba(0,0,0,0.3); }
-.comm-sub { font-size:0.95rem; font-weight:700; line-height:1.2; }
+.comm-num { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.8rem,6vw,4.2rem); line-height:0.85; color:var(--red); letter-spacing:1px; }
+.comm-sub { font-size:0.95rem; font-weight:700; line-height:1.2; color:var(--text); }
 .comm-facts { display:flex; flex-wrap:wrap; gap:8px; }
-.comm-facts span { font-size:0.76rem; font-weight:700; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.22); padding:7px 13px; border-radius:50px; white-space:nowrap; }
-.comm-ig { color:#161616; background:var(--yellow); font-weight:800; font-size:0.9rem; padding:11px 20px; border-radius:50px; text-decoration:none; white-space:nowrap; box-shadow:0 6px 18px rgba(0,0,0,0.28); transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
+.comm-facts span { font-size:0.76rem; font-weight:700; background:#fff; border:1px solid var(--line); color:var(--text); padding:7px 13px; border-radius:50px; white-space:nowrap; }
+.comm-ig { color:#fff; background:var(--red); font-weight:800; font-size:0.9rem; padding:11px 20px; border-radius:50px; text-decoration:none; white-space:nowrap; box-shadow:0 6px 18px rgba(200,51,30,0.3); transition:transform .2s cubic-bezier(.34,1.56,.64,1); }
 .comm-ig:hover { transform:translateY(-2px) scale(1.03); }
 @media (max-width:820px){ .comm-inner { flex-direction:column; align-items:flex-start; gap:16px; } }
+
+/* ===== COLECCIONES con actitud ===== */
+.coll-wrap { max-width:1100px; margin:22px auto 6px; padding:0 16px; }
+.coll-head { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:1px; color:var(--text); text-transform:uppercase; margin-bottom:12px; }
+.collections { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.coll-card { position:relative; overflow:hidden; border:none; cursor:pointer; border-radius:16px; padding:18px 16px; min-height:104px; display:flex; flex-direction:column; justify-content:flex-end; align-items:flex-start; text-align:left; color:#fff; transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s; box-shadow:0 6px 18px rgba(0,0,0,0.14); }
+.coll-card::after { content:""; position:absolute; inset:0; background:radial-gradient(120% 90% at 85% 12%, rgba(255,255,255,0.16), transparent 60%); pointer-events:none; }
+.coll-card:hover { transform:translateY(-4px); box-shadow:0 14px 30px rgba(0,0,0,0.22); }
+.coll-card.is-active { outline:3px solid var(--text); outline-offset:2px; }
+.coll-name { font-family:'Bebas Neue',sans-serif; font-size:1.55rem; line-height:0.95; letter-spacing:0.5px; position:relative; z-index:1; }
+.coll-desc { font-size:0.72rem; font-weight:600; opacity:0.92; margin-top:3px; position:relative; z-index:1; }
+.c-noche { background:linear-gradient(135deg,#15151c,#3a0f0c); }
+.c-previa { background:linear-gradient(135deg,#6e1410,#E2902B); }
+.c-dulce { background:linear-gradient(135deg,#8f1f17,#C8331E); }
+.c-top { background:linear-gradient(135deg,#a8740b,#F5B301); color:#161616; }
+.coll-title { display:flex; align-items:center; gap:14px; }
+.coll-clear { background:none; border:1px solid var(--line); color:var(--muted); border-radius:50px; font-size:0.7rem; font-weight:700; padding:4px 12px; cursor:pointer; text-transform:none; letter-spacing:0; font-family:'Outfit',sans-serif; }
+.coll-clear:hover { border-color:var(--red); color:var(--red); }
+@media (max-width:780px){ .collections { grid-template-columns:repeat(2,1fr); } }
+
+/* ===== ZONAS DE ENTREGA (rooting local) ===== */
+.zones { max-width:1100px; margin:34px auto; padding:28px 22px; background:var(--bg2); border:1px solid var(--line); border-radius:22px; text-align:center; }
+.zones-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(1.8rem,4.5vw,2.7rem); letter-spacing:1px; color:var(--text); text-transform:uppercase; line-height:1; }
+.zones-title span { color:var(--red); }
+.zones-sub { color:var(--muted); font-size:0.9rem; font-weight:600; margin-top:8px; }
+.zones-list { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:18px; }
+.zones-list span { background:#fff; border:1px solid var(--line); border-radius:50px; padding:7px 15px; font-size:0.82rem; font-weight:700; color:var(--text); }
+.foot-tagline { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.5px; color:var(--yellow); margin:6px 0 4px; }
 
 /* ===== BUSCADOR ===== */
 .search-wrap { position:sticky; top:68px; z-index:95; background:var(--bg); padding:12px 16px 8px; }
@@ -804,6 +832,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   </div>
 </section>
 
+<div class="coll-wrap">
+  <div class="coll-head">Elegí por antojo</div>
+  <section class="collections" aria-label="Colecciones">
+    <button class="coll-card c-noche" data-coll="noche" onclick="filterCollection('noche')"><span class="coll-name">Bajón de las 3am</span><span class="coll-desc">Para el hambre nocturna</span></button>
+    <button class="coll-card c-previa" data-coll="previa" onclick="filterCollection('previa')"><span class="coll-name">Para la previa</span><span class="coll-desc">Arrancá la juntada</span></button>
+    <button class="coll-card c-dulce" data-coll="dulce" onclick="filterCollection('dulce')"><span class="coll-name">Antojo dulce</span><span class="coll-desc">Chocolates y golosinas</span></button>
+    <button class="coll-card c-top" data-coll="top" onclick="filterCollection('top')"><span class="coll-name">Lo más pedido</span><span class="coll-desc">Lo que se llevan todos</span></button>
+  </section>
+</div>
 
 <div class="search-wrap">
   <div class="search-box" id="search-box">
@@ -870,10 +907,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <button class="to-top" id="to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">↑</button>
 
 
+<section class="zones">
+  <div class="zones-inner">
+    <h2 class="zones-title">Llegamos a todo <span>Florencio Varela</span></h2>
+    <p class="zones-sub">Envío gratis a domicilio · Entrega en ~30 min · Las 24 horas</p>
+    <div class="zones-list">
+      <span>Centro</span><span>Villa Vatteone</span><span>San Jorge</span><span>La Carolina</span><span>Villa Mónica</span><span>Santa Rosa</span><span>Bosques</span><span>Gobernador Costa</span><span>El Cruce</span>
+    </div>
+  </div>
+</section>
+
 <footer id="contacto">
   <div class="foot-col foot-brand">
     <img src="img/logo.png" class="foot-logo" alt="FR Varela 24hs" loading="lazy">
     <div class="logo-name"><span class="fr">FR</span> <span class="va">VARELA</span></div>
+    <p class="foot-tagline">El kiosco que no cierra.</p>
     <p>Tu maxikiosco de confianza en Florencio Varela. Bebidas, golosinas, snacks y almacén, las 24 horas.</p>
   </div>
   <div class="foot-col">
@@ -1127,13 +1175,22 @@ let currentCat = 'all';
 let searchTerm = '';
 
 const catNames = {
-  promos:      '🔥 Promos',
-  golosinas:   '🍫 Golosinas',
-  snacks:      '🥔 Snacks',
-  bebidas:     '🥤 Bebidas',
-  comida:      '🌭 Para comer',
-  almacen:     '🛒 Almacén',
-  cigarrillos: '🚬 Cigarrillos',
+  promos:      'Promos',
+  golosinas:   'Golosinas',
+  snacks:      'Snacks',
+  bebidas:     'Bebidas',
+  comida:      'Para comer',
+  almacen:     'Almacén',
+  cigarrillos: 'Cigarrillos',
+};
+
+// Colecciones con actitud (cruzan categorías — lo que una app genérica no hace)
+let currentCollection = null;
+const collections = {
+  noche:  { label: 'Bajón de las 3am',     cats: ['snacks', 'golosinas', 'bebidas'] },
+  previa: { label: 'Para la previa',        cats: ['bebidas', 'snacks', 'comida'] },
+  dulce:  { label: 'Antojo dulce',          cats: ['golosinas'] },
+  top:    { label: 'Lo que se llevan todos', pred: p => p.category === 'promos' || nuevoIds.includes(p.id) },
 };
 
 // Venta cruzada: qué categorías combinan con cada una (en orden de prioridad)
@@ -1274,6 +1331,16 @@ function renderProducts() {
     count = found.length;
     html = `<div class="section-title" data-reveal>Resultados (${found.length})</div>
       <div class="products-grid">${found.map(renderCard).join('')}</div>`;
+  } else if (currentCollection && collections[currentCollection]) {
+    const c = collections[currentCollection];
+    const match = c.pred ? c.pred : (p => c.cats.includes(p.category));
+    const prods = sortList(products.filter(p => match(p) && passFilters(p)));
+    count = prods.length;
+    html = prods.length
+      ? `<div class="section-title coll-title" data-reveal>${c.label}<button class="coll-clear" onclick="clearCollection()">✕ Quitar</button></div>
+         <div class="products-grid">${prods.map(renderCard).join('')}</div>`
+      : `<div class="no-results">No hay productos en esta colección ahora.<br>
+         <button class="cf-cancel" style="margin-top:14px;max-width:200px" onclick="clearCollection()">Ver todo</button></div>`;
   } else {
     const cats = currentCat === 'all' ? Object.keys(catNames) : [currentCat];
     html = cats.map(cat => {
@@ -1470,11 +1537,31 @@ function confirmClear() {
   closeConfirm();
 }
 
+/* ---------- Colecciones ---------- */
+function filterCollection(key) {
+  currentCollection = key;
+  currentCat = 'all';
+  searchTerm = '';
+  syncSearchUI();
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.cat-btn')?.classList.add('active');
+  document.querySelectorAll('.coll-card').forEach(c => c.classList.toggle('is-active', c.dataset.coll === key));
+  renderProducts();
+  document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function clearCollection() {
+  currentCollection = null;
+  document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active'));
+  renderProducts();
+}
+
 /* ---------- Categorías y búsqueda ---------- */
 function filterCat(cat, btn) {
   currentCat = cat;
+  currentCollection = null;
   searchTerm = '';
   syncSearchUI();
+  document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active'));
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderProducts();
@@ -1482,6 +1569,7 @@ function filterCat(cat, btn) {
 
 function onSearch(value) {
   searchTerm = value;
+  if (value.trim()) { currentCollection = null; document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active')); }
   document.getElementById('search-box').classList.toggle('has-text', value.length > 0);
   renderProducts();
 }
