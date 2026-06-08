@@ -140,6 +140,7 @@ header .logo-name .va { color:#241F1A; }
 }
 .cart-btn:hover { background:#b32d1b; transform:translateY(-2px) scale(1.03); box-shadow:0 8px 22px rgba(200,51,30,0.42); }
 .cart-btn:active { transform:translateY(0) scale(1); }
+.cart-ico { width:18px; height:18px; }
 .cart-count {
   background:var(--yellow); color:#1B1B1F; border-radius:50%;
   min-width:22px; height:22px; padding:0 5px; display:flex; align-items:center; justify-content:center;
@@ -156,7 +157,8 @@ header .logo-name .va { color:#241F1A; }
 }
 @keyframes tickerbg { 0%{background-position:0 0} 100%{background-position:200% 0} }
 .ticker-track { display:inline-block; padding:7px 0; animation:tickermove 22s linear infinite; font-weight:800; font-size:0.74rem; letter-spacing:0.5px; color:#fff; text-transform:uppercase; }
-.ticker-track span { padding:0 22px; }
+.ticker-track span { padding:0 26px; position:relative; }
+.ticker-track span::before { content:"•"; position:absolute; left:-2px; opacity:0.5; }
 @keyframes tickermove { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
 /* ===== HERO ===== */
@@ -188,7 +190,8 @@ header .logo-name .va { color:#241F1A; }
 /* ===== BENEFICIOS ===== */
 .benefits { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; padding:16px; max-width:1100px; margin:0 auto; }
 .benefit { display:flex; align-items:center; gap:10px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
-.benefit .b-ico { font-size:24px; }
+.benefit .b-ico { display:flex; align-items:center; justify-content:center; width:42px; height:42px; flex-shrink:0; border-radius:12px; background:rgba(200,51,30,0.08); color:var(--red); }
+.benefit .b-ico svg { width:23px; height:23px; }
 .benefit b { display:block; font-size:0.9rem; color:var(--text); line-height:1.1; }
 .benefit small { color:var(--muted); font-size:0.7rem; }
 @media (max-width:620px){ .benefits { grid-template-columns:repeat(2,1fr); } }
@@ -702,14 +705,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <a href="#" onclick="openContacto();return false;">Contacto</a>
     </nav>
     <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito">
-      🛒 Carrito
+      <svg class="cart-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.2l2.3 12.2a1.6 1.6 0 0 0 1.6 1.3h8.9a1.6 1.6 0 0 0 1.6-1.3L20.5 7H6"/></svg>
+      Carrito
       <span class="cart-count" id="cart-count">0</span>
     </button>
   </header>
   <div class="ticker">
     <div class="ticker-track">
-      <span>💛 +100.000 NOS ELIGEN</span><span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 ENVÍO GRATIS A DOMICILIO</span>
-      <span>💛 +100.000 NOS ELIGEN</span><span>🔥 PROMOS DE LA SEMANA</span><span>🆕 NUEVOS INGRESOS</span><span>🍫 CHOCOLATES Y ALFAJORES</span><span>🥤 BEBIDAS BIEN FRÍAS</span><span>🛵 ENVÍO GRATIS A DOMICILIO</span>
+      <span>+100.000 clientes nos eligen</span><span>Promos de la semana</span><span>Nuevos ingresos</span><span>Chocolates y alfajores</span><span>Bebidas bien frías</span><span>Envío gratis a domicilio</span>
+      <span>+100.000 clientes nos eligen</span><span>Promos de la semana</span><span>Nuevos ingresos</span><span>Chocolates y alfajores</span><span>Bebidas bien frías</span><span>Envío gratis a domicilio</span>
     </div>
   </div>
 </div>
@@ -776,10 +780,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 </section>
 
 <section class="benefits">
-  <div class="benefit"><span class="b-ico">🕐</span><div><b>24 horas</b><small>Siempre abierto</small></div></div>
-  <div class="benefit"><span class="b-ico">🛵</span><div><b>Envío gratis</b><small>A domicilio</small></div></div>
-  <div class="benefit"><span class="b-ico">💛</span><div><b>+100.000</b><small>Nos eligen</small></div></div>
-  <div class="benefit"><span class="b-ico">📲</span><div><b>WhatsApp</b><small>Pedido fácil</small></div></div>
+  <div class="benefit"><span class="b-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><b>24 horas</b><small>Siempre abierto</small></div></div>
+  <div class="benefit"><span class="b-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h9v8H3z"/><path d="M12 10h4l3 3v2h-7z"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg></span><div><b>Envío gratis</b><small>A domicilio</small></div></div>
+  <div class="benefit"><span class="b-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-9.6A3.4 3.4 0 0 1 12 6a3.4 3.4 0 0 1 7 4.4C19 15.6 12 20 12 20z"/></svg></span><div><b>+100.000</b><small>Nos eligen</small></div></div>
+  <div class="benefit"><span class="b-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a7.5 7.5 0 0 1-11 6.6L4 19.5l1.4-5.4A7.5 7.5 0 1 1 21 11.5z"/></svg></span><div><b>WhatsApp</b><small>Pedido fácil</small></div></div>
 </section>
 
 
@@ -792,14 +796,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 </div>
 
 <nav class="cat-bar" id="cat-bar">
-  <button class="cat-btn active" onclick="filterCat('all',this)">🏪 Todos</button>
-  <button class="cat-btn" onclick="filterCat('promos',this)">🔥 Promos</button>
-  <button class="cat-btn" onclick="filterCat('golosinas',this)">🍫 Golosinas</button>
-  <button class="cat-btn" onclick="filterCat('snacks',this)">🥔 Snacks</button>
-  <button class="cat-btn" onclick="filterCat('bebidas',this)">🥤 Bebidas</button>
-  <button class="cat-btn" onclick="filterCat('comida',this)">🌭 Para comer</button>
-  <button class="cat-btn" onclick="filterCat('almacen',this)">🛒 Almacén</button>
-  <button class="cat-btn" onclick="filterCat('cigarrillos',this)">🚬 Cigarrillos</button>
+  <button class="cat-btn active" onclick="filterCat('all',this)">Todos</button>
+  <button class="cat-btn" onclick="filterCat('promos',this)">Promos</button>
+  <button class="cat-btn" onclick="filterCat('golosinas',this)">Golosinas</button>
+  <button class="cat-btn" onclick="filterCat('snacks',this)">Snacks</button>
+  <button class="cat-btn" onclick="filterCat('bebidas',this)">Bebidas</button>
+  <button class="cat-btn" onclick="filterCat('comida',this)">Para comer</button>
+  <button class="cat-btn" onclick="filterCat('almacen',this)">Almacén</button>
+  <button class="cat-btn" onclick="filterCat('cigarrillos',this)">Cigarrillos</button>
 </nav>
 
 <section class="featured" id="featured"></section>
@@ -876,7 +880,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 
 <div class="cart-panel" id="cart-panel" role="dialog" aria-label="Tu pedido">
   <div class="cart-header">
-    <h2>🛒 Tu Pedido</h2>
+    <h2>Tu pedido</h2>
     <div class="cart-header-actions">
       <button class="clear-btn" id="clear-btn" onclick="clearCart()">🗑️ Vaciar</button>
       <button class="close-btn" onclick="closeCart()">✕ Cerrar</button>
@@ -1165,7 +1169,7 @@ function renderFeatured() {
   const items = featuredIds.map(id => products.find(p => p.id === id)).filter(Boolean);
   if (!items.length) { el.style.display = 'none'; return; }
   el.style.display = 'block';
-  el.innerHTML = `<div class="featured-head">⭐ Destacados</div>
+  el.innerHTML = `<div class="featured-head">Destacados</div>
     <div class="featured-row">${items.map(p => {
       const { name, size } = splitSize(p.name);
       const src = imgSrc(p);
@@ -1547,7 +1551,7 @@ function renderSuggestions() {
   const sug = getSuggestions(6);
   if (!sug.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
   box.style.display = 'block';
-  box.innerHTML = `<h4>🔥 Agregá también</h4>
+  box.innerHTML = `<h4>También te puede interesar</h4>
     <div class="suggest-row">${sug.map(p => {
       const src = imgSrc(p);
       const thumb = src
