@@ -15,7 +15,7 @@ body{ font-family:'Outfit',system-ui,sans-serif; background:var(--bg); color:#24
 /* ===== HERO: buscador gigante sobre muro vivo de productos ===== */
 .hero{
   position:relative; overflow:hidden;
-  height:clamp(460px, 72vh, 580px);
+  height:clamp(440px, 66vh, 540px);
   display:flex; align-items:center; justify-content:center;
   background:#15110d;
 }
@@ -25,9 +25,9 @@ body{ font-family:'Outfit',system-ui,sans-serif; background:var(--bg); color:#24
   position:absolute; top:0; left:0; width:100%; z-index:0;
   display:grid; grid-template-columns:repeat(8, 1fr); gap:6px;
   padding:6px;
-  filter:blur(1px) brightness(0.92) saturate(1.05);
-  will-change:transform;
-  animation:wallDrift 55s linear infinite;
+  /* Muro QUIETO: la abundancia se lee por densidad, no por movimiento. Cero fatiga.
+     Más desenfoque + más oscuro => manos/brazos/fondos se disuelven en "textura". */
+  filter:blur(3px) brightness(0.78) saturate(1.08);
 }
 .cell{ aspect-ratio:1; border-radius:10px; overflow:hidden; background:#241f1a; }
 .cell img{ width:100%; height:100%; object-fit:cover; display:block; }
@@ -38,8 +38,10 @@ body{ font-family:'Outfit',system-ui,sans-serif; background:var(--bg); color:#24
 .hero::after{
   content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
-    radial-gradient(85% 75% at 50% 46%, rgba(15,11,8,0.88) 0%, rgba(15,11,8,0.60) 52%, rgba(15,11,8,0.48) 100%),
-    linear-gradient(180deg, rgba(15,11,8,0.35), rgba(15,11,8,0.15) 30%, rgba(15,11,8,0.55));
+    /* Transición suave: el fondo oscuro del hero se funde con el crema de la página */
+    linear-gradient(to bottom, rgba(21,17,13,0) 58%, var(--bg) 100%),
+    /* Legibilidad: centro más oscuro (texto), bordes apenas más claros (productos asoman) */
+    radial-gradient(90% 80% at 50% 45%, rgba(15,11,8,0.86) 0%, rgba(15,11,8,0.60) 55%, rgba(15,11,8,0.52) 100%);
 }
 
 /* Capa 2: contenido */
@@ -111,15 +113,15 @@ body{ font-family:'Outfit',system-ui,sans-serif; background:var(--bg); color:#24
 <section class="hero">
   <div class="wall" id="wall" aria-hidden="true"></div>
   <div class="hero-inner">
-    <span class="eyebrow">Florencio Varela · Las 24 horas</span>
+    <span class="eyebrow">Florencio Varela · Abierto las 24 horas</span>
     <h1 class="htitle">TENEMOS <span class="acc">DE TODO</span></h1>
-    <p class="hsubtitle">Buscá entre cientos de productos. A cualquier hora.</p>
+    <p class="hsubtitle">Si se te antoja, está. A la hora que sea.</p>
     <form class="searchbox" onsubmit="return doSearch(event)">
       <svg class="lupa" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
-      <input id="q" type="search" autocomplete="off" aria-label="Buscar producto" placeholder="Buscá Coca…">
+      <input id="q" type="search" autocomplete="off" aria-label="Buscar producto" placeholder="Buscá una Coca bien fría…">
       <button class="search-btn" type="submit"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg><span class="txt">Buscar</span></button>
     </form>
-    <div class="chips"><span>🚚 Envío gratis</span><span>⏱️ ~30 min</span><span><b>+300</b> productos</span></div>
+    <div class="chips"><span>Envío gratis</span><span>Te llega en ~30 min</span><span>Abierto las 24 hs</span></div>
     <div class="searched" id="searched"></div>
   </div>
 </section>
@@ -149,7 +151,7 @@ function buildWall(){
 buildWall();
 
 /* Placeholder rotativo dentro del buscador: deletrea la variedad */
-const EJEMPLOS = ['Coca 2 litros','Franui','hielo','Doritos','Marlboro','un alfajor','Red Bull','Oreo','Takis','Monster'];
+const EJEMPLOS = ['una Coca bien fría','Franui','hielo','puchos','algo dulce','Doritos','un alfajor','un Red Bull'];
 let ei = 0;
 const input = document.getElementById('q');
 setInterval(() => {
