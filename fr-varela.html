@@ -848,6 +848,29 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .faq-a { padding:0 18px 16px; color:var(--muted); font-size:0.9rem; line-height:1.55; }
 .faq-a a { color:var(--red); font-weight:700; text-decoration:none; }
 .faq-a a:hover { text-decoration:underline; }
+
+/* ===== HERO: buscador sobre muro vivo de productos (Concepto E) ===== */
+.hw { position:relative; overflow:hidden; height:clamp(440px,66vh,540px); display:flex; align-items:center; justify-content:center; background:#15110d; }
+.hw-wall { position:absolute; top:0; left:0; width:100%; z-index:0; display:grid; grid-template-columns:repeat(8,1fr); gap:6px; padding:6px; filter:blur(3px) brightness(0.78) saturate(1.08); }
+.hw-cell { aspect-ratio:1; border-radius:10px; overflow:hidden; background:#241f1a; }
+.hw-cell img { width:100%; height:100%; object-fit:cover; display:block; }
+.hw::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    linear-gradient(to bottom, rgba(21,17,13,0) 58%, var(--bg) 100%),
+    radial-gradient(90% 80% at 50% 45%, rgba(15,11,8,0.86) 0%, rgba(15,11,8,0.60) 55%, rgba(15,11,8,0.52) 100%); }
+.hw-inner { position:relative; z-index:2; width:min(680px,92%); text-align:center; color:#fff; }
+.hw-eyebrow { display:inline-block; font-weight:800; letter-spacing:2px; font-size:0.78rem; text-transform:uppercase; color:#fff; background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25); padding:6px 14px; border-radius:50px; margin-bottom:16px; backdrop-filter:blur(4px); }
+.hw-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.7rem,7.5vw,4.8rem); line-height:0.92; letter-spacing:1px; text-shadow:0 4px 22px rgba(0,0,0,0.5); margin-bottom:6px; color:#fff; }
+.hw-acc { color:var(--yellow); }
+.hw-sub { font-size:clamp(0.95rem,2.2vw,1.15rem); font-weight:600; color:rgba(255,255,255,0.92); margin-bottom:22px; text-shadow:0 2px 10px rgba(0,0,0,0.45); }
+.hw .search-box.big { max-width:600px; }
+.hw-chips { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:18px; }
+.hw-chips span { font-size:0.8rem; font-weight:700; color:#fff; background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.28); border-radius:50px; padding:7px 14px; backdrop-filter:blur(4px); }
+@media (max-width:640px){
+  .hw { height:clamp(420px,70svh,520px); }
+  .hw-wall { grid-template-columns:repeat(4,1fr); }
+  .hw-chips span { font-size:0.72rem; padding:6px 11px; }
+}
 </style>
 </head>
 <body>
@@ -877,78 +900,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   </div>
 </div>
 
-<section class="topsearch">
-  <div class="topsearch-inner">
-    <h2 class="ts-title">+300 productos. <span>De todo, las 24 horas.</span></h2>
+<section class="hw">
+  <div class="hw-wall" id="hw-wall" aria-hidden="true"></div>
+  <div class="hw-inner">
+    <span class="hw-eyebrow">Florencio Varela · Abierto las 24 horas</span>
+    <h2 class="hw-title">TENEMOS <span class="hw-acc">DE TODO</span></h2>
+    <p class="hw-sub">Si se te antoja, está. A la hora que sea.</p>
     <div class="search-box big" id="search-box">
       <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
-      <input type="search" id="search-input" placeholder="Buscá entre +300 productos…" aria-label="Buscar producto" oninput="onSearch(this.value)" onblur="setTimeout(hideSuggest,150)" onkeydown="ssKey(event)" autocomplete="off">
+      <input type="search" id="search-input" placeholder="Buscá una Coca bien fría…" aria-label="Buscar producto" oninput="onSearch(this.value)" onblur="setTimeout(hideSuggest,150)" onkeydown="ssKey(event)" autocomplete="off">
       <button class="search-clear" onclick="clearSearch()" aria-label="Limpiar búsqueda">✕</button>
       <div class="search-suggest" id="search-suggest"></div>
     </div>
-    <div class="ts-scale"><span>Envío gratis</span><span>Abierto 24 hs</span><span>Te llega en ~30 min</span><span>De todo en un solo lugar</span></div>
+    <div class="hw-chips"><span>Envío gratis</span><span>Te llega en ~30 min</span><span>Abierto las 24 hs</span></div>
   </div>
-</section>
-
-<section class="hero">
-  <div class="hslides" id="hslides">
-    <div class="hslide active theme1">
-      <div class="hs-content">
-        <span class="hs-kicker">Florencio Varela · Las 24 horas</span>
-        <h2 class="hs-title">EL KIOSCO DE <span class="acc">VARELA</span></h2>
-        <div class="hs-sub">Abierto las 24 horas. Elegido por +100.000 vecinos.</div>
-        <p class="hs-desc">Pedí por WhatsApp y te llega en ~30 min. A cualquier hora.</p>
-        <button class="hs-cta" onclick="heroShop()">Ver productos</button>
-        <div class="hs-feats">
-          <div class="hs-feat"><b>24 HS</b><small>Nunca cerramos</small></div>
-          <div class="hs-feat"><b>+100.000</b><small>Vecinos nos eligen</small></div>
-          <div class="hs-feat"><b>~30 min</b><small>Y lo tenés en casa</small></div>
-        </div>
-      </div>
-      <div class="hs-art hs-logo"><img src="img/logo.png" alt="FR Varela" fetchpriority="high" decoding="async"></div>
-    </div>
-    <div class="hslide theme2">
-      <div class="hs-content">
-        <span class="hs-kicker">Promo Mundial</span>
-        <h2 class="hs-title">SOBRE DE <span class="acc">FIGURITAS</span> DE REGALO</h2>
-        <div class="hs-sub">Con tu compra mayor a $100.000</div>
-        <p class="hs-desc">Te regalamos un sobre de figus con tu pedido.</p>
-        <button class="hs-cta" onclick="heroShop('promos')">Aprovechar promo</button>
-      </div>
-      <div class="hs-art hs-prod"><img src="img/figuritas.png" alt="Promo figuritas Mundial"></div>
-    </div>
-    <div class="hslide theme3">
-      <div class="hs-content">
-        <span class="hs-kicker">Combo del día</span>
-        <h2 class="hs-title">FRANUI + <span class="acc">ALFAJOR BARRIGÓN</span></h2>
-        <div class="hs-sub">Llevá el combo por solo $12.100</div>
-        <span class="hs-save">¡AHORRÁS $2.500!</span>
-        <p class="hs-desc">Tu antojo perfecto, a precio especial.</p>
-        <button class="hs-cta" onclick="openProduct(1)">Comprar combo</button>
-      </div>
-      <div class="hs-art hs-prod"><img src="img/p1.png" alt="Combo Franui + Barrigón"></div>
-    </div>
-    <div class="hslide theme4">
-      <div class="hs-content">
-        <span class="hs-kicker">Envío gratis</span>
-        <h2 class="hs-title">TE LO LLEVAMOS A <span class="acc">TU CASA</span></h2>
-        <div class="hs-sub">Comprá desde la web y recibí tu pedido</div>
-        <p class="hs-desc">Sin moverte, las 24 horas. Pagás como quieras.</p>
-        <button class="hs-cta" onclick="heroShop()">Pedir ahora</button>
-      </div>
-      <div class="hs-art hs-collage" aria-hidden="true">
-        <span style="background-image:url('img/monster-mango.png')"></span>
-        <span style="background-image:url('img/mogul-moras.png')"></span>
-        <span style="background-image:url('img/tictac.png')"></span>
-        <span style="background-image:url('img/traviata-rex.png')"></span>
-        <span style="background-image:url('img/leonachos.png')"></span>
-        <span style="background-image:url('img/traviata-kesitas.png')"></span>
-      </div>
-    </div>
-  </div>
-  <button class="hero-arrow prev" onclick="heroGo(hsIdx-1)" aria-label="Anterior">‹</button>
-  <button class="hero-arrow next" onclick="heroGo(hsIdx+1)" aria-label="Siguiente">›</button>
-  <div class="hero-dots" id="hero-dots"></div>
 </section>
 
 <div class="cattiles-wrap">
@@ -2451,6 +2416,37 @@ heroInit();
 initCountUp();
 renderRecent();
 loadCatalogFromSheet(); // intenta cargar el catálogo en vivo (no bloquea la página)
+
+/* ===== HERO muro vivo (Concepto E): construye el muro + placeholder rotativo ===== */
+(function(){
+  const IMGS = [
+    'img/p1.png','img/p2.png','img/p3.png','img/p5.png','img/p13.png','img/p16.png',
+    'img/p20.png','img/p34.png','img/p39.png','img/p47.png','img/p57.png','img/p58.png',
+    'img/p61.png','img/p69.png','img/p82.png','img/p85.png','img/p86.png','img/p89.png',
+    'img/p104.png','img/p105.png','img/p114.png','img/p131.png',
+    'img/monster-mango.png','img/mogul-moras.png','img/tictac.png','img/leonachos.png',
+    'img/traviata-rex.png','img/figuritas.png','img/quento-clasicas.png','img/placer-naranja.png',
+    'img/p7.png','img/p18.png'
+  ];
+  const wall = document.getElementById('hw-wall');
+  if (wall) {
+    const base = IMGS.slice(0, 32);
+    const cells = base.concat(base); // 2 copias -> el muro llena sin huecos
+    wall.innerHTML = cells.map(src =>
+      `<div class="hw-cell"><img src="${src}" alt="" loading="eager" onerror="this.parentElement.style.background='#3a2c1f';this.remove();"></div>`
+    ).join('');
+  }
+  const EJEMPLOS = ['una Coca bien fría','Franui','hielo','puchos','algo dulce','Doritos','un alfajor','un Red Bull'];
+  const input = document.getElementById('search-input');
+  if (input) {
+    let ei = 0;
+    setInterval(() => {
+      if (document.activeElement === input || input.value) return;
+      ei = (ei + 1) % EJEMPLOS.length;
+      input.placeholder = 'Buscá ' + EJEMPLOS[ei] + '…';
+    }, 2200);
+  }
+})();
 </script>
 </body>
 </html>
