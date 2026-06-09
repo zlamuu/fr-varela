@@ -1398,7 +1398,6 @@ function catTileClick(cat) {
   buildCatBar();        // refleja la categoría activa en la barra
   buildCatTiles();      // refleja el resaltado en las tarjetas
   renderProducts();
-  scrollToGrid();
 }
 
 // Colecciones con actitud (cruzan categorías — lo que una app genérica no hace)
@@ -1823,7 +1822,6 @@ function filterCat(cat, btn) {
   btn.setAttribute('aria-current', 'true');
   buildCatTiles();
   renderProducts();
-  scrollToGrid();
 }
 
 function onSearch(value) {
