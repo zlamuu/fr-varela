@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FR.VARELA — Prototipo Hero (Concepto E)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{ --red:#C8331E; --yellow:#F5B301; --bg:#FBF5EC; }
+body{ font-family:'Outfit',system-ui,sans-serif; background:var(--bg); color:#241F1A; }
+
+/* ===== HERO: buscador gigante sobre muro vivo de productos ===== */
+.hero{
+  position:relative; overflow:hidden;
+  height:clamp(460px, 72vh, 580px);
+  display:flex; align-items:center; justify-content:center;
+  background:#15110d;
+}
+
+/* Capa 0: el muro de productos (se desplaza lento, infinito y sin cortes) */
+.wall{
+  position:absolute; top:0; left:0; width:100%; z-index:0;
+  display:grid; grid-template-columns:repeat(8, 1fr); gap:6px;
+  padding:6px;
+  filter:blur(1px) brightness(0.92) saturate(1.05);
+  will-change:transform;
+  animation:wallDrift 55s linear infinite;
+}
+.cell{ aspect-ratio:1; border-radius:10px; overflow:hidden; background:#241f1a; }
+.cell img{ width:100%; height:100%; object-fit:cover; display:block; }
+@keyframes wallDrift{ from{transform:translateY(0)} to{transform:translateY(-50%)} }
+
+/* Capa 1: oscurecido — vuelve el muro "textura de abundancia" y deja leer el texto.
+   Más oscuro en el centro (atrás del buscador), más claro en los bordes (los productos asoman). */
+.hero::after{
+  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:
+    radial-gradient(85% 75% at 50% 46%, rgba(15,11,8,0.88) 0%, rgba(15,11,8,0.60) 52%, rgba(15,11,8,0.48) 100%),
+    linear-gradient(180deg, rgba(15,11,8,0.35), rgba(15,11,8,0.15) 30%, rgba(15,11,8,0.55));
+}
+
+/* Capa 2: contenido */
+.hero-inner{ position:relative; z-index:2; width:min(680px, 92%); text-align:center; color:#fff; }
+.eyebrow{
+  display:inline-block; font-weight:800; letter-spacing:2px; font-size:0.78rem;
+  text-transform:uppercase; color:#fff; background:rgba(255,255,255,0.14);
+  border:1px solid rgba(255,255,255,0.25); padding:6px 14px; border-radius:50px; margin-bottom:16px;
+  backdrop-filter:blur(4px);
+}
+.htitle{
+  font-family:'Bebas Neue',sans-serif; font-size:clamp(2.7rem, 7.5vw, 4.8rem);
+  line-height:0.92; letter-spacing:1px; text-shadow:0 4px 22px rgba(0,0,0,0.5); margin-bottom:6px;
+}
+.htitle .acc{ color:var(--yellow); }
+.hsubtitle{ font-size:clamp(0.95rem,2.2vw,1.15rem); font-weight:600; color:rgba(255,255,255,0.92); margin-bottom:22px; text-shadow:0 2px 10px rgba(0,0,0,0.45); }
+
+/* El buscador: el protagonista nítido */
+.searchbox{
+  display:flex; align-items:center; gap:8px;
+  background:#fff; border-radius:50px; padding:8px 8px 8px 20px;
+  box-shadow:0 18px 50px rgba(0,0,0,0.45);
+  max-width:600px; margin:0 auto; width:100%;
+}
+.searchbox svg.lupa{ width:24px; height:24px; fill:#9a9088; flex-shrink:0; }
+.searchbox input{
+  flex:1; border:none; outline:none; background:none; min-width:0;
+  font-family:inherit; font-size:clamp(1rem,2.4vw,1.15rem); color:#241F1A; padding:14px 4px;
+}
+.searchbox input::placeholder{ color:#8a8178; }
+.search-btn{
+  flex-shrink:0; border:none; cursor:pointer; background:var(--red); color:#fff;
+  font-family:inherit; font-weight:800; font-size:1rem; padding:14px 26px; border-radius:50px;
+  display:flex; align-items:center; gap:8px; transition:transform .15s, background .2s;
+}
+.search-btn:hover{ background:#b32d1b; transform:translateY(-1px); }
+.search-btn svg{ width:18px; height:18px; fill:#fff; }
+
+.chips{ display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:18px; }
+.chips span{ font-size:0.8rem; font-weight:700; color:#fff; background:rgba(255,255,255,0.16); border:1px solid rgba(255,255,255,0.28); border-radius:50px; padding:7px 14px; backdrop-filter:blur(4px); }
+.chips b{ color:var(--yellow); }
+
+.searched{ margin-top:16px; min-height:22px; font-size:0.9rem; font-weight:700; color:#fff; opacity:0; transition:opacity .2s; }
+.searched.show{ opacity:1; }
+
+/* ===== MOBILE ===== */
+@media (max-width:640px){
+  .hero{ height:clamp(420px, 70svh, 520px); }
+  .wall{ grid-template-columns:repeat(4, 1fr); animation-duration:48s; }
+  .searchbox{ padding:6px 6px 6px 16px; }
+  .search-btn{ padding:13px 18px; }
+  .search-btn .txt{ display:none; }       /* en mobile el botón queda como ícono lupa */
+  .search-btn{ border-radius:50%; width:48px; height:48px; padding:0; justify-content:center; }
+  .chips span{ font-size:0.72rem; padding:6px 11px; }
+}
+
+/* Respeta a quien pide menos movimiento */
+@media (prefers-reduced-motion: reduce){
+  .wall{ animation:none; }
+}
+
+/* Nota del prototipo (no va en producción) */
+.note{ max-width:680px; margin:22px auto; padding:0 18px; text-align:center; color:#6E665A; font-size:0.85rem; line-height:1.5; }
+.note b{ color:#241F1A; }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wall" id="wall" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <span class="eyebrow">Florencio Varela · Las 24 horas</span>
+    <h1 class="htitle">TENEMOS <span class="acc">DE TODO</span></h1>
+    <p class="hsubtitle">Buscá entre cientos de productos. A cualquier hora.</p>
+    <form class="searchbox" onsubmit="return doSearch(event)">
+      <svg class="lupa" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg>
+      <input id="q" type="search" autocomplete="off" aria-label="Buscar producto" placeholder="Buscá Coca…">
+      <button class="search-btn" type="submit"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 10-.7.7l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0A4.5 4.5 0 1114 9.5 4.5 4.5 0 019.5 14z"/></svg><span class="txt">Buscar</span></button>
+    </form>
+    <div class="chips"><span>🚚 Envío gratis</span><span>⏱️ ~30 min</span><span><b>+300</b> productos</span></div>
+    <div class="searched" id="searched"></div>
+  </div>
+</section>
+
+<p class="note"><b>Prototipo del hero (Concepto E).</b> El muro usa tus fotos reales, atenuadas como “textura de abundancia”. El buscador es el protagonista. Probá escribir o mirá cómo rota el ejemplo dentro de la barra. Esto NO toca tu página actual.</p>
+
+<script>
+/* Muro: productos reales (los más reconocibles). Se repiten para llenar sin huecos. */
+const IMGS = [
+  'img/p1.png','img/p2.png','img/p3.png','img/p5.png','img/p13.png','img/p16.png',
+  'img/p20.png','img/p34.png','img/p39.png','img/p47.png','img/p57.png','img/p58.png',
+  'img/p61.png','img/p69.png','img/p82.png','img/p85.png','img/p86.png','img/p89.png',
+  'img/p104.png','img/p105.png','img/p114.png','img/p131.png',
+  'img/monster-mango.png','img/mogul-moras.png','img/tictac.png','img/leonachos.png',
+  'img/traviata-rex.png','img/figuritas.png','img/quento-clasicas.png','img/placer-naranja.png',
+  'img/p7.png','img/p18.png'
+];
+// Mezcla estable y arma 32 celdas; las duplico (64) para que el scroll sea infinito y sin cortes.
+function buildWall(){
+  const base = IMGS.slice(0, 32);
+  const cells = base.concat(base); // 2 copias idénticas -> loop perfecto al -50%
+  const wall = document.getElementById('wall');
+  wall.innerHTML = cells.map(src =>
+    `<div class="cell"><img src="${src}" alt="" loading="eager" onerror="this.parentElement.style.background='#3a2c1f';this.remove();"></div>`
+  ).join('');
+}
+buildWall();
+
+/* Placeholder rotativo dentro del buscador: deletrea la variedad */
+const EJEMPLOS = ['Coca 2 litros','Franui','hielo','Doritos','Marlboro','un alfajor','Red Bull','Oreo','Takis','Monster'];
+let ei = 0;
+const input = document.getElementById('q');
+setInterval(() => {
+  if (document.activeElement === input || input.value) return; // no molestar si está escribiendo
+  ei = (ei + 1) % EJEMPLOS.length;
+  input.placeholder = 'Buscá ' + EJEMPLOS[ei] + '…';
+}, 2000);
+
+/* En el prototipo, "buscar" solo muestra qué se buscó. En la página real, esto filtra el catálogo. */
+function doSearch(e){
+  e.preventDefault();
+  const v = input.value.trim();
+  const out = document.getElementById('searched');
+  out.textContent = v ? `Buscando "${v}"… (en la página real te lleva a los productos)` : 'Escribí algo y tocá Buscar 🙂';
+  out.classList.add('show');
+  return false;
+}
+</script>
+</body>
+</html>
