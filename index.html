@@ -300,6 +300,19 @@ header .logo-name .va { color:#241F1A; }
 .coll-clear:hover { border-color:var(--red); color:var(--red); }
 @media (max-width:780px){ .collections { grid-template-columns:repeat(2,1fr); } }
 
+/* ===== TARJETAS VISUALES POR CATEGORÍA ===== */
+.cattiles-wrap { max-width:1100px; margin:18px auto 6px; padding:0 16px; }
+.cattiles { display:grid; grid-template-columns:repeat(auto-fill, minmax(150px,1fr)); gap:12px; }
+.cattile { position:relative; height:118px; border:none; border-radius:16px; overflow:hidden; cursor:pointer; display:flex; align-items:flex-end; justify-content:flex-start; padding:14px; text-align:left; background:#241F1A; box-shadow:0 6px 18px rgba(0,0,0,0.16); transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s; }
+.cattile img.bg { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; transition:transform .5s cubic-bezier(.22,.61,.36,1); }
+.cattile::after { content:""; position:absolute; inset:0; z-index:1; background:linear-gradient(to top, rgba(20,12,8,0.82) 8%, rgba(20,12,8,0.30) 55%, rgba(20,12,8,0.12) 100%); }
+.cattile .lbl { position:relative; z-index:2; font-family:'Bebas Neue',sans-serif; font-size:1.7rem; line-height:0.95; letter-spacing:0.5px; color:#fff; text-shadow:0 2px 10px rgba(0,0,0,0.65); }
+.cattile .cnt { position:relative; z-index:2; }
+.cattile:hover { transform:translateY(-4px); box-shadow:0 14px 30px rgba(0,0,0,0.26); }
+.cattile:hover img.bg { transform:scale(1.08); }
+.cattile.is-active { outline:3px solid var(--red); outline-offset:2px; }
+@media (max-width:520px){ .cattiles { grid-template-columns:repeat(2,1fr); gap:10px; } .cattile { height:104px; } .cattile .lbl { font-size:1.45rem; } }
+
 /* ===== FRANJA DE MARCAS ===== */
 .brands-wrap { max-width:1100px; margin:18px auto 6px; padding:0 16px; }
 .brand-strip { display:flex; flex-wrap:wrap; gap:8px; }
@@ -962,6 +975,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   </section>
 </div>
 
+<div class="cattiles-wrap">
+  <div class="coll-head">Comprá por categoría</div>
+  <section class="cattiles" id="cattiles" aria-label="Categorías"></section>
+</div>
+
 <nav class="cat-bar" id="cat-bar">
   <button class="cat-btn active" onclick="filterCat('all',this)">Todos</button>
   <button class="cat-btn" onclick="filterCat('promos',this)">Promos</button>
@@ -1354,6 +1372,35 @@ function buildCatBar() {
     cats.map(c => `<button class="cat-btn${currentCat === c ? ' active' : ''}" onclick="filterCat('${c}',this)">${catLabel(c)}</button>`).join('');
 }
 
+// Tarjetas visuales por categoría: foto representativa + nombre grande.
+function tileImg(cat) {
+  const withImg = products.find(p => p.category === cat && imgSrc(p));
+  return withImg ? imgSrc(withImg) : null;
+}
+function buildCatTiles() {
+  const wrap = document.getElementById('cattiles');
+  if (!wrap) return;
+  const cats = orderedCats(SECTION_ORDER);
+  wrap.innerHTML = cats.map(c => {
+    const bg = tileImg(c);
+    const img = bg ? `<img class="bg" src="${bg}" alt="" loading="lazy" decoding="async">` : '';
+    const active = currentCat === c ? ' is-active' : '';
+    return `<button class="cattile${active}" onclick="catTileClick('${c}')" aria-label="Ver ${catLabel(c)}">${img}<span class="lbl">${catLabel(c)}</span></button>`;
+  }).join('');
+}
+function catTileClick(cat) {
+  currentCat = cat;
+  currentCollection = null;
+  searchTerm = '';
+  syncSearchUI();
+  hideSuggest();
+  document.querySelectorAll('.coll-card').forEach(c => c.classList.remove('is-active'));
+  buildCatBar();        // refleja la categoría activa en la barra
+  buildCatTiles();      // refleja el resaltado en las tarjetas
+  renderProducts();
+  scrollToGrid();
+}
+
 // Colecciones con actitud (cruzan categorías — lo que una app genérica no hace)
 let currentCollection = null;
 const collections = {
@@ -1741,6 +1788,7 @@ function filterCollection(key) {
   document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
   document.querySelector('.cat-btn')?.classList.add('active');
   document.querySelectorAll('.coll-card').forEach(c => c.classList.toggle('is-active', c.dataset.coll === key));
+  buildCatTiles();
   renderProducts();
   document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -1773,6 +1821,7 @@ function filterCat(cat, btn) {
   document.querySelectorAll('.cat-btn').forEach(b => { b.classList.remove('active'); b.removeAttribute('aria-current'); });
   btn.classList.add('active');
   btn.setAttribute('aria-current', 'true');
+  buildCatTiles();
   renderProducts();
   scrollToGrid();
 }
@@ -2413,6 +2462,7 @@ async function loadCatalogFromSheet() {
     // Re-dibujar todo lo que depende del catálogo
     buildBrandSelect();
     buildCatBar();
+    buildCatTiles();
     renderProducts();
     updateCount();
     updateCheckoutBar();
@@ -2428,6 +2478,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 buildBrandSelect();
 buildBrandStrip();
 buildCatBar();
+buildCatTiles();
 renderProducts();
 updateCount();
 updateCheckoutBar();
