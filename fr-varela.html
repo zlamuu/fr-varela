@@ -861,14 +861,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     radial-gradient(90% 80% at 50% 45%, rgba(15,11,8,0.86) 0%, rgba(15,11,8,0.60) 55%, rgba(15,11,8,0.52) 100%); }
 .hw-inner { position:relative; z-index:2; width:min(680px,92%); text-align:center; color:#fff; }
 /* Logo neón como ancla de marca: el negro del PNG se funde con el hero (screen) y el neón brilla */
-.hw-mark { width:clamp(96px,11vw,118px); aspect-ratio:1; margin:0 auto 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:50%;
+.hw-mark { width:clamp(108px,12vw,132px); aspect-ratio:1; margin:0 auto 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:50%;
   border:1.5px solid rgba(245,179,1,0.5);
   background:radial-gradient(circle at 50% 42%, rgba(245,150,45,0.16), rgba(20,15,11,0) 72%);
   box-shadow:0 0 30px rgba(245,140,45,0.22), inset 0 0 16px rgba(245,140,45,0.10);
-  font-family:'Bebas Neue',sans-serif; line-height:0.8; text-align:center; }
-.hw-mark .m-24 { font-size:0.78rem; letter-spacing:2.5px; color:var(--yellow); margin-bottom:1px; }
-.hw-mark .m-fr { font-size:2.4rem; letter-spacing:1px; color:var(--yellow); text-shadow:0 0 14px rgba(245,179,1,0.35); }
-.hw-mark .m-va { font-size:1rem; letter-spacing:4px; color:#EA5130; margin-top:1px; }
+  font-family:'Bebas Neue',sans-serif; line-height:0.76; text-align:center; }
+.hw-mark .m-flame { width:clamp(20px,2.4vw,25px); height:auto; margin-bottom:1px; filter:drop-shadow(0 0 6px rgba(245,140,40,0.65)); }
+.hw-mark .m-fr { font-size:clamp(2.9rem,3.8vw,3.6rem); letter-spacing:1px; color:var(--yellow); text-shadow:0 0 16px rgba(245,179,1,0.42); }
+.hw-mark .m-sub { font-size:0.62rem; letter-spacing:2px; color:rgba(255,238,222,0.8); margin-top:2px; }
 .hw-eyebrow { display:inline-flex; align-items:center; gap:8px; font-weight:800; letter-spacing:2px; font-size:0.78rem; text-transform:uppercase; color:#fff; background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25); padding:6px 14px; border-radius:50px; margin-bottom:16px; backdrop-filter:blur(4px); }
 .hw-sign { margin-top:16px; font-size:0.8rem; font-weight:600; letter-spacing:0.5px; color:rgba(255,255,255,0.55); }
 .hw-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.7rem,7.5vw,4.8rem); line-height:0.92; letter-spacing:1px; text-shadow:0 4px 22px rgba(0,0,0,0.5); margin-bottom:6px; color:#fff; }
@@ -881,8 +881,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .hw { height:clamp(420px,70svh,520px); }
   .hw-wall { grid-template-columns:repeat(4,1fr); }
   .hw-chips span { font-size:0.72rem; padding:6px 11px; }
-  .hw-mark { width:88px; margin-bottom:12px; }
-  .hw-mark .m-fr { font-size:2rem; }
+  .hw-mark { width:100px; margin-bottom:12px; }
+  .hw-mark .m-fr { font-size:2.7rem; }
 }
 </style>
 </head>
@@ -905,21 +905,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <span class="cart-count" id="cart-count">0</span>
     </button>
   </header>
-  <div class="ticker">
-    <div class="ticker-track">
-      <span>+100.000 clientes nos eligen</span><span>Promos de la semana</span><span>Nuevos ingresos</span><span>Chocolates y alfajores</span><span>Bebidas bien frías</span><span>Envío gratis a domicilio</span>
-      <span>+100.000 clientes nos eligen</span><span>Promos de la semana</span><span>Nuevos ingresos</span><span>Chocolates y alfajores</span><span>Bebidas bien frías</span><span>Envío gratis a domicilio</span>
-    </div>
-  </div>
 </div>
 
 <section class="hw">
   <div class="hw-wall" id="hw-wall" aria-hidden="true"></div>
   <div class="hw-inner">
     <div class="hw-mark" role="img" aria-label="FR Varela · 24 horas">
-      <span class="m-24">24 HS</span>
+      <svg class="m-flame" viewBox="0 0 24 24" aria-hidden="true"><defs><linearGradient id="frFlame" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#EA5130"/><stop offset=".55" stop-color="#F5870F"/><stop offset="1" stop-color="#F5D000"/></linearGradient></defs><path fill="url(#frFlame)" d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></svg>
       <span class="m-fr">FR</span>
-      <span class="m-va">VARELA</span>
+      <span class="m-sub">Varela · 24hs</span>
     </div>
     <span class="hw-eyebrow"><span class="live-dot"></span>Abierto ahora · Florencio Varela</span>
     <h2 class="hw-title">TENEMOS <span class="hw-acc">DE TODO</span></h2>
