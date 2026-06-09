@@ -857,11 +857,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 .hw::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
     linear-gradient(to bottom, rgba(21,17,13,0) 58%, var(--bg) 100%),
-    linear-gradient(to bottom, rgba(13,9,6,0.90) 0%, rgba(13,9,6,0.42) 26%, rgba(13,9,6,0) 48%),
+    linear-gradient(to bottom, rgba(13,9,6,0.62) 0%, rgba(13,9,6,0.22) 28%, rgba(13,9,6,0) 48%),
     radial-gradient(90% 80% at 50% 45%, rgba(15,11,8,0.86) 0%, rgba(15,11,8,0.60) 55%, rgba(15,11,8,0.52) 100%); }
 .hw-inner { position:relative; z-index:2; width:min(680px,92%); text-align:center; color:#fff; }
 /* Logo neón como ancla de marca: el negro del PNG se funde con el hero (screen) y el neón brilla */
-.hw-logo { display:block; width:clamp(122px,15vw,154px); height:auto; margin:0 auto 12px; border-radius:50%; filter:drop-shadow(0 0 14px rgba(255,150,60,0.55)); }
+.hw-mark { width:clamp(96px,11vw,118px); aspect-ratio:1; margin:0 auto 16px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:50%;
+  border:1.5px solid rgba(245,179,1,0.5);
+  background:radial-gradient(circle at 50% 42%, rgba(245,150,45,0.16), rgba(20,15,11,0) 72%);
+  box-shadow:0 0 30px rgba(245,140,45,0.22), inset 0 0 16px rgba(245,140,45,0.10);
+  font-family:'Bebas Neue',sans-serif; line-height:0.8; text-align:center; }
+.hw-mark .m-24 { font-size:0.78rem; letter-spacing:2.5px; color:var(--yellow); margin-bottom:1px; }
+.hw-mark .m-fr { font-size:2.4rem; letter-spacing:1px; color:var(--yellow); text-shadow:0 0 14px rgba(245,179,1,0.35); }
+.hw-mark .m-va { font-size:1rem; letter-spacing:4px; color:#EA5130; margin-top:1px; }
 .hw-eyebrow { display:inline-flex; align-items:center; gap:8px; font-weight:800; letter-spacing:2px; font-size:0.78rem; text-transform:uppercase; color:#fff; background:rgba(255,255,255,0.14); border:1px solid rgba(255,255,255,0.25); padding:6px 14px; border-radius:50px; margin-bottom:16px; backdrop-filter:blur(4px); }
 .hw-sign { margin-top:16px; font-size:0.8rem; font-weight:600; letter-spacing:0.5px; color:rgba(255,255,255,0.55); }
 .hw-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.7rem,7.5vw,4.8rem); line-height:0.92; letter-spacing:1px; text-shadow:0 4px 22px rgba(0,0,0,0.5); margin-bottom:6px; color:#fff; }
@@ -874,7 +881,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   .hw { height:clamp(420px,70svh,520px); }
   .hw-wall { grid-template-columns:repeat(4,1fr); }
   .hw-chips span { font-size:0.72rem; padding:6px 11px; }
-  .hw-logo { width:96px; margin-bottom:10px; }
+  .hw-mark { width:88px; margin-bottom:12px; }
+  .hw-mark .m-fr { font-size:2rem; }
 }
 </style>
 </head>
@@ -908,7 +916,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <section class="hw">
   <div class="hw-wall" id="hw-wall" aria-hidden="true"></div>
   <div class="hw-inner">
-    <img class="hw-logo" src="img/logo.png" alt="FR Varela · 24hs" fetchpriority="high" decoding="async">
+    <div class="hw-mark" role="img" aria-label="FR Varela · 24 horas">
+      <span class="m-24">24 HS</span>
+      <span class="m-fr">FR</span>
+      <span class="m-va">VARELA</span>
+    </div>
     <span class="hw-eyebrow"><span class="live-dot"></span>Abierto ahora · Florencio Varela</span>
     <h2 class="hw-title">TENEMOS <span class="hw-acc">DE TODO</span></h2>
     <p class="hw-sub">El kiosco que no cierra. Si se te antoja, está.</p>
