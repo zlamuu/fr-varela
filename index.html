@@ -45,6 +45,20 @@
   "sameAs": ["https://instagram.com/fr.varela", "https://www.facebook.com/franui.varela/"]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "¿Cuánto tarda en llegar mi pedido?", "acceptedAnswer": { "@type": "Answer", "text": "Te llega en aproximadamente 30 minutos a tu casa, y el envío es gratis. Como estamos abiertos las 24 horas, podés pedir a cualquier hora." } },
+    { "@type": "Question", "name": "¿Hay un pedido mínimo?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, el pedido mínimo es de $6.000. En el carrito te mostramos cuánto te falta para llegar." } },
+    { "@type": "Question", "name": "¿Cómo puedo pagar?", "acceptedAnswer": { "@type": "Answer", "text": "Aceptamos efectivo, transferencia y MercadoPago. Lo coordinás por WhatsApp cuando confirmás tu pedido." } },
+    { "@type": "Question", "name": "¿A qué zonas hacen envíos?", "acceptedAnswer": { "@type": "Answer", "text": "Llegamos a varias zonas de Florencio Varela. Escribinos tu dirección por WhatsApp y te confirmamos si llegamos a la tuya." } },
+    { "@type": "Question", "name": "¿Están abiertos las 24 horas?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, estamos abiertos las 24 horas, todos los días del año. No cerramos nunca." } },
+    { "@type": "Question", "name": "¿Necesito registrarme o descargar una app?", "acceptedAnswer": { "@type": "Answer", "text": "No. Elegís tus productos, los sumás al carrito y hacés el pedido por WhatsApp. Sin registro y sin apps." } }
+  ]
+}
+</script>
 <!-- Fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -821,6 +835,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 [data-reveal].is-revealed { opacity:1; transform:none; }
 
 @media (prefers-reduced-motion: reduce) { *, *::after, *::before { animation:none !important; } [data-reveal] { opacity:1 !important; transform:none !important; transition:none !important; } }
+
+/* ===== FAQ (Preguntas frecuentes) ===== */
+.faq { max-width:760px; margin:34px auto 10px; padding:0 16px; }
+.faq-title { font-family:'Bebas Neue',sans-serif; font-size:1.7rem; letter-spacing:1px; color:var(--text); text-transform:uppercase; text-align:center; margin-bottom:6px; }
+.faq-sub { text-align:center; color:var(--muted); font-size:0.88rem; margin-bottom:18px; }
+.faq-item { background:var(--bg2); border:1px solid var(--line); border-radius:14px; margin-bottom:10px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.faq-item summary { list-style:none; cursor:pointer; padding:15px 18px; font-weight:700; font-size:0.95rem; color:var(--text); display:flex; align-items:center; justify-content:space-between; gap:14px; }
+.faq-item summary::-webkit-details-marker { display:none; }
+.faq-item summary::after { content:"+"; font-family:'Outfit',sans-serif; font-size:1.5rem; font-weight:700; line-height:1; color:var(--red); flex-shrink:0; transition:transform .25s ease; }
+.faq-item[open] summary::after { transform:rotate(45deg); }
+.faq-item summary:hover { color:var(--red); }
+.faq-a { padding:0 18px 16px; color:var(--muted); font-size:0.9rem; line-height:1.55; }
+.faq-a a { color:var(--red); font-weight:700; text-decoration:none; }
+.faq-a a:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
@@ -1015,6 +1043,17 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <button class="comm-share" onclick="shareSite()">Compartir</button>
     </div>
   </div>
+</section>
+
+<section class="faq" id="faq">
+  <h2 class="faq-title">Preguntas frecuentes</h2>
+  <p class="faq-sub">Lo que más nos consultan antes de pedir</p>
+  <details class="faq-item"><summary>¿Cuánto tarda en llegar mi pedido?</summary><div class="faq-a">Te llega en aproximadamente 30 minutos a tu casa, y el envío es gratis. Como estamos abiertos las 24 horas, podés pedir a cualquier hora.</div></details>
+  <details class="faq-item"><summary>¿Hay un pedido mínimo?</summary><div class="faq-a">Sí, el pedido mínimo es de $6.000. En el carrito te vamos mostrando cuánto te falta para llegar.</div></details>
+  <details class="faq-item"><summary>¿Cómo puedo pagar?</summary><div class="faq-a">Aceptamos efectivo, transferencia y MercadoPago. Lo coordinás directamente por WhatsApp cuando confirmás tu pedido.</div></details>
+  <details class="faq-item"><summary>¿A qué zonas hacen envíos?</summary><div class="faq-a">Llegamos a varias zonas de Florencio Varela. Escribinos tu dirección por <a href="https://wa.me/5491123593011" target="_blank" rel="noopener">WhatsApp</a> y te confirmamos al toque si llegamos a la tuya.</div></details>
+  <details class="faq-item"><summary>¿Están abiertos las 24 horas de verdad?</summary><div class="faq-a">Sí, estamos abiertos las 24 horas, todos los días del año. No cerramos nunca.</div></details>
+  <details class="faq-item"><summary>¿Necesito registrarme o descargar una app?</summary><div class="faq-a">No hace falta nada de eso. Elegís tus productos, los sumás al carrito y hacés el pedido por WhatsApp. Sin registro y sin apps.</div></details>
 </section>
 
 <footer id="contacto">
