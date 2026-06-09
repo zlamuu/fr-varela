@@ -1326,6 +1326,32 @@ const catNames = {
   cigarrillos: 'Cigarrillos',
 };
 
+// Etiqueta linda para una categoría. Las nuevas (creadas en la planilla)
+// se muestran capitalizadas automáticamente. Ej: "alfajores" -> "Alfajores".
+function catLabel(cat) {
+  if (catNames[cat]) return catNames[cat];
+  return cat ? cat.charAt(0).toUpperCase() + cat.slice(1) : '';
+}
+// Orden preferido de categorías. Cualquier categoría nueva de la planilla
+// que no esté en estas listas se agrega sola al final.
+const BAR_ORDER = ['promos', 'golosinas', 'snacks', 'bebidas', 'comida', 'almacen', 'cigarrillos'];
+const SECTION_ORDER = ['golosinas', 'snacks', 'bebidas', 'promos', 'comida', 'almacen', 'cigarrillos'];
+function orderedCats(pref) {
+  const present = [...new Set(products.map(p => p.category).filter(Boolean))];
+  const out = pref.filter(c => present.includes(c));
+  present.forEach(c => { if (!out.includes(c)) out.push(c); });
+  return out;
+}
+// Construye la barra de categorías a partir de los productos reales.
+function buildCatBar() {
+  const bar = document.getElementById('cat-bar');
+  if (!bar) return;
+  const cats = orderedCats(BAR_ORDER);
+  bar.innerHTML =
+    `<button class="cat-btn${currentCat === 'all' ? ' active' : ''}" onclick="filterCat('all',this)">Todos</button>` +
+    cats.map(c => `<button class="cat-btn${currentCat === c ? ' active' : ''}" onclick="filterCat('${c}',this)">${catLabel(c)}</button>`).join('');
+}
+
 // Colecciones con actitud (cruzan categorías — lo que una app genérica no hace)
 let currentCollection = null;
 const collections = {
@@ -1475,7 +1501,7 @@ function pickBrand(b) {
 // Busca por nombre, descripción, categoría y marca (más resultados = catálogo más grande)
 function matchesSearch(p, t) {
   return norm(p.name).includes(t) || norm(p.desc).includes(t)
-    || norm(catNames[p.category] || '').includes(t)
+    || norm(catLabel(p.category) || '').includes(t)
     || norm(brandOf(p.name)).includes(t);
 }
 function renderProducts() {
@@ -1507,13 +1533,12 @@ function renderProducts() {
          <button class="cf-cancel" style="margin-top:14px;max-width:200px" onclick="clearCollection()">Ver todo</button></div>`;
   } else {
     // En "Todos" lideramos con las categorías más grandes (muro de abundancia inmediato)
-    const catOrder = ['golosinas', 'snacks', 'bebidas', 'promos', 'comida', 'almacen', 'cigarrillos'];
-    const cats = currentCat === 'all' ? catOrder : [currentCat];
+    const cats = currentCat === 'all' ? orderedCats(SECTION_ORDER) : [currentCat];
     html = cats.map(cat => {
       const prods = sortList(products.filter(p => p.category === cat && passFilters(p)));
       if (!prods.length) return '';
       count += prods.length;
-      return `<div class="section-title" data-reveal>${catNames[cat]}</div>
+      return `<div class="section-title" data-reveal>${catLabel(cat)}</div>
         <div class="products-grid">${prods.map(renderCard).join('')}</div>`;
     }).join('');
     if (!count) {
@@ -2383,6 +2408,7 @@ async function loadCatalogFromSheet() {
 
     // Re-dibujar todo lo que depende del catálogo
     buildBrandSelect();
+    buildCatBar();
     renderProducts();
     updateCount();
     updateCheckoutBar();
@@ -2397,6 +2423,7 @@ async function loadCatalogFromSheet() {
 document.getElementById('year').textContent = new Date().getFullYear();
 buildBrandSelect();
 buildBrandStrip();
+buildCatBar();
 renderProducts();
 updateCount();
 updateCheckoutBar();
