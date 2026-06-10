@@ -558,9 +558,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-card { position:relative; background:var(--card); border-radius:18px; width:min(380px,100%); max-height:92vh; overflow:hidden auto; box-shadow:0 20px 60px rgba(0,0,0,0.3); animation:pmin .25s ease; }
 @keyframes pmin { from{opacity:0; transform:translateY(20px) scale(.97)} to{opacity:1; transform:none} }
 .pm-close { position:absolute; top:10px; right:10px; z-index:4; width:34px; height:34px; border-radius:50%; border:none; background:rgba(255,255,255,0.92); color:var(--text); font-size:1rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); }
-.pm-img { position:relative; height:150px; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:18px 18px 0 0; }
-.pm-img img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; position:relative; z-index:1; }
-.pm-imgbg { position:absolute; inset:0; background-size:cover; background-position:center; filter:blur(22px) brightness(0.9); transform:scale(1.25); z-index:0; }
+.pm-img { position:relative; height:200px; display:flex; align-items:center; justify-content:center; overflow:hidden; border-radius:18px 18px 0 0; padding:16px; }
+.pm-img img { max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; position:relative; z-index:1; filter:drop-shadow(0 6px 14px rgba(0,0,0,0.12)); }
 .pm-emoji { font-size:96px; position:relative; z-index:1; filter:drop-shadow(0 6px 10px rgba(0,0,0,0.15)); }
 .pm-info { padding:16px 18px 18px; }
 .pm-promo { display:inline-block; background:var(--red); color:#fff; font-size:0.62rem; font-weight:900; padding:3px 8px; border-radius:50px; margin-bottom:8px; letter-spacing:0.5px; }
@@ -2341,10 +2340,9 @@ function renderProductModal() {
         <button class="pm-add" onclick="pmAdd()">Agregar · $${total}</button>
       </div>`;
 
-  const imgbg = src ? `<div class="pm-imgbg" style="background-image:url('${src}')"></div>` : '';
   document.getElementById('pm-card').innerHTML = `
     <button class="pm-close" onclick="closeProduct()" aria-label="Cerrar">✕</button>
-    <div class="pm-img t-${p.category}">${imgbg}${size ? `<span class="size-tag">${size}</span>` : ''}${thumb}</div>
+    <div class="pm-img t-${p.category}">${size ? `<span class="size-tag">${size}</span>` : ''}${thumb}</div>
     <div class="pm-info">
       ${p.category === 'promos' ? '<span class="pm-promo">🔥 PROMO</span>' : ''}
       <h3 class="pm-name">${name}</h3>
