@@ -341,6 +341,9 @@ header .logo-name .va { color:#241F1A; }
 .ss-item { display:flex; align-items:center; gap:11px; padding:9px 14px; cursor:pointer; border-bottom:1px solid var(--line); }
 .ss-item:last-child { border-bottom:none; }
 .ss-item:hover, .ss-item.sel { background:#F8F1E6; }
+.ss-cat { background:#FBF5EC; }
+.ss-cat .ss-name b { color:var(--red); }
+.ss-cat .ss-price { color:var(--red); font-weight:800; }
 .product-name mark { background:transparent; color:var(--red); font-weight:800; }
 .ss-thumb { width:38px; height:38px; border-radius:8px; background:#F4ECDD center/cover no-repeat; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:19px; }
 .ss-name { flex:1; font-size:0.85rem; font-weight:600; color:var(--text); line-height:1.2; }
@@ -1855,10 +1858,21 @@ function renderSearchSuggest(value) {
   if (!box) return;
   const t = norm((value || '').trim());
   if (t.length < 2) { box.className = 'search-suggest'; box.innerHTML = ''; return; }
-  const matches = products.filter(p => matchesSearch(p, t)).slice(0, 6);
-  if (!matches.length) { box.className = 'search-suggest'; box.innerHTML = ''; suggestIds = []; suggestIdx = -1; return; }
+  const allMatches = products.filter(p => matchesSearch(p, t));
+  if (!allMatches.length) { box.className = 'search-suggest'; box.innerHTML = ''; suggestIds = []; suggestIdx = -1; return; }
+  // ¿la búsqueda apunta a una categoría? -> ofrecer "ver todos" (intención de explorar, no de comprar uno solo)
+  const catHit = [...new Set(allMatches.map(p => p.category))]
+    .filter(c => norm(catLabel(c) || '').includes(t))
+    .map(c => ({ cat: c, label: catLabel(c), count: products.filter(p => p.category === c).length }))
+    .sort((a, b) => b.count - a.count)[0];
+  const matches = allMatches.slice(0, 6);
   suggestIds = matches.map(p => p.id); suggestIdx = -1;
-  box.innerHTML = matches.map(p => {
+  const catRow = (catHit && catHit.count > 1) ? `<div class="ss-item ss-cat" onmousedown="seeAllFromSuggest()">
+      <span class="ss-thumb">📂</span>
+      <span class="ss-name">Ver todos · <b>${catHit.label}</b> <span class="ss-size">(${catHit.count})</span></span>
+      <span class="ss-price">→</span>
+    </div>` : '';
+  box.innerHTML = catRow + matches.map(p => {
     const src = imgSrc(p);
     const thumb = src ? `style="background-image:url('${src}')"` : '';
     const fb = src ? '' : p.emoji;
@@ -1891,7 +1905,7 @@ function ssKey(e) {
   }
 }
 function updateSuggestSel() {
-  document.querySelectorAll('#search-suggest .ss-item').forEach((el, i) => el.classList.toggle('sel', i === suggestIdx));
+  document.querySelectorAll('#search-suggest .ss-item:not(.ss-cat)').forEach((el, i) => el.classList.toggle('sel', i === suggestIdx));
 }
 function shareSite() {
   const data = { title: 'FR.VARELA', text: 'El kiosco con más variedad de Florencio Varela. Golosinas, bebidas, snacks y más. Abierto 24 hs, envío gratis.', url: 'https://fr-varela.vercel.app' };
@@ -1899,6 +1913,12 @@ function shareSite() {
   else window.open('https://wa.me/?text=' + encodeURIComponent(data.text + ' ' + data.url), '_blank');
 }
 function openFromSuggest(id) { hideSuggest(); openProduct(id); }
+function seeAllFromSuggest() {
+  // la grilla ya está filtrada por el término actual; solo cerramos el dropdown y llevamos a la lista
+  hideSuggest();
+  const grid = document.getElementById('comprar');
+  if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 function hideSuggest() { const b = document.getElementById('search-suggest'); if (b) b.className = 'search-suggest'; }
 function searchEnter() {
   const t = norm((document.getElementById('search-input').value || '').trim());
