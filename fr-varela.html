@@ -1920,9 +1920,21 @@ function seeAllFromSuggest() {
   if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function hideSuggest() { const b = document.getElementById('search-suggest'); if (b) b.className = 'search-suggest'; }
+// ¿el término apunta claramente a una categoría? (intención de explorar, no de abrir un producto)
+function matchedCategory(t) {
+  if (!t || t.length < 3) return null;
+  const hit = [...new Set(products.map(p => p.category))]
+    .filter(c => norm(catLabel(c) || '').includes(t))
+    .map(c => ({ cat: c, count: products.filter(p => p.category === c).length }))
+    .filter(c => c.count > 1)
+    .sort((a, b) => b.count - a.count)[0];
+  return hit ? hit.cat : null;
+}
 function searchEnter() {
   const t = norm((document.getElementById('search-input').value || '').trim());
   if (t.length < 1) return;
+  // categoría -> a la lista completa (no abrir un producto al azar)
+  if (matchedCategory(t)) { hideSuggest(); document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
   const first = products.find(p => matchesSearch(p, t));
   if (first) { hideSuggest(); openProduct(first.id); }
   else { document.getElementById('comprar')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
