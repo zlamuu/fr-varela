@@ -405,7 +405,7 @@ header .logo-name .va { color:#241F1A; }
 .cart-overlay.open { display:block; }
 .cart-panel { position:fixed; right:0; top:0; bottom:0; width:min(420px,100vw); background:#fff; display:flex; flex-direction:column; z-index:201; transform:translateX(100%); transition:transform .3s ease; box-shadow:-8px 0 30px rgba(0,0,0,0.15); }
 .cart-panel.open { transform:translateX(0); }
-.cart-header { background:#fff; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); }
+.cart-header { background:#fff; padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); flex-shrink:0; }
 .cart-header h2 { font-family:'Bebas Neue', sans-serif; font-size:1.5rem; letter-spacing:0.5px; color:var(--text); }
 .cart-h-count { font-family:'Outfit',sans-serif; font-size:0.8rem; font-weight:700; color:var(--muted); letter-spacing:0; }
 .cart-header-actions { display:flex; align-items:center; gap:8px; }
@@ -413,9 +413,10 @@ header .logo-name .va { color:#241F1A; }
 .clear-btn:hover { border-color:#d33; }
 .close-btn { background:none; border:1px solid var(--line); color:var(--text); border-radius:8px; padding:6px 12px; cursor:pointer; font-size:0.85rem; }
 .close-btn:hover { border-color:var(--red); color:var(--red); }
-.cart-items { flex:1; overflow-y:auto; padding:16px; display:flex; flex-direction:column; gap:10px; }
-.cart-items::-webkit-scrollbar { width:5px; }
-.cart-items::-webkit-scrollbar-thumb { background:#ccc; border-radius:10px; }
+.cart-scroll { flex:1; min-height:0; overflow-y:auto; }   /* min-height:0 = clave para que scrollee y no empuje el footer fuera de pantalla */
+.cart-scroll::-webkit-scrollbar { width:5px; }
+.cart-scroll::-webkit-scrollbar-thumb { background:#ccc; border-radius:10px; }
+.cart-items { padding:16px; display:flex; flex-direction:column; gap:10px; }
 .cart-empty { text-align:center; color:var(--muted); padding:50px 20px; }
 .cart-empty .big-e { font-size:52px; display:block; margin-bottom:12px; }
 .empty-cta { margin-top:18px; background:var(--red); color:#fff; border:none; border-radius:50px; padding:12px 24px; font-weight:800; font-size:0.9rem; cursor:pointer; box-shadow:0 6px 16px rgba(200,51,30,0.3); transition:transform .15s; }
@@ -445,7 +446,9 @@ header .logo-name .va { color:#241F1A; }
 .suggest-add { margin-top:3px; background:var(--red); color:#fff; border:none; border-radius:8px; padding:5px; font-weight:800; font-size:0.72rem; cursor:pointer; }
 .suggest-add:hover { background:#c4151b; }
 
-.cart-footer { padding:16px 20px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:12px; background:#fff; }
+/* datos de pago/envío/checkout: viven en el scroll, NO en el footer fijo (así la lista nunca colapsa en pantallas bajas) */
+.cart-checkout { padding:14px 16px 6px; display:flex; flex-direction:column; gap:12px; border-top:1px solid var(--line); }
+.cart-footer { padding:14px 20px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:10px; background:#fff; flex-shrink:0; box-shadow:0 -4px 16px rgba(0,0,0,0.05); }
 .cart-note { font-size:0.72rem; color:var(--muted); background:#F8F1E6; border:1px solid var(--line); border-radius:8px; padding:8px 12px; line-height:1.4; }
 .min-order { display:none; border-radius:12px; padding:11px 13px; font-size:0.8rem; }
 .min-order.warn { display:block; background:#FBF5EC; border:1px solid var(--line); }
@@ -530,7 +533,7 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .feat-add { position:absolute; right:8px; bottom:8px; width:34px; height:34px; font-size:1.3rem; }
 
 /* ===== Barra de orden ===== */
-.toolbar { max-width:1100px; margin:18px auto 8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+.toolbar { max-width:1100px; margin:18px auto 8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.05); scroll-margin-top:130px; }
 @media (max-width:520px){ .toolbar { margin:14px 12px 8px; } .toolbar-filters { width:100%; } .t-select { flex:1; } }
 .result-count { font-size:0.8rem; color:var(--muted); font-weight:600; }
 .sort-label { font-size:0.8rem; color:var(--muted); display:flex; align-items:center; gap:6px; }
@@ -579,12 +582,25 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-sg-title { font-size:0.85rem; font-weight:800; color:var(--text); margin:18px 0 10px; border-top:1px solid var(--line); padding-top:14px; }
 .pm-sg-row { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
 .pm-sg-row::-webkit-scrollbar { display:none; }
-.pm-sg-card { flex:0 0 auto; width:84px; cursor:pointer; }
-.pm-sg-thumb { height:64px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:30px; }
+.pm-sg-card { flex:0 0 auto; width:92px; cursor:pointer; }
+.pm-sg-thumb { height:64px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:30px; position:relative; }
 .pm-sg-thumb img { width:100%; height:100%; object-fit:cover; }
 .pm-sg-emoji { filter:drop-shadow(0 3px 5px rgba(0,0,0,0.12)); }
 .pm-sg-name { font-size:0.64rem; color:var(--text); line-height:1.2; height:2.4em; overflow:hidden; margin-top:4px; }
 .pm-sg-price { font-size:0.72rem; color:var(--red); font-weight:800; }
+.pm-sg-add { margin-top:5px; width:100%; background:#fff; color:var(--red); border:1.5px solid var(--red); border-radius:8px; padding:5px 4px; font-family:inherit; font-weight:800; font-size:0.68rem; cursor:pointer; transition:all .15s; }
+.pm-sg-add:hover { background:var(--red); color:#fff; }
+.pm-sg-card.added .pm-sg-add { background:#1f9d57; border-color:#1f9d57; color:#fff; }
+.pm-sg-card.added .pm-sg-thumb::after { content:'✓'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:rgba(31,157,87,0.78); color:#fff; font-size:26px; font-weight:900; border-radius:10px; }
+
+/* Estado "agregado" dentro del modal: deja de ser callejón sin salida */
+.pm-added { background:#EAF8EF; border:1px solid #BCE7CC; border-radius:14px; padding:12px 14px; margin-top:4px; animation:pmin .2s ease; }
+.pm-added-msg { font-size:0.92rem; font-weight:800; color:#1f7a45; display:flex; align-items:center; gap:7px; }
+.pm-added-actions { display:flex; gap:8px; margin-top:11px; }
+.pm-keep { flex:1; background:#fff; color:var(--text); border:1.5px solid var(--line); border-radius:11px; padding:11px 8px; font-family:inherit; font-weight:800; font-size:0.84rem; cursor:pointer; transition:border-color .15s; }
+.pm-keep:hover { border-color:var(--red); }
+.pm-gocart { flex:1.3; background:var(--red); color:#fff; border:none; border-radius:11px; padding:11px 8px; font-family:inherit; font-weight:800; font-size:0.84rem; cursor:pointer; box-shadow:0 4px 12px rgba(200,51,30,0.3); }
+.pm-gocart:hover { background:#B23A1C; }
 
 /* hover en destacados */
 .feat-card { transition:all .2s; }
@@ -1054,27 +1070,31 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <button class="close-btn" onclick="closeCart()">✕ Cerrar</button>
     </div>
   </div>
-  <div class="cart-items" id="cart-items"></div>
-  <div class="cart-suggest" id="cart-suggest" style="display:none"></div>
+  <div class="cart-scroll">
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-suggest" id="cart-suggest" style="display:none"></div>
+    <div class="cart-checkout">
+      <div class="pay-note">
+        <div class="pay-chips">
+          <span class="pay-chip">Efectivo</span>
+          <span class="pay-chip">Transferencia</span>
+          <span class="pay-chip">MercadoPago</span>
+        </div>
+        <div class="ship-note"><b style="color:var(--red)">Envío gratis</b> · Te llega en ~30 min · Abierto las 24 hs</div>
+      </div>
+      <div class="wa-proof">+100.000 clientes ya nos hicieron su pedido</div>
+    </div>
+  </div>
   <div class="cart-footer">
     <div class="min-order" id="min-order"></div>
-    <div class="pay-note">
-      <div class="pay-chips">
-        <span class="pay-chip">Efectivo</span>
-        <span class="pay-chip">Transferencia</span>
-        <span class="pay-chip">MercadoPago</span>
-      </div>
-      <div class="ship-note"><b style="color:var(--red)">Envío gratis</b> · Te llega en ~30 min · Abierto las 24 hs</div>
-    </div>
     <div class="checkout-fields">
-      <input id="ck-name" class="ck-input" type="text" placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="name" oninput="saveCkFields()">
-      <input id="ck-addr" class="ck-input" type="text" placeholder="Dirección de entrega (o escribí: retiro en el local)" aria-label="Dirección de entrega" autocomplete="street-address" oninput="saveCkFields()">
+      <input id="ck-name" class="ck-input" type="text" placeholder="Tu nombre" aria-label="Tu nombre" autocomplete="name" oninput="saveCkFields()" onfocus="ckFocus()">
+      <input id="ck-addr" class="ck-input" type="text" placeholder="Dirección de entrega (o escribí: retiro en el local)" aria-label="Dirección de entrega" autocomplete="street-address" oninput="saveCkFields()" onfocus="ckFocus()">
     </div>
     <div class="cart-total">
       <span class="label">Total estimado:</span>
       <span class="amount" id="cart-total">$0</span>
     </div>
-    <div class="wa-proof">+100.000 clientes ya nos hicieron su pedido</div>
     <button class="whatsapp-btn" onclick="sendToWhatsApp()">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -1352,17 +1372,62 @@ const collections = {
 };
 
 // Venta cruzada: qué categorías combinan con cada una (en orden de prioridad)
-const pairs = {
-  promos:      ['bebidas', 'snacks'],
-  chocolates:  ['bebidas', 'alfajores'],
-  golosinas:   ['bebidas', 'chocolates'],
-  alfajores:   ['bebidas', 'chocolates'],
-  snacks:      ['bebidas', 'chocolates'],
-  bebidas:     ['snacks', 'chocolates'],
-  comida:      ['bebidas', 'snacks'],
-  almacen:     ['golosinas', 'bebidas'],
-  cigarrillos: ['bebidas', 'golosinas'],
+/* ---------- Motor de cross-sell (cruces naturales de kiosco) ---------- */
+// Pools curados: "bebida" es muy amplio, lo separo para que el cruce se sienta natural.
+const CROSS_POOL = {
+  cold:   [104, 106, 105, 110, 112, 108],  // refrescos individuales fríos (gaseosa/jugo chico)
+  energy: [103, 109, 111],                 // energizantes
 };
+// Qué empujar según lo que estás mirando (orden = prioridad). Tokens = pool curado o categoría.
+const crossPlan = {
+  alfajores:   ['cold', 'chocolates'],     // alfajor → bebida fría + tentación
+  chocolates:  ['cold', 'alfajores'],
+  golosinas:   ['cold', 'chocolates'],
+  snacks:      ['cold', 'energy'],          // papas → gaseosa (a veces energizante)
+  comida:      ['cold', 'snacks'],          // pancho/pizza → bebida + algo para picar
+  bebidas:     ['snacks', 'golosinas', 'chocolates'], // ya tenés bebida → algo para comer
+  promos:      ['cold', 'snacks'],
+  almacen:     ['golosinas', 'cold'],
+  cigarrillos: ['cold', 'golosinas'],
+};
+// resuelve un token a su lista de productos candidatos
+function crossPool(token) {
+  if (CROSS_POOL[token]) return CROSS_POOL[token].map(id => products.find(p => p.id === id)).filter(Boolean);
+  return products.filter(p => p.category === token);
+}
+// puntaje: preferí adds de precio parecido (sí fácil) y penalizá upsells caros y absurdos
+function crossScore(cand, anchorPrice) {
+  const ceiling = Math.max(anchorPrice * 2.2, 6000);
+  let s = -Math.abs(cand.price - anchorPrice) / 1000;
+  if (cand.price > ceiling) s -= 1000;     // ej. no ofrecer un Mr Beast de $18.000 al lado de un alfajor
+  return s;
+}
+// construye candidatos ordenados (score + jitter para que varíen en cada apertura)
+function crossQueues(tokens, anchorPrice, exclude, seenBase) {
+  return tokens.map(tok => {
+    const pool = crossPool(tok).filter(c =>
+      !exclude.has(c.id) && !seenBase.has(prodBase(c)));
+    return pool
+      .map(c => ({ c, k: crossScore(c, anchorPrice) + Math.random() * 1.2 }))
+      .sort((a, b) => b.k - a.k)
+      .map(o => o.c);
+  });
+}
+// intercala las colas (una por token) para una mezcla variada y sin duplicados
+function pickFromQueues(queues, limit, seenBase) {
+  const out = [];
+  let i = 0, guard = 0;
+  while (out.length < limit && queues.some(q => q.length) && guard++ < 300) {
+    const q = queues[i++ % queues.length];
+    if (!q.length) continue;
+    const cand = q.shift();
+    const b = prodBase(cand);
+    if (seenBase.has(b)) continue;
+    seenBase.add(b);
+    out.push(cand);
+  }
+  return out;
+}
 
 /* ---------- Persistencia ---------- */
 function loadCart() {
@@ -1644,12 +1709,13 @@ function renderCard(p) {
 function keyId(k) { return parseInt(String(k).split('|')[0], 10); }
 function keyVar(k) { const s = String(k).split('|'); return s.length > 1 ? s[1] : ''; }
 
-function addToCart(id) {
+function addToCart(id, source = 'grid') {
   const p = products.find(x => x.id === id);
   if (p && p.variants) { openProduct(id); return; } // tiene sabores: abrir para elegir
   cart[id] = (cart[id] || 0) + 1;
   afterCartChange(id);
   showToast(`${p.name} agregado al pedido`);
+  track('add_to_cart', { id, source, price: p.price });
 }
 
 function changeQty(key, delta) {
@@ -1865,12 +1931,42 @@ function loadCkFields() {
   } catch {}
 }
 
+/* ---------- Métrica liviana de embudo (sin dependencias) ----------
+   Registra los pasos clave para no estar a ciegas con la conversión.
+   HOY: consola en vivo + log local acotado (localStorage 'frvarela_events'); en consola escribí dumpEvents() para verlo/exportarlo.
+   OJO: el log local solo ve ESTE dispositivo. Para datos de TODOS los visitantes hay que conectar un sink real (ver punto 4). */
+const FRV_BUILD = 'recomendados-fijos-2026-06-09';
+try { console.log('%cFR.VARELA build: ' + FRV_BUILD, 'background:#C8331E;color:#fff;padding:2px 8px;border-radius:4px;font-weight:700'); } catch (e) {}
+const FRV_SID = (() => {
+  try {
+    let s = sessionStorage.getItem('frv_sid');
+    if (!s) { s = Date.now().toString(36) + Math.random().toString(36).slice(2, 7); sessionStorage.setItem('frv_sid', s); }
+    return s;
+  } catch (e) { return 'nosession'; }
+})();
+function track(event, props = {}) {
+  const ev = { t: new Date().toISOString(), sid: FRV_SID, event, ...props };
+  (window.dataLayer = window.dataLayer || []).push(ev);           // 1) dataLayer (compatible GA4/GTM a futuro)
+  try { console.debug('[track]', event, props); } catch (e) {}    // 2) consola (para pruebas en vivo)
+  try {                                                            // 3) log local acotado (este dispositivo)
+    const log = JSON.parse(localStorage.getItem('frvarela_events') || '[]');
+    log.push(ev); while (log.length > 300) log.shift();
+    localStorage.setItem('frvarela_events', JSON.stringify(log));
+  } catch (e) {}
+  // 4) ↓ SINK REAL (descomentar y poner endpoint para datos de TODOS los visitantes):
+  // try { navigator.sendBeacon('https://TU-ENDPOINT', JSON.stringify(ev)); } catch (e) {}
+}
+function dumpEvents() { try { return JSON.parse(localStorage.getItem('frvarela_events') || '[]'); } catch (e) { return []; } }
+let ckStartTracked = false, minReachedTracked = false;
+function ckFocus() { if (!ckStartTracked) { ckStartTracked = true; track('checkout_start', { items: cartCount(), total: cartTotal() }); } }
+
 function openCart() {
   document.getElementById('cart-overlay').classList.add('open');
   document.getElementById('cart-panel').classList.add('open');
   updateCheckoutBar();
   renderCartPanel();
   loadCkFields();
+  track('cart_open', { items: cartCount(), total: cartTotal() });
 }
 
 function closeCart() {
@@ -1884,34 +1980,20 @@ document.addEventListener('keydown', e => {
 });
 
 /* ---------- Venta cruzada ---------- */
-function shuffleArr(a) {
-  for (let j = a.length - 1; j > 0; j--) { const k = Math.floor(Math.random() * (j + 1)); [a[j], a[k]] = [a[k], a[j]]; }
-  return a;
-}
 function getSuggestions(limit = 6) {
   const cartIds = Object.keys(cart).map(keyId);
   if (!cartIds.length) return [];
   const inCart = new Set(cartIds);
-  const cartCats = new Set(cartIds.map(id => products.find(p => p.id === id)?.category));
-  // categorías recomendadas (complementarias) sin repetir
-  const wanted = [];
-  cartCats.forEach(c => (pairs[c] || []).forEach(w => { if (!wanted.includes(w)) wanted.push(w); }));
-  // colas por categoría, MEZCLADAS al azar (así varían en cada apertura)
-  const queues = shuffleArr(wanted).map(cat => shuffleArr(products.filter(p => p.category === cat && !inCart.has(p.id))));
-  // intercalo categorías para una mezcla variada
-  const out = [];
-  const seenBase = new Set(cartIds.map(id => { const pp = products.find(p => p.id === id); return pp ? prodBase(pp) : ''; }));
-  let i = 0, guard = 0;
-  while (out.length < limit && queues.some(q => q.length) && guard++ < 300) {
-    const q = queues[i++ % queues.length];
-    if (!q.length) continue;
-    const cand = q.shift();
-    const b = prodBase(cand);
-    if (seenBase.has(b)) continue;   // sin duplicados (Sprite / Sprite Lata)
-    seenBase.add(b);
-    out.push(cand);
-  }
-  return out;
+  const cartProds = cartIds.map(id => products.find(p => p.id === id)).filter(Boolean);
+  // tokens según TODO lo que ya hay en el carrito (sin repetir)
+  const tokens = [];
+  [...new Set(cartProds.map(p => p.category))].forEach(c =>
+    (crossPlan[c] || []).forEach(t => { if (!tokens.includes(t)) tokens.push(t); }));
+  // ancla de precio = promedio de lo que llevás (para scorear adds razonables)
+  const anchorPrice = Math.round(cartProds.reduce((a, p) => a + p.price, 0) / cartProds.length) || 2500;
+  const seenBase = new Set(cartProds.map(prodBase));
+  const queues = crossQueues(tokens, anchorPrice, inCart, seenBase);
+  return pickFromQueues(queues, limit, seenBase);
 }
 
 function renderSuggestions() {
@@ -1919,7 +2001,11 @@ function renderSuggestions() {
   const sug = getSuggestions(6);
   if (!sug.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
   box.style.display = 'block';
-  box.innerHTML = `<h4>También te puede interesar</h4>
+  const falta = MIN_ORDER - cartTotal();
+  const heading = falta > 0
+    ? `Sumá $${falta.toLocaleString('es-AR')} y llegás al mínimo 👇`
+    : 'También te puede interesar';
+  box.innerHTML = `<h4>${heading}</h4>
     <div class="suggest-row">${sug.map(p => {
       const src = imgSrc(p);
       const thumb = src
@@ -1937,8 +2023,8 @@ function renderSuggestions() {
 }
 
 function addSuggestion(id) {
-  addToCart(id);       // agrega + toast + actualiza grilla/contador/barra
-  renderCartPanel();   // refresca items, total y recomendaciones
+  addToCart(id, 'suggest_cart');   // agrega + toast + actualiza grilla/contador/barra
+  renderCartPanel();               // refresca items, total y recomendaciones
 }
 
 const MIN_ORDER = 6000; // pedido mínimo (cambiable)
@@ -1949,7 +2035,9 @@ function updateMinOrder(total) {
   if (total >= MIN_ORDER) {
     el.className = 'min-order ok';
     el.innerHTML = 'Pedido mínimo alcanzado ✓';
+    if (!minReachedTracked) { minReachedTracked = true; track('min_order_reached', { total }); }
   } else {
+    minReachedTracked = false;   // si baja del mínimo, permití volver a registrarlo al recuperarlo
     const falta = MIN_ORDER - total;
     const pct = Math.min(100, Math.round(total / MIN_ORDER * 100));
     el.className = 'min-order warn';
@@ -2029,6 +2117,7 @@ function sendToWhatsApp() {
     showToast(`Te faltan $${falta.toLocaleString('es-AR')} para el pedido mínimo de $${MIN_ORDER.toLocaleString('es-AR')} 🛒`);
     const moEl = document.getElementById('min-order');
     if (moEl) { moEl.classList.remove('bump'); void moEl.offsetWidth; moEl.classList.add('bump'); }
+    track('checkout_blocked_min', { total: totalNow, falta });   // quiso pedir pero no llegaba al mínimo
     return;
   }
 
@@ -2055,15 +2144,18 @@ function sendToWhatsApp() {
   msg += `\n*Total estimado: $${total.toLocaleString('es-AR')}*\n`;
   msg += `Muchas gracias!`;
 
+  // conversión: el evento clave del embudo (toca "Pedir por WhatsApp" con pedido válido)
+  track('checkout_whatsapp', { order: num, total, items: cartCount(), hasName: !!ckName, hasAddr: !!ckAddr });
   window.open('https://wa.me/5491123593011?text=' + encodeURIComponent(msg), '_blank');
 }
 
 /* ---------- Ventana de detalle del producto ---------- */
-let pmId = null, pmQty = 1, pmVariant = '';
+let pmId = null, pmQty = 1, pmVariant = '', pmAdded = false, pmSug = [], pmSugAdded = new Set();
 function openProduct(id) {
-  pmId = id; pmQty = 1;
+  pmId = id; pmQty = 1; pmAdded = false; pmSugAdded = new Set();
   const p = products.find(x => x.id === id);
   pmVariant = (p && p.variants) ? p.variants[0].l : '';
+  pmSug = p ? modalSuggestions(p) : [];   // se calcula UNA vez al abrir → quedan fijas mientras mirás este producto
   renderProductModal();
   document.getElementById('pm-overlay').classList.add('open');
   trackRecent(id);
@@ -2099,6 +2191,18 @@ function renderRecent() {
 function closeProduct() {
   document.getElementById('pm-overlay').classList.remove('open');
 }
+// "Seguir comprando": no es solo cerrar — te devuelve al catálogo para que recorras sin fricción
+function keepShopping() {
+  closeProduct();
+  // si venías de una búsqueda, volvé al catálogo completo (no te dejo atrapado en un filtro)
+  if (searchTerm && searchTerm.trim()) clearSearch();
+  const grid = document.getElementById('comprar');
+  if (!grid) return;
+  // scrolleo a la grilla solo si no la tenés ya a la vista (evita saltos si ya estabas navegando)
+  const r = grid.getBoundingClientRect();
+  const inView = r.top < window.innerHeight * 0.6 && r.bottom > 80;
+  if (!inView) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 function pmChange(d) { pmQty = Math.max(1, pmQty + d); renderProductModal(); }
 function pmSelectVariant(l) { pmVariant = l; renderProductModal(); }
 function pmAdd() {
@@ -2108,7 +2212,10 @@ function pmAdd() {
   cart[key] = (cart[key] || 0) + pmQty;
   saveCart(); updateCount(); refreshCard(pmId); updateCheckoutBar();
   showToast(`${pmQty} x ${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''} agregado al pedido`);
-  closeProduct();
+  track('add_to_cart', { id: pmId, source: 'modal', qty: pmQty, price: p.price });
+  pmAdded = true;          // no cerramos: ofrecemos seguir comprando + cruces
+  renderProductModal();
+  document.getElementById('pm-card').scrollTop = 0;
 }
 // nombre base de un producto (sin tamaño/formato) para evitar duplicados tipo "Sprite" / "Sprite Lata"
 function prodBase(p) {
@@ -2117,25 +2224,45 @@ function prodBase(p) {
     .replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
 }
 
-function modalSuggestions(p, limit = 4) {
-  // solo categorías COMPLEMENTARIAS (no sugerir más de lo mismo)
-  const cats = pairs[p.category] || [];
-  // una cola por categoría, mezclada al azar para que varíe en cada apertura
-  const queues = shuffleArr(cats.slice()).map(c =>
-    shuffleArr(products.filter(x => x.category === c && x.id !== p.id)));
-  const out = [], seenBase = new Set([prodBase(p)]);
-  let i = 0, guard = 0;
-  // intercalo categorías (un producto de cada una por vuelta) → mezcla variada
-  while (out.length < limit && queues.some(q => q.length) && guard++ < 300) {
-    const q = queues[i++ % queues.length];
-    if (!q.length) continue;
-    const cand = q.shift();
-    const b = prodBase(cand);
-    if (seenBase.has(b)) continue;   // evita duplicados (Sprite / Sprite Lata)
-    seenBase.add(b);
-    out.push(cand);
+// título de cross-sell según lo que estás mirando (más vendedor que "te puede gustar")
+const crossLabels = {
+  alfajores:   'Va bien con una bebida 🥤',
+  chocolates:  'Acompañalo con algo fresco 🥤',
+  golosinas:   'Sumale una bebida 🥤',
+  snacks:      'Pedí una gaseosa bien fría 🥤',
+  bebidas:     'Sumale algo rico 🍫',
+  comida:      'No te olvides la bebida 🥤',
+  promos:      'Completá el combo 🛒',
+  almacen:     'Llevá también 👇',
+  cigarrillos: 'Sumale una bebida 🥤',
+};
+function crossLabel(cat) { return crossLabels[cat] || 'Los clientes también llevan 👇'; }
+
+// agregar un cruce sin salir del modal del producto actual
+function addSugFromModal(id, ev) {
+  if (ev) ev.stopPropagation();
+  const p = products.find(x => x.id === id);
+  if (!p) return;
+  if (p.variants) { openProduct(id); return; }   // tiene sabores: abrir para elegir
+  cart[id] = (cart[id] || 0) + 1;
+  afterCartChange(id);
+  showToast(`${splitSize(p.name).name} agregado al pedido`);
+  track('add_to_cart', { id, source: 'suggest_modal', price: p.price });
+  pmSugAdded.add(id);   // recordá el ✓ por si se re-renderiza el modal
+  if (ev && ev.currentTarget) {
+    const card = ev.currentTarget.closest('.pm-sg-card');
+    if (card) card.classList.add('added');
   }
-  return out;
+  const gc = document.getElementById('pm-gocart-total');
+  if (gc) gc.textContent = '$' + cartTotal().toLocaleString('es-AR');
+}
+
+function modalSuggestions(p, limit = 4) {
+  const tokens = crossPlan[p.category] || ['cold', 'golosinas'];
+  const seenBase = new Set([prodBase(p)]);     // evita duplicados (Sprite / Sprite Lata)
+  const exclude = new Set([p.id]);
+  const queues = crossQueues(tokens, p.price, exclude, seenBase);
+  return pickFromQueues(queues, limit, seenBase);
 }
 
 function renderProductModal() {
@@ -2148,20 +2275,39 @@ function renderProductModal() {
     ? `<img src="${src}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-emoji" style="display:none">${p.emoji}</span>`
     : `<span class="pm-emoji">${p.emoji}</span>`;
   const total = (p.price * pmQty).toLocaleString('es-AR');
-  const sug = modalSuggestions(p);
+  const sug = pmSug;   // fijas (calculadas al abrir el producto), no se recalculan al agregar/cambiar cantidad
   const sugHtml = sug.length ? `
-      <div class="pm-sg-title">Te puede gustar 👇</div>
+      <div class="pm-sg-title">${crossLabel(p.category)}</div>
       <div class="pm-sg-row">${sug.map(s => {
         const ssrc = imgSrc(s);
         const sthumb = ssrc
           ? `<img src="${ssrc}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-sg-emoji" style="display:none">${s.emoji}</span>`
           : `<span class="pm-sg-emoji">${s.emoji}</span>`;
-        return `<div class="pm-sg-card" onclick="openProduct(${s.id})">
+        return `<div class="pm-sg-card${pmSugAdded.has(s.id) ? ' added' : ''}" onclick="openProduct(${s.id})">
           <div class="pm-sg-thumb t-${s.category}">${sthumb}</div>
           <div class="pm-sg-name">${splitSize(s.name).name}</div>
           <div class="pm-sg-price">$${s.price.toLocaleString('es-AR')}</div>
+          <button class="pm-sg-add" onclick="addSugFromModal(${s.id}, event)">+ Agregar</button>
         </div>`;
       }).join('')}</div>` : '';
+
+  // área de acción: antes de agregar = cantidad + botón; después = confirmación + salidas claras
+  const actionHtml = pmAdded ? `
+      <div class="pm-added">
+        <div class="pm-added-msg">✓ Sumado a tu pedido</div>
+        <div class="pm-added-actions">
+          <button class="pm-keep" onclick="keepShopping()">← Seguir comprando</button>
+          <button class="pm-gocart" onclick="closeProduct();openCart()">Ver carrito · <span id="pm-gocart-total">$${cartTotal().toLocaleString('es-AR')}</span></button>
+        </div>
+      </div>` : `
+      <div class="pm-qtyrow">
+        <div class="pm-qty">
+          <button onclick="pmChange(-1)" aria-label="Menos">−</button>
+          <span>${pmQty}</span>
+          <button onclick="pmChange(1)" aria-label="Más">+</button>
+        </div>
+        <button class="pm-add" onclick="pmAdd()">Agregar · $${total}</button>
+      </div>`;
 
   const imgbg = src ? `<div class="pm-imgbg" style="background-image:url('${src}')"></div>` : '';
   document.getElementById('pm-card').innerHTML = `
@@ -2172,14 +2318,7 @@ function renderProductModal() {
       <h3 class="pm-name">${name}</h3>
       <div class="pm-price">$${p.price.toLocaleString('es-AR')} <small>c/u</small></div>
       ${p.variants ? `<div class="pm-vlabel">Elegí el sabor:</div><div class="pm-variants">${p.variants.map(v => `<button class="pm-var${v.l === pmVariant ? ' active' : ''}" onclick="pmSelectVariant('${v.l}')">${v.l}</button>`).join('')}</div>` : ''}
-      <div class="pm-qtyrow">
-        <div class="pm-qty">
-          <button onclick="pmChange(-1)" aria-label="Menos">−</button>
-          <span>${pmQty}</span>
-          <button onclick="pmChange(1)" aria-label="Más">+</button>
-        </div>
-        <button class="pm-add" onclick="pmAdd()">Agregar · $${total}</button>
-      </div>
+      ${actionHtml}
       ${sugHtml}
     </div>`;
 }
