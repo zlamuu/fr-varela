@@ -2338,12 +2338,21 @@ function toggleChat() {
   const open = panel.classList.toggle('open');
   if (open && !chatStarted) {
     chatStarted = true;
-    chatBot('¡Hola! 👋 Soy el asistente de FR.VARELA. ¿En qué te puedo ayudar?');
+    const n = cartCount();
+    const greeting = n > 0
+      ? `¡Hola! 👋 Ya tenés ${n} ${n === 1 ? 'producto' : 'productos'} en tu carrito. ¿Te ayudo con algo o querés revisar el pedido?`
+      : '¡Hola! 👋 ¿Qué estás buscando? Escribime el producto y te lo encuentro.';
+    chatBot(greeting);
     renderChatQuick();
   }
 }
 function renderChatQuick() {
+  const n = cartCount();
+  const cartBtn = n > 0
+    ? `<button onclick="toggleChat();openCart()">Ver mi carrito · ${n} ${n === 1 ? 'producto' : 'productos'} 🛒</button>`
+    : '';
   document.getElementById('chat-quick').innerHTML =
+    cartBtn +
     chatQuick.map(([label, key]) => `<button onclick="chatPick('${key}',\`${label}\`)">${label}</button>`).join('') +
     `<button class="cq-wa" onclick="window.open('https://wa.me/5491123593011','_blank')">Hablar por WhatsApp</button>`;
 }
@@ -2363,14 +2372,32 @@ function chatSend() {
   inp.value = '';
   chatMsg(t, 'me');
   const n = norm(t);
+
+  // Primero: intentar como búsqueda de producto
+  const matches = products.filter(p => matchesSearch(p, n));
+  if (matches.length) {
+    const label = matches.length === 1 ? `"${matches[0].name}"` : `${matches.length} productos`;
+    setTimeout(() => {
+      chatBot(`Encontré ${label} 🔍 Te los muestro.`);
+      setTimeout(() => {
+        toggleChat();
+        onSearch(t);
+        const grid = document.getElementById('comprar');
+        if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 600);
+    }, 300);
+    return;
+  }
+
+  // FAQ
   let key = null;
   if (/pedi|comprar|orden|carrito|como/.test(n)) key = 'pedir';
   else if (/envio|delivery|domicilio|horario|abierto|hora/.test(n)) key = 'envio';
   else if (/pago|paga|transfer|efectivo|mercado|tarjeta/.test(n)) key = 'pago';
   else if (/sucursal|donde|direccion|local|llegar|mapa/.test(n)) key = 'sucursales';
-  else if (/promo|oferta|descuento|combo|figu/.test(n)) key = 'promos';
-  else if (/hola|buenas|buenos/.test(n)) { setTimeout(() => chatBot('¡Hola! 😄 Preguntame sobre pedidos, envío, pagos, sucursales o promos. O tocá una opción de abajo.'), 300); return; }
-  setTimeout(() => chatBot(key ? chatAnswers[key] : 'Te puedo ayudar con: cómo pedir, envío, pagos, sucursales y promos 🙂. O tocá "Hablar por WhatsApp".'), 350);
+  else if (/promo|oferta|descuento|combo/.test(n)) key = 'promos';
+  else if (/hola|buenas|buenos/.test(n)) { setTimeout(() => chatBot('¡Hola! 😄 Escribime qué producto buscás y te lo encuentro.'), 300); return; }
+  setTimeout(() => chatBot(key ? chatAnswers[key] : 'No lo encuentro en el catálogo 😕 Escribinos por WhatsApp y te ayudamos.'), 350);
 }
 
 /* ---------- Popups de Sucursales / Contacto ---------- */
