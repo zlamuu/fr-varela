@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FR.VARELA — Maxikiosco 24hs en Florencio Varela · +300 productos, envío gratis</title>
-<meta name="description" content="El maxikiosco con más variedad de Florencio Varela. +300 productos: golosinas, chocolates, snacks, bebidas y almacén. Abierto las 24 horas. Pedí por WhatsApp con envío gratis y te llega en ~30 min.">
+<title>FR.VARELA — Maxikiosco 24hs en Florencio Varela · Golosinas, bebidas y más · Envío gratis</title>
+<meta name="description" content="El maxikiosco con más variedad de Florencio Varela. Golosinas, chocolates, snacks, bebidas y almacén. Abierto las 24 horas. Pedí por WhatsApp con envío gratis y te llega en ~30 min.">
 <meta name="theme-color" content="#C8331E">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -12,7 +12,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <!-- Para compartir por WhatsApp / redes -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="FR.VARELA — Maxikiosco 24hs · +300 productos">
+<meta property="og:title" content="FR.VARELA — Maxikiosco 24hs · Envío gratis a Florencio Varela">
 <meta property="og:description" content="El kiosco con más variedad de Florencio Varela. Abierto 24 hs, envío gratis. Pedí por WhatsApp.">
 <meta property="og:image" content="https://fr-varela.vercel.app/img/logo.png">
 <meta property="og:url" content="https://fr-varela.vercel.app">
@@ -34,7 +34,7 @@
   "@context": "https://schema.org",
   "@type": "Store",
   "name": "FR.VARELA",
-  "description": "Maxikiosco abierto las 24 horas en Florencio Varela. +300 productos con envío gratis a domicilio.",
+  "description": "Maxikiosco abierto las 24 horas en Florencio Varela. Golosinas, bebidas, snacks y almacén con envío gratis a domicilio.",
   "image": "https://fr-varela.vercel.app/img/logo.png",
   "url": "https://fr-varela.vercel.app",
   "telephone": "+5491123593011",
@@ -1012,7 +1012,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <div class="howto-inner">
     <h2 class="howto-title">Pedir es facilísimo</h2>
     <div class="howto-steps">
-      <div class="howto-step"><span class="howto-n">1</span><div class="howto-tx"><b>Elegí</b><small>Buscá entre +300 productos</small></div></div>
+      <div class="howto-step"><span class="howto-n">1</span><div class="howto-tx"><b>Elegí</b><small>Buscá golosinas, bebidas, snacks y más</small></div></div>
       <div class="howto-step"><span class="howto-n">2</span><div class="howto-tx"><b>Sumá al carrito</b><small>Las veces que quieras</small></div></div>
       <div class="howto-step"><span class="howto-n">3</span><div class="howto-tx"><b>Pedí por WhatsApp</b><small>Te llega en ~30 min, gratis</small></div></div>
     </div>
@@ -1022,8 +1022,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 <section class="community">
   <div class="comm-inner">
     <div class="comm-lead">
-      <span class="comm-num" data-countup="100000">+100.000</span>
-      <span class="comm-sub">vecinos de Florencio Varela ya nos eligen</span>
+      <span class="comm-num">FR.VARELA</span>
+      <span class="comm-sub">El kiosco del barrio · Florencio Varela</span>
     </div>
     <div class="comm-actions">
       <a class="comm-ig" href="https://instagram.com/fr.varela" target="_blank" rel="noopener">Seguinos en @fr.varela →</a>
@@ -1082,7 +1082,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         </div>
         <div class="ship-note"><b style="color:var(--red)">Envío gratis</b> · Te llega en ~30 min · Abierto las 24 hs</div>
       </div>
-      <div class="wa-proof">+100.000 clientes ya nos hicieron su pedido</div>
+      <div class="wa-proof">Pedidos en el barrio · Florencio Varela</div>
     </div>
   </div>
   <div class="cart-footer">
@@ -1457,7 +1457,7 @@ function updateResultCount(n) {
   const el = document.getElementById('result-count');
   if (!el) return;
   const full = currentCat === 'all' && !searchTerm.trim() && !currentCollection && !brandFilter && !priceFilter;
-  el.textContent = full ? '+300 productos · de todo, las 24 hs' : (n + (n === 1 ? ' producto' : ' productos'));
+  el.textContent = full ? (products.length + ' productos · de todo, las 24 hs') : (n + (n === 1 ? ' producto' : ' productos'));
 }
 
 /* ---------- Destacados (vidriera) ---------- */
@@ -1894,7 +1894,7 @@ function updateSuggestSel() {
   document.querySelectorAll('#search-suggest .ss-item').forEach((el, i) => el.classList.toggle('sel', i === suggestIdx));
 }
 function shareSite() {
-  const data = { title: 'FR.VARELA', text: 'El kiosco con más variedad de Florencio Varela. +300 productos, abierto 24 hs, envío gratis.', url: 'https://fr-varela.vercel.app' };
+  const data = { title: 'FR.VARELA', text: 'El kiosco con más variedad de Florencio Varela. Golosinas, bebidas, snacks y más. Abierto 24 hs, envío gratis.', url: 'https://fr-varela.vercel.app' };
   if (navigator.share) navigator.share(data).catch(() => {});
   else window.open('https://wa.me/?text=' + encodeURIComponent(data.text + ' ' + data.url), '_blank');
 }
@@ -2121,7 +2121,7 @@ function sendToWhatsApp() {
     return;
   }
 
-  let num = parseInt(localStorage.getItem('frvarela_order_n') || '1000', 10) + 1;
+  let num = parseInt(localStorage.getItem('frvarela_order_n') || '0', 10) + 1;
   localStorage.setItem('frvarela_order_n', num);
   const ckName = (document.getElementById('ck-name')?.value || '').trim();
   const ckAddr = (document.getElementById('ck-addr')?.value || '').trim();
@@ -2330,7 +2330,7 @@ const chatAnswers = {
   envio: '🛵 ¡El envío es GRATIS a domicilio! Y estamos abiertos las 24 horas, todos los días.',
   pago: '💳 Aceptamos Efectivo, Transferencia y MercadoPago. Lo coordinás al confirmar el pedido.',
   sucursales: '📍 Tenemos 3 sucursales en Florencio Varela:\n• España 2960\n• Hipólito Yrigoyen 1940\n• San Martín 3302\nMirá "Dónde estamos" para el mapa.',
-  promos: '🔥 Mirá la sección Promos arriba. Combos Franui, Blockazo y más. Y con compras mayores a $100.000 ¡te regalamos un sobre de figus! 🏆',
+  promos: '🔥 Mirá la sección Promos arriba. Combos Franui, Blockazo y más.',
 };
 const chatQuick = [['¿Cómo hago un pedido?', 'pedir'], ['Envío y horarios', 'envio'], ['Medios de pago', 'pago'], ['Sucursales', 'sucursales'], ['Promos', 'promos']];
 function toggleChat() {

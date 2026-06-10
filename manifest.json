@@ -1,7 +1,7 @@
 {
   "name": "FR.VARELA — Maxikiosco 24hs",
   "short_name": "FR.VARELA",
-  "description": "El maxikiosco con más variedad de Florencio Varela. +300 productos, abierto las 24 horas, envío gratis.",
+  "description": "El maxikiosco con más variedad de Florencio Varela. Golosinas, bebidas, snacks y más. Abierto las 24 horas, envío gratis.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FBF5EC",
