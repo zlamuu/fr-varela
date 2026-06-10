@@ -2336,14 +2336,16 @@ const chatQuick = [['¿Cómo hago un pedido?', 'pedir'], ['Envío y horarios', '
 function toggleChat() {
   const panel = document.getElementById('chat-panel');
   const open = panel.classList.toggle('open');
-  if (open && !chatStarted) {
-    chatStarted = true;
-    const n = cartCount();
-    const greeting = n > 0
-      ? `¡Hola! 👋 Ya tenés ${n} ${n === 1 ? 'producto' : 'productos'} en tu carrito. ¿Te ayudo con algo o querés revisar el pedido?`
-      : '¡Hola! 👋 ¿Qué estás buscando? Escribime el producto y te lo encuentro.';
-    chatBot(greeting);
+  if (open) {
     renderChatQuick();
+    if (!chatStarted) {
+      chatStarted = true;
+      const n = cartCount();
+      const greeting = n > 0
+        ? `¡Hola! 👋 Ya tenés ${n} ${n === 1 ? 'producto' : 'productos'} en tu carrito. ¿Te ayudo con algo o querés revisar el pedido?`
+        : '¡Hola! 👋 ¿Qué estás buscando? Escribime el producto y te lo encuentro.';
+      chatBot(greeting);
+    }
   }
 }
 function renderChatQuick() {
@@ -2381,6 +2383,8 @@ function chatSend() {
       chatBot(`Encontré ${label} 🔍 Te los muestro.`);
       setTimeout(() => {
         toggleChat();
+        const si = document.getElementById('search-input');
+        if (si) si.value = t;
         onSearch(t);
         const grid = document.getElementById('comprar');
         if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
