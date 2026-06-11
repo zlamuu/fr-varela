@@ -584,8 +584,7 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-sg-row::-webkit-scrollbar { display:none; }
 .pm-sg-card { flex:0 0 auto; width:92px; cursor:pointer; }
 .pm-sg-thumb { height:90px; border-radius:10px; overflow:hidden; display:flex; align-items:center; justify-content:center; font-size:30px; position:relative; }
-.pm-sg-bg { position:absolute; inset:0; background-size:cover; background-position:center; filter:blur(11px) brightness(0.96); transform:scale(1.2); z-index:0; }
-.pm-sg-thumb img { max-width:96%; max-height:100%; width:auto; height:auto; object-fit:contain; position:relative; z-index:1; filter:drop-shadow(0 4px 9px rgba(0,0,0,0.28)); }
+.pm-sg-thumb img { width:100%; height:100%; object-fit:cover; }
 .pm-sg-emoji { filter:drop-shadow(0 3px 5px rgba(0,0,0,0.12)); }
 .pm-sg-name { font-size:0.64rem; color:var(--text); line-height:1.2; height:2.4em; overflow:hidden; margin-top:4px; }
 .pm-sg-price { font-size:0.72rem; color:var(--red); font-weight:800; }
@@ -2311,7 +2310,7 @@ function renderProductModal() {
           ? `<img src="${ssrc}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-sg-emoji" style="display:none">${s.emoji}</span>`
           : `<span class="pm-sg-emoji">${s.emoji}</span>`;
         return `<div class="pm-sg-card${pmSugAdded.has(s.id) ? ' added' : ''}" onclick="openProduct(${s.id})">
-          <div class="pm-sg-thumb t-${s.category}">${ssrc ? `<div class="pm-sg-bg" style="background-image:url('${ssrc}')"></div>` : ''}${sthumb}</div>
+          <div class="pm-sg-thumb t-${s.category}">${sthumb}</div>
           <div class="pm-sg-name">${splitSize(s.name).name}</div>
           <div class="pm-sg-price">$${s.price.toLocaleString('es-AR')}</div>
           <button class="pm-sg-add" onclick="addSugFromModal(${s.id}, event)">+ Agregar</button>
