@@ -165,29 +165,22 @@ header .logo-name .va { color:#241F1A; }
 .logo-sub { font-size:0.62rem; color:var(--muted); text-transform:uppercase; letter-spacing:1.5px; font-weight:700; margin-top:3px; }
 
 .cart-btn {
-  position:relative;
   background:var(--red); color:#fff; border:none; border-radius:50px;
   padding:10px 18px; font-size:0.9rem; font-weight:800; cursor:pointer;
-  display:flex; align-items:center; gap:7px; white-space:nowrap;
+  display:flex; align-items:center; gap:8px; white-space:nowrap;
   box-shadow:0 4px 14px rgba(200,51,30,0.32);
   transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s, background .2s;
 }
 .cart-btn:hover { background:#b32d1b; transform:translateY(-2px) scale(1.03); box-shadow:0 8px 22px rgba(200,51,30,0.42); }
 .cart-btn:active { transform:translateY(0) scale(1); }
-.cart-btn.bump { animation:cartBtnBump .45s cubic-bezier(.34,1.56,.64,1); }
-@keyframes cartBtnBump { 0%{transform:scale(1)} 40%{transform:scale(1.07)} 100%{transform:scale(1)} }
 .cart-ico { width:18px; height:18px; }
-.cart-total { font-weight:900; font-variant-numeric:tabular-nums; }
 .cart-count {
-  position:absolute; top:-7px; right:-5px;
-  background:var(--yellow); color:#1B1B1F; border:2px solid #fff;
-  border-radius:50%; min-width:23px; height:23px; padding:0 5px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:0.72rem; font-weight:900; box-shadow:0 2px 7px rgba(0,0,0,0.28);
+  background:var(--yellow); color:#1B1B1F; border-radius:50%;
+  min-width:22px; height:22px; padding:0 5px; display:flex; align-items:center; justify-content:center;
+  font-size:0.75rem; font-weight:900;
 }
-.cart-count.hide { display:none; }
-.cart-count.bump { animation:cartBump .42s cubic-bezier(.34,1.56,.64,1); }
-@keyframes cartBump { 0%{transform:scale(1)} 40%{transform:scale(1.5)} 100%{transform:scale(1)} }
+.cart-count.bump { animation:cartBump .4s cubic-bezier(.34,1.56,.64,1); }
+@keyframes cartBump { 0%{transform:scale(1)} 40%{transform:scale(1.45)} 100%{transform:scale(1)} }
 
 /* ===== TICKER ===== */
 .ticker {
@@ -492,6 +485,8 @@ header .logo-name .va { color:#241F1A; }
 /* ===== TOAST ===== */
 .toast { position:fixed; bottom:96px; left:50%; transform:translateX(-50%) translateY(20px); background:#1B1B1F; color:#fff; padding:11px 18px; border-radius:50px; font-size:0.85rem; font-weight:600; z-index:250; opacity:0; pointer-events:none; transition:all .25s ease; white-space:nowrap; box-shadow:0 6px 20px rgba(0,0,0,0.25); }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+.toast-plus { display:inline-flex; align-items:center; background:#1f9d57; color:#fff; font-weight:900; border-radius:50px; padding:1px 9px; margin-right:8px; font-size:0.82rem; }
+.toast-tail { opacity:0.6; margin-left:6px; font-weight:600; }
 
 /* ===== COMO PEDIR ===== */
 .howto { padding:26px 16px 6px; max-width:1100px; margin:0 auto; }
@@ -927,9 +922,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     </div>
     <button class="cart-btn" onclick="openCart()" aria-label="Abrir carrito">
       <svg class="cart-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h2.2l2.3 12.2a1.6 1.6 0 0 0 1.6 1.3h8.9a1.6 1.6 0 0 0 1.6-1.3L20.5 7H6"/></svg>
-      <span class="cart-text" id="cart-text">Carrito</span>
-      <span class="cart-total" id="cart-total-btn"></span>
-      <span class="cart-count hide" id="cart-count">0</span>
+      Carrito
+      <span class="cart-count" id="cart-count">0</span>
     </button>
   </header>
 </div>
@@ -1725,7 +1719,7 @@ function addToCart(id, source = 'grid') {
   if (p && p.variants) { openProduct(id); return; } // tiene sabores: abrir para elegir
   cart[id] = (cart[id] || 0) + 1;
   afterCartChange(id);
-  showToast(`${p.name} agregado al pedido`);
+  showAddToast(p.name);
   track('add_to_cart', { id, source, price: p.price });
 }
 
@@ -1767,18 +1761,11 @@ function cartTotal() {
 }
 
 function updateCount() {
-  const n = cartCount();
   const el = document.getElementById('cart-count');
-  el.textContent = n;
-  el.classList.toggle('hide', n === 0);
-  const txt = document.getElementById('cart-text');
-  const tot = document.getElementById('cart-total-btn');
-  if (txt) txt.style.display = n ? 'none' : '';                                  // con items mostramos el total en vez de "Carrito"
-  if (tot) tot.textContent = n ? '$' + cartTotal().toLocaleString('es-AR') : '';
-  if (n === 0) return;                                                          // sin items no animamos (carga inicial)
-  el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump');   // reinicia la animación
-  const btn = document.querySelector('.cart-btn');
-  if (btn) { btn.classList.remove('bump'); void btn.offsetWidth; btn.classList.add('bump'); }
+  el.textContent = cartCount();
+  el.classList.remove('bump');
+  void el.offsetWidth;          // reinicia la animación
+  el.classList.add('bump');
 }
 
 function updateCheckoutBar() {
@@ -2149,6 +2136,14 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
 }
+// confirmación de "agregado": "+N · Nombre del producto · agregado"
+function showAddToast(name, qty = 1) {
+  const t = document.getElementById('toast');
+  t.innerHTML = `<span class="toast-plus">+${qty}</span>${name}<span class="toast-tail">agregado</span>`;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+}
 
 /* ---------- WhatsApp ---------- */
 function sendToWhatsApp() {
@@ -2255,7 +2250,7 @@ function pmAdd() {
   const key = p.variants ? `${pmId}|${pmVariant}` : String(pmId);
   cart[key] = (cart[key] || 0) + pmQty;
   saveCart(); updateCount(); refreshCard(pmId); updateCheckoutBar();
-  showToast(`${pmQty} x ${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''} agregado al pedido`);
+  showAddToast(`${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''}`, pmQty);
   track('add_to_cart', { id: pmId, source: 'modal', qty: pmQty, price: p.price });
   pmAdded = true;          // no cerramos: ofrecemos seguir comprando + cruces
   renderProductModal();
@@ -2290,17 +2285,14 @@ function addSugFromModal(id, ev) {
   if (p.variants) { openProduct(id); return; }   // tiene sabores: abrir para elegir
   cart[id] = (cart[id] || 0) + 1;
   afterCartChange(id);
-  showToast(`${splitSize(p.name).name} agregado al pedido`);
+  showAddToast(splitSize(p.name).name);
   track('add_to_cart', { id, source: 'suggest_modal', price: p.price });
   if (ev && ev.currentTarget) {
-    const btn = ev.currentTarget;
-    const card = btn.closest('.pm-sg-card');
+    const card = ev.currentTarget.closest('.pm-sg-card');
     if (card) {   // pop rápido, sin marca persistente: agregás y listo
       card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
       setTimeout(() => card.classList.remove('pop'), 850);
     }
-    btn.textContent = '✓ Agregado';                       // confirmación transitoria, vuelve sola
-    setTimeout(() => { btn.textContent = '+ Agregar'; }, 900);
   }
   const gc = document.getElementById('pm-gocart-total');
   if (gc) gc.textContent = '$' + cartTotal().toLocaleString('es-AR');
