@@ -590,9 +590,11 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-sg-price { font-size:0.72rem; color:var(--red); font-weight:800; }
 .pm-sg-add { margin-top:5px; width:100%; background:#fff; color:var(--red); border:1.5px solid var(--red); border-radius:8px; padding:5px 4px; font-family:inherit; font-weight:800; font-size:0.68rem; cursor:pointer; transition:all .15s; }
 .pm-sg-add:hover { background:var(--red); color:#fff; }
-.pm-sg-card.added .pm-sg-add { background:#1f9d57; border-color:#1f9d57; color:#fff; }
-.pm-sg-card.added .pm-sg-thumb { outline:2.5px solid #1f9d57; outline-offset:-2.5px; }
-.pm-sg-card.added .pm-sg-thumb::after { content:'✓'; position:absolute; top:5px; right:5px; z-index:2; width:22px; height:22px; display:flex; align-items:center; justify-content:center; background:#1f9d57; color:#fff; font-size:13px; font-weight:900; border-radius:50%; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
+/* feedback al agregar: solo una animación, sin marca persistente */
+@keyframes sgPop { 0%{transform:scale(1)} 35%{transform:scale(.9)} 70%{transform:scale(1.07)} 100%{transform:scale(1)} }
+@keyframes sgBtnPulse { 0%{background:#fff;border-color:var(--red);color:var(--red)} 20%,75%{background:#1f9d57;border-color:#1f9d57;color:#fff} 100%{background:#fff;border-color:var(--red);color:var(--red)} }
+.pm-sg-card.pop .pm-sg-thumb { animation:sgPop .42s ease; }
+.pm-sg-card.pop .pm-sg-add { animation:sgBtnPulse .85s ease; }
 
 /* Estado "agregado" dentro del modal: deja de ser callejón sin salida */
 .pm-added { background:#EAF8EF; border:1px solid #BCE7CC; border-radius:14px; padding:12px 14px; margin-top:4px; animation:pmin .2s ease; }
@@ -2177,9 +2179,9 @@ function sendToWhatsApp() {
 }
 
 /* ---------- Ventana de detalle del producto ---------- */
-let pmId = null, pmQty = 1, pmVariant = '', pmAdded = false, pmSug = [], pmSugAdded = new Set();
+let pmId = null, pmQty = 1, pmVariant = '', pmAdded = false, pmSug = [];
 function openProduct(id) {
-  pmId = id; pmQty = 1; pmAdded = false; pmSugAdded = new Set();
+  pmId = id; pmQty = 1; pmAdded = false;
   const p = products.find(x => x.id === id);
   pmVariant = (p && p.variants) ? p.variants[0].l : '';
   pmSug = p ? modalSuggestions(p) : [];   // se calcula UNA vez al abrir → quedan fijas mientras mirás este producto
@@ -2275,10 +2277,12 @@ function addSugFromModal(id, ev) {
   afterCartChange(id);
   showToast(`${splitSize(p.name).name} agregado al pedido`);
   track('add_to_cart', { id, source: 'suggest_modal', price: p.price });
-  pmSugAdded.add(id);   // recordá el ✓ por si se re-renderiza el modal
   if (ev && ev.currentTarget) {
     const card = ev.currentTarget.closest('.pm-sg-card');
-    if (card) card.classList.add('added');
+    if (card) {   // pop rápido, sin marca persistente: agregás y listo
+      card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
+      setTimeout(() => card.classList.remove('pop'), 850);
+    }
   }
   const gc = document.getElementById('pm-gocart-total');
   if (gc) gc.textContent = '$' + cartTotal().toLocaleString('es-AR');
@@ -2310,7 +2314,7 @@ function renderProductModal() {
         const sthumb = ssrc
           ? `<img src="${ssrc}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-sg-emoji" style="display:none">${s.emoji}</span>`
           : `<span class="pm-sg-emoji">${s.emoji}</span>`;
-        return `<div class="pm-sg-card${pmSugAdded.has(s.id) ? ' added' : ''}" onclick="openProduct(${s.id})">
+        return `<div class="pm-sg-card" onclick="openProduct(${s.id})">
           <div class="pm-sg-thumb t-${s.category}">${sthumb}</div>
           <div class="pm-sg-name">${splitSize(s.name).name}</div>
           <div class="pm-sg-price">$${s.price.toLocaleString('es-AR')}</div>
