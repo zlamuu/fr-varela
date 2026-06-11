@@ -599,15 +599,6 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-sg-card.pop .pm-sg-thumb { animation:sgPop .42s ease; }
 .pm-sg-card.pop .pm-sg-add { animation:sgBtnPulse .85s ease; }
 
-/* Estado "agregado" dentro del modal: deja de ser callejón sin salida */
-.pm-added { background:#EAF8EF; border:1px solid #BCE7CC; border-radius:14px; padding:12px 14px; margin-top:4px; animation:pmin .2s ease; }
-.pm-added-msg { font-size:0.92rem; font-weight:800; color:#1f7a45; display:flex; align-items:center; gap:7px; }
-.pm-added-actions { display:flex; gap:8px; margin-top:11px; }
-.pm-keep { flex:1; background:#fff; color:var(--text); border:1.5px solid var(--line); border-radius:11px; padding:11px 8px; font-family:inherit; font-weight:800; font-size:0.84rem; cursor:pointer; transition:border-color .15s; }
-.pm-keep:hover { border-color:var(--red); }
-.pm-gocart { flex:1.3; background:var(--red); color:#fff; border:none; border-radius:11px; padding:11px 8px; font-family:inherit; font-weight:800; font-size:0.84rem; cursor:pointer; box-shadow:0 4px 12px rgba(200,51,30,0.3); }
-.pm-gocart:hover { background:#B23A1C; }
-
 /* hover en destacados */
 .feat-card { transition:all .2s; }
 .feat-card .product-img-wrap, .feat-body { cursor:pointer; }
@@ -2197,9 +2188,9 @@ function sendToWhatsApp() {
 }
 
 /* ---------- Ventana de detalle del producto ---------- */
-let pmId = null, pmQty = 1, pmVariant = '', pmAdded = false, pmSug = [];
+let pmId = null, pmQty = 1, pmVariant = '', pmSug = [];
 function openProduct(id) {
-  pmId = id; pmQty = 1; pmAdded = false;
+  pmId = id; pmQty = 1;
   const p = products.find(x => x.id === id);
   pmVariant = (p && p.variants) ? p.variants[0].l : '';
   pmSug = p ? modalSuggestions(p) : [];   // se calcula UNA vez al abrir → quedan fijas mientras mirás este producto
@@ -2239,17 +2230,6 @@ function closeProduct() {
   document.getElementById('pm-overlay').classList.remove('open');
 }
 // "Seguir comprando": no es solo cerrar — te devuelve al catálogo para que recorras sin fricción
-function keepShopping() {
-  closeProduct();
-  // si venías de una búsqueda, volvé al catálogo completo (no te dejo atrapado en un filtro)
-  if (searchTerm && searchTerm.trim()) clearSearch();
-  const grid = document.getElementById('comprar');
-  if (!grid) return;
-  // scrolleo a la grilla solo si no la tenés ya a la vista (evita saltos si ya estabas navegando)
-  const r = grid.getBoundingClientRect();
-  const inView = r.top < window.innerHeight * 0.6 && r.bottom > 80;
-  if (!inView) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 function pmChange(d) { pmQty = Math.max(1, pmQty + d); renderProductModal(); }
 function pmSelectVariant(l) { pmVariant = l; renderProductModal(); }
 function pmAdd() {
@@ -2260,9 +2240,8 @@ function pmAdd() {
   saveCart(); updateCount(); refreshCard(pmId); updateCheckoutBar();
   showAddToast(`${splitSize(p.name).name}${pmVariant ? ' · ' + pmVariant : ''}`, pmQty);
   track('add_to_cart', { id: pmId, source: 'modal', qty: pmQty, price: p.price });
-  pmAdded = true;          // no cerramos: ofrecemos seguir comprando + cruces
-  renderProductModal();
-  document.getElementById('pm-card').scrollTop = 0;
+  closeProduct();          // flujo PedidosYa: agregás y te lleva al carrito a completar el pedido
+  openCart();
 }
 // nombre base de un producto (sin tamaño/formato) para evitar duplicados tipo "Sprite" / "Sprite Lata"
 function prodBase(p) {
@@ -2302,8 +2281,6 @@ function addSugFromModal(id, ev) {
       setTimeout(() => card.classList.remove('pop'), 850);
     }
   }
-  const gc = document.getElementById('pm-gocart-total');
-  if (gc) gc.textContent = '$' + cartTotal().toLocaleString('es-AR');
 }
 
 function modalSuggestions(p, limit = 4) {
@@ -2340,15 +2317,8 @@ function renderProductModal() {
         </div>`;
       }).join('')}</div>` : '';
 
-  // área de acción: antes de agregar = cantidad + botón; después = confirmación + salidas claras
-  const actionHtml = pmAdded ? `
-      <div class="pm-added">
-        <div class="pm-added-msg">✓ Sumado a tu pedido</div>
-        <div class="pm-added-actions">
-          <button class="pm-keep" onclick="keepShopping()">← Seguir comprando</button>
-          <button class="pm-gocart" onclick="closeProduct();openCart()">Ver carrito · <span id="pm-gocart-total">$${cartTotal().toLocaleString('es-AR')}</span></button>
-        </div>
-      </div>` : `
+  // área de acción: cantidad + botón (al agregar te lleva al carrito)
+  const actionHtml = `
       <div class="pm-qtyrow">
         <div class="pm-qty">
           <button onclick="pmChange(-1)" aria-label="Menos">−</button>
