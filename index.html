@@ -593,11 +593,13 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-sg-price { font-size:0.72rem; color:var(--red); font-weight:800; }
 .pm-sg-add { margin-top:5px; width:100%; background:#fff; color:var(--red); border:1.5px solid var(--red); border-radius:8px; padding:5px 4px; font-family:inherit; font-weight:800; font-size:0.68rem; cursor:pointer; transition:all .15s; }
 .pm-sg-add:hover { background:var(--red); color:#fff; }
-/* feedback al agregar: solo una animación, sin marca persistente */
-@keyframes sgPop { 0%{transform:scale(1)} 35%{transform:scale(.9)} 70%{transform:scale(1.07)} 100%{transform:scale(1)} }
-@keyframes sgBtnPulse { 0%{background:#fff;border-color:var(--red);color:var(--red)} 20%,75%{background:#1f9d57;border-color:#1f9d57;color:#fff} 100%{background:#fff;border-color:var(--red);color:var(--red)} }
-.pm-sg-card.pop .pm-sg-thumb { animation:sgPop .42s ease; }
-.pm-sg-card.pop .pm-sg-add { animation:sgBtnPulse .85s ease; }
+/* al agregar, el botón se vuelve stepper de cantidad */
+.pm-sg-step { margin-top:5px; display:flex; align-items:center; justify-content:space-between; background:#fff; border:1.5px solid var(--red); border-radius:8px; padding:3px 6px; }
+.pm-sg-step button { background:none; border:none; color:var(--red); font-size:1rem; font-weight:800; cursor:pointer; width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
+.pm-sg-step span { font-size:0.74rem; font-weight:900; color:var(--text); }
+.sug-step { margin-top:3px; display:flex; align-items:center; justify-content:space-between; background:#fff; border:1px solid var(--red); border-radius:8px; padding:3px 7px; }
+.sug-step button { background:none; border:none; color:var(--red); font-size:1.05rem; font-weight:800; cursor:pointer; width:24px; height:24px; display:flex; align-items:center; justify-content:center; }
+.sug-step span { font-size:0.8rem; font-weight:900; color:var(--text); }
 
 /* hover en destacados */
 .feat-card { transition:all .2s; }
@@ -1993,6 +1995,7 @@ function ckFocus() { if (!ckStartTracked) { ckStartTracked = true; track('checko
 function openCart() {
   document.getElementById('cart-overlay').classList.add('open');
   document.getElementById('cart-panel').classList.add('open');
+  cartSug = getSuggestions(6);   // fijas para esta apertura: al agregar, transforman en stepper en su lugar
   updateCheckoutBar();
   renderCartPanel();
   loadCkFields();
@@ -2026,9 +2029,10 @@ function getSuggestions(limit = 6) {
   return pickFromQueues(queues, limit, seenBase);
 }
 
+let cartSug = [];   // sugerencias fijadas al abrir el carrito (se transforman en stepper en su lugar)
 function renderSuggestions() {
   const box = document.getElementById('cart-suggest');
-  const sug = getSuggestions(6);
+  const sug = cartSug.length ? cartSug : getSuggestions(6);
   if (!sug.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
   box.style.display = 'block';
   const falta = MIN_ORDER - cartTotal();
@@ -2041,20 +2045,23 @@ function renderSuggestions() {
       const thumb = src
         ? `<img src="${src}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="product-emoji-fb" style="display:none">${p.emoji}</span>`
         : `<span>${p.emoji}</span>`;
+      const q = cart[p.id] || 0;   // al estar en el carrito, el botón pasa a stepper (estilo PedidosYa)
+      const footer = q > 0
+        ? `<div class="sug-step">
+             <button onclick="changeQty('${p.id}',-1)" aria-label="${q === 1 ? 'Quitar del carrito' : 'Quitar uno'}">${q === 1 ? TRASH_SVG : '−'}</button>
+             <span>${q}</span>
+             <button onclick="changeQty('${p.id}',1)" aria-label="Agregar uno">+</button>
+           </div>`
+        : `<button class="suggest-add" onclick="changeQty('${p.id}',1)">+ Agregar</button>`;
       return `<div class="suggest-card">
         <div class="suggest-thumb t-${p.category}">${thumb}</div>
         <div class="suggest-body">
           <div class="suggest-name">${splitSize(p.name).name}</div>
           <div class="suggest-price">$${p.price.toLocaleString('es-AR')}</div>
-          <button class="suggest-add" onclick="addSuggestion(${p.id})">+ Agregar</button>
+          ${footer}
         </div>
       </div>`;
     }).join('')}</div>`;
-}
-
-function addSuggestion(id) {
-  addToCart(id, 'suggest_cart');   // agrega + toast + actualiza grilla/contador/barra
-  renderCartPanel();               // refresca items, total y recomendaciones
 }
 
 const MIN_ORDER = 6000; // pedido mínimo (cambiable)
@@ -2264,23 +2271,49 @@ const crossLabels = {
 };
 function crossLabel(cat) { return crossLabels[cat] || 'Los clientes también llevan 👇'; }
 
-// agregar un cruce sin salir del modal del producto actual
-function addSugFromModal(id, ev) {
+// Sugerencias dentro del modal: al agregar, el botón se vuelve stepper (estilo PedidosYa)
+function pmSugCardsHtml() {
+  const sug = pmSug;   // fijas (calculadas al abrir el producto)
+  if (!sug.length) return '';
+  const p = products.find(x => x.id === pmId);
+  return `<div class="pm-sg-title">${crossLabel(p.category)}</div>
+      <div class="pm-sg-row">${sug.map(s => {
+        const ssrc = imgSrc(s);
+        const sthumb = ssrc
+          ? `<img src="${ssrc}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-sg-emoji" style="display:none">${s.emoji}</span>`
+          : `<span class="pm-sg-emoji">${s.emoji}</span>`;
+        const q = cart[s.id] || 0;
+        const footer = q > 0
+          ? `<div class="pm-sg-step">
+               <button onclick="event.stopPropagation();pmSugStep(${s.id},-1)" aria-label="${q === 1 ? 'Quitar del carrito' : 'Quitar uno'}">${q === 1 ? TRASH_SVG : '−'}</button>
+               <span>${q}</span>
+               <button onclick="event.stopPropagation();pmSugStep(${s.id},1)" aria-label="Agregar uno">+</button>
+             </div>`
+          : `<button class="pm-sg-add" onclick="pmSugAdd(${s.id}, event)">+ Agregar</button>`;
+        return `<div class="pm-sg-card" onclick="openProduct(${s.id})">
+          <div class="pm-sg-thumb t-${s.category}">${sthumb}</div>
+          <div class="pm-sg-name">${splitSize(s.name).name}</div>
+          <div class="pm-sg-price">$${s.price.toLocaleString('es-AR')}</div>
+          ${footer}
+        </div>`;
+      }).join('')}</div>`;
+}
+function renderPmSug() {
+  const box = document.getElementById('pm-sug-box');
+  if (box) box.innerHTML = pmSugCardsHtml();
+}
+function pmSugStep(id, delta) {
+  changeQty(String(id), delta);   // actualiza cart, grilla, contador, barra y panel
+  renderPmSug();
+}
+function pmSugAdd(id, ev) {
   if (ev) ev.stopPropagation();
   const p = products.find(x => x.id === id);
   if (!p) return;
   if (p.variants) { openProduct(id); return; }   // tiene sabores: abrir para elegir
-  cart[id] = (cart[id] || 0) + 1;
-  afterCartChange(id);
-  showAddToast(splitSize(p.name).name);
+  changeQty(String(id), 1);
   track('add_to_cart', { id, source: 'suggest_modal', price: p.price });
-  if (ev && ev.currentTarget) {
-    const card = ev.currentTarget.closest('.pm-sg-card');
-    if (card) {   // pop rápido, sin marca persistente: agregás y listo
-      card.classList.remove('pop'); void card.offsetWidth; card.classList.add('pop');
-      setTimeout(() => card.classList.remove('pop'), 850);
-    }
-  }
+  renderPmSug();
 }
 
 function modalSuggestions(p, limit = 4) {
@@ -2301,21 +2334,7 @@ function renderProductModal() {
     ? `<img src="${src}" alt="${name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-emoji" style="display:none">${p.emoji}</span>`
     : `<span class="pm-emoji">${p.emoji}</span>`;
   const total = (p.price * pmQty).toLocaleString('es-AR');
-  const sug = pmSug;   // fijas (calculadas al abrir el producto), no se recalculan al agregar/cambiar cantidad
-  const sugHtml = sug.length ? `
-      <div class="pm-sg-title">${crossLabel(p.category)}</div>
-      <div class="pm-sg-row">${sug.map(s => {
-        const ssrc = imgSrc(s);
-        const sthumb = ssrc
-          ? `<img src="${ssrc}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-sg-emoji" style="display:none">${s.emoji}</span>`
-          : `<span class="pm-sg-emoji">${s.emoji}</span>`;
-        return `<div class="pm-sg-card" onclick="openProduct(${s.id})">
-          <div class="pm-sg-thumb t-${s.category}">${sthumb}</div>
-          <div class="pm-sg-name">${splitSize(s.name).name}</div>
-          <div class="pm-sg-price">$${s.price.toLocaleString('es-AR')}</div>
-          <button class="pm-sg-add" onclick="addSugFromModal(${s.id}, event)">+ Agregar</button>
-        </div>`;
-      }).join('')}</div>` : '';
+  const sugHtml = `<div id="pm-sug-box">${pmSugCardsHtml()}</div>`;   // se re-renderiza solo al sumar/restar
 
   // área de acción: cantidad + botón (al agregar te lleva al carrito)
   const actionHtml = `
