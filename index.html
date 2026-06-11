@@ -544,6 +544,9 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .feat-name { font-size:0.76rem; font-weight:700; color:var(--text); line-height:1.25; height:2.5em; overflow:hidden; margin-bottom:2px; }
 .feat-slot { position:absolute; right:8px; bottom:8px; z-index:3; }
 .feat-slot .add-btn { width:34px; height:34px; font-size:1.3rem; }
+/* al expandir en la vidriera, ocupa toda la barra de abajo (no tapa el precio como pastilla) */
+.feat-slot.open { left:8px; right:8px; bottom:6px; background:var(--card); border-radius:11px; padding:2px 0; box-shadow:0 2px 12px rgba(0,0,0,0.18); }
+.feat-slot.open .qty-ctrl { width:100%; justify-content:space-between; border:none; background:transparent; box-shadow:none; }
 
 /* ===== Barra de orden ===== */
 .toolbar { max-width:1100px; margin:18px auto 8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.05); scroll-margin-top:130px; }
@@ -2297,18 +2300,20 @@ function stepStart(btn, id, ctx) {
   track('add_to_cart', { id, source: 'step_' + ctx, price: p.price });
   const slot = btn.closest('.step-slot');
   slot.innerHTML = stepExpandedHtml(id, q, ctx, 1);
+  slot.classList.add('open');
   armStepCollapse(slot, id, ctx);
 }
 function stepChange(btnEl, id, delta, ctx) {
   const slot = btnEl.closest('.step-slot');
   const q = stepApply(id, delta, ctx);
-  if (q <= 0) { clearTimeout(slot._t); slot.innerHTML = stepCollapsedHtml(id, ctx); return; }
+  if (q <= 0) { clearTimeout(slot._t); slot.classList.remove('open'); slot.innerHTML = stepCollapsedHtml(id, ctx); return; }
   slot.innerHTML = stepExpandedHtml(id, q, ctx, delta);
+  slot.classList.add('open');
   armStepCollapse(slot, id, ctx);
 }
 function armStepCollapse(slot, id, ctx) {
   clearTimeout(slot._t);
-  slot._t = setTimeout(() => { slot.innerHTML = stepCollapsedHtml(id, ctx); }, 2000);
+  slot._t = setTimeout(() => { slot.classList.remove('open'); slot.innerHTML = stepCollapsedHtml(id, ctx); }, 2000);
 }
 function stepApply(id, delta, ctx) {
   const key = String(id);
