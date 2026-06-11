@@ -394,7 +394,16 @@ header .logo-name .va { color:#241F1A; }
 .qty-ctrl span { font-size:0.9rem; font-weight:800; color:var(--text); min-width:20px; text-align:center; }
 
 .promo-badge { position:absolute; top:8px; left:8px; z-index:3; background:var(--red); color:#fff; font-size:0.6rem; font-weight:900; padding:4px 8px; border-radius:50px; letter-spacing:0.8px; box-shadow:0 2px 8px rgba(225,27,34,0.45); }
-.card-qty { position:absolute; top:7px; right:7px; z-index:3; background:var(--red); color:#fff; border:2px solid #fff; border-radius:50%; min-width:25px; height:25px; padding:0 6px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900; box-shadow:0 2px 7px rgba(0,0,0,0.28); animation:cartBump .35s cubic-bezier(.34,1.56,.64,1); }
+.card-qty { position:absolute; top:7px; right:7px; z-index:3; background:var(--red); color:#fff; border:2px solid #fff; border-radius:50%; min-width:25px; height:25px; padding:0 6px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900; box-shadow:0 2px 7px rgba(0,0,0,0.28); }
+.card-qty.pulse { animation:cartBump .35s cubic-bezier(.34,1.56,.64,1); }
+/* número del stepper: sube al sumar, baja al restar */
+.step-num { display:inline-block; }
+@keyframes stepNumUp { from{transform:translateY(80%);opacity:0} to{transform:translateY(0);opacity:1} }
+@keyframes stepNumDown { from{transform:translateY(-80%);opacity:0} to{transform:translateY(0);opacity:1} }
+.step-num.up { animation:stepNumUp .2s ease; }
+.step-num.down { animation:stepNumDown .2s ease; }
+.step-slot { display:flex; }
+.suggest-body .step-slot, .pm-sg-card .step-slot { display:block; }
 .size-tag { position:absolute; top:8px; right:8px; z-index:3; background:rgba(255,255,255,0.95); color:var(--text); font-size:0.64rem; font-weight:800; padding:3px 9px; border-radius:50px; letter-spacing:0.2px; box-shadow:0 1px 4px rgba(0,0,0,0.12); }
 
 /* ===== SIN RESULTADOS ===== */
@@ -444,7 +453,7 @@ header .logo-name .va { color:#241F1A; }
 .suggest-body { padding:6px 7px 8px; display:flex; flex-direction:column; gap:3px; }
 .suggest-name { font-size:0.72rem; color:#444; line-height:1.25; height:2.5em; overflow:hidden; }
 .suggest-price { font-size:0.74rem; color:var(--text); font-weight:800; }
-.suggest-add { margin-top:3px; background:var(--red); color:#fff; border:none; border-radius:8px; padding:5px; font-weight:800; font-size:0.72rem; cursor:pointer; }
+.suggest-add { margin-top:3px; width:100%; background:var(--red); color:#fff; border:none; border-radius:8px; padding:5px; font-weight:800; font-size:0.72rem; cursor:pointer; }
 .suggest-add:hover { background:#c4151b; }
 
 /* datos de pago/envío/checkout: viven en el scroll, NO en el footer fijo (así la lista nunca colapsa en pantallas bajas) */
@@ -1676,17 +1685,8 @@ const TRASH_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" s
 
 function renderCard(p) {
   const inCart = cart[p.id];
-  // al llegar a 1, el "−" pasa a tacho (queda claro que el próximo toque lo saca del carrito)
-  const minus = inCart === 1
-    ? `<button onclick="changeQty(${p.id},-1)" aria-label="Quitar del carrito">${TRASH_SVG}</button>`
-    : `<button onclick="changeQty(${p.id},-1)" aria-label="Quitar uno">−</button>`;
-  const footer = inCart
-    ? `<div class="qty-ctrl">
-         ${minus}
-         <span>${inCart}</span>
-         <button onclick="changeQty(${p.id},1)" aria-label="Agregar uno">+</button>
-       </div>`
-    : `<button class="add-btn" onclick="addToCart(${p.id})" aria-label="Agregar ${p.name}">+</button>`;
+  // footer en reposo siempre "+"; al tocar aparece el stepper transitorio. El número sobre la foto es el indicador permanente.
+  const footer = `<div class="step-slot">${stepCollapsedHtml(p.id, 'grid')}</div>`;
   const imgBadge = inCart ? `<span class="card-qty">${inCart}</span>` : '';
 
   const badge = p.category === 'promos'
@@ -2045,20 +2045,12 @@ function renderSuggestions() {
       const thumb = src
         ? `<img src="${src}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="product-emoji-fb" style="display:none">${p.emoji}</span>`
         : `<span>${p.emoji}</span>`;
-      const q = cart[p.id] || 0;   // al estar en el carrito, el botón pasa a stepper (estilo PedidosYa)
-      const footer = q > 0
-        ? `<div class="sug-step">
-             <button onclick="changeQty('${p.id}',-1)" aria-label="${q === 1 ? 'Quitar del carrito' : 'Quitar uno'}">${q === 1 ? TRASH_SVG : '−'}</button>
-             <span>${q}</span>
-             <button onclick="changeQty('${p.id}',1)" aria-label="Agregar uno">+</button>
-           </div>`
-        : `<button class="suggest-add" onclick="changeQty('${p.id}',1)">+ Agregar</button>`;
       return `<div class="suggest-card">
         <div class="suggest-thumb t-${p.category}">${thumb}</div>
         <div class="suggest-body">
           <div class="suggest-name">${splitSize(p.name).name}</div>
           <div class="suggest-price">$${p.price.toLocaleString('es-AR')}</div>
-          ${footer}
+          <div class="step-slot">${stepCollapsedHtml(p.id, 'cart')}</div>
         </div>
       </div>`;
     }).join('')}</div>`;
@@ -2084,9 +2076,12 @@ function updateMinOrder(total) {
 }
 
 function renderCartPanel() {
+  renderCartItems();
+  renderSuggestions();
+}
+function renderCartItems() {
   const items = Object.entries(cart);
   const el = document.getElementById('cart-items');
-  renderSuggestions();
   document.getElementById('clear-btn').style.display = items.length ? 'block' : 'none';
   const hc = document.getElementById('cart-h-count');
   if (hc) { const n = cartCount(); hc.textContent = n ? `· ${n} ${n === 1 ? 'ítem' : 'ítems'}` : ''; }
@@ -2271,7 +2266,7 @@ const crossLabels = {
 };
 function crossLabel(cat) { return crossLabels[cat] || 'Los clientes también llevan 👇'; }
 
-// Sugerencias dentro del modal: al agregar, el botón se vuelve stepper (estilo PedidosYa)
+// Sugerencias dentro del modal (el footer usa el stepper transitorio genérico)
 function pmSugCardsHtml() {
   const sug = pmSug;   // fijas (calculadas al abrir el producto)
   if (!sug.length) return '';
@@ -2282,38 +2277,76 @@ function pmSugCardsHtml() {
         const sthumb = ssrc
           ? `<img src="${ssrc}" alt="" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"><span class="pm-sg-emoji" style="display:none">${s.emoji}</span>`
           : `<span class="pm-sg-emoji">${s.emoji}</span>`;
-        const q = cart[s.id] || 0;
-        const footer = q > 0
-          ? `<div class="pm-sg-step">
-               <button onclick="event.stopPropagation();pmSugStep(${s.id},-1)" aria-label="${q === 1 ? 'Quitar del carrito' : 'Quitar uno'}">${q === 1 ? TRASH_SVG : '−'}</button>
-               <span>${q}</span>
-               <button onclick="event.stopPropagation();pmSugStep(${s.id},1)" aria-label="Agregar uno">+</button>
-             </div>`
-          : `<button class="pm-sg-add" onclick="pmSugAdd(${s.id}, event)">+ Agregar</button>`;
         return `<div class="pm-sg-card" onclick="openProduct(${s.id})">
           <div class="pm-sg-thumb t-${s.category}">${sthumb}</div>
           <div class="pm-sg-name">${splitSize(s.name).name}</div>
           <div class="pm-sg-price">$${s.price.toLocaleString('es-AR')}</div>
-          ${footer}
+          <div class="step-slot">${stepCollapsedHtml(s.id, 'modal')}</div>
         </div>`;
       }).join('')}</div>`;
 }
-function renderPmSug() {
-  const box = document.getElementById('pm-sug-box');
-  if (box) box.innerHTML = pmSugCardsHtml();
+
+/* ===== Stepper transitorio (grilla + sugerencias) =====
+   Tocás "+/Agregar" → aparece el stepper, el número se anima al sumar/restar,
+   y a los 2s sin tocarlo vuelve a "+/Agregar". El producto queda en el carrito;
+   el indicador permanente es el número sobre la foto. */
+function stepCollapsedHtml(id, ctx) {
+  if (ctx === 'grid') return `<button class="add-btn" onclick="stepStart(this,${id},'grid')" aria-label="Agregar">+</button>`;
+  const cls = ctx === 'cart' ? 'suggest-add' : 'pm-sg-add';
+  return `<button class="${cls}" onclick="event.stopPropagation();stepStart(this,${id},'${ctx}')">+ Agregar</button>`;
 }
-function pmSugStep(id, delta) {
-  changeQty(String(id), delta);   // actualiza cart, grilla, contador, barra y panel
-  renderPmSug();
+function stepExpandedHtml(id, q, ctx, dir) {
+  const cls = ctx === 'grid' ? 'qty-ctrl' : (ctx === 'cart' ? 'sug-step' : 'pm-sg-step');
+  const ncls = 'step-num' + (dir > 0 ? ' up' : dir < 0 ? ' down' : '');
+  return `<div class="${cls}">
+    <button onclick="event.stopPropagation();stepChange(this,${id},-1,'${ctx}')" aria-label="${q === 1 ? 'Quitar del carrito' : 'Quitar uno'}">${q === 1 ? TRASH_SVG : '−'}</button>
+    <span class="${ncls}">${q}</span>
+    <button onclick="event.stopPropagation();stepChange(this,${id},1,'${ctx}')" aria-label="Agregar uno">+</button>
+  </div>`;
 }
-function pmSugAdd(id, ev) {
-  if (ev) ev.stopPropagation();
+function stepStart(btn, id, ctx) {
   const p = products.find(x => x.id === id);
   if (!p) return;
-  if (p.variants) { openProduct(id); return; }   // tiene sabores: abrir para elegir
-  changeQty(String(id), 1);
-  track('add_to_cart', { id, source: 'suggest_modal', price: p.price });
-  renderPmSug();
+  if (p.variants) { openProduct(id); return; }   // con sabores: elegir en el modal
+  const q = stepApply(id, 1, ctx);
+  track('add_to_cart', { id, source: 'step_' + ctx, price: p.price });
+  const slot = btn.closest('.step-slot');
+  slot.innerHTML = stepExpandedHtml(id, q, ctx, 1);
+  armStepCollapse(slot, id, ctx);
+}
+function stepChange(btnEl, id, delta, ctx) {
+  const slot = btnEl.closest('.step-slot');
+  const q = stepApply(id, delta, ctx);
+  if (q <= 0) { clearTimeout(slot._t); slot.innerHTML = stepCollapsedHtml(id, ctx); return; }
+  slot.innerHTML = stepExpandedHtml(id, q, ctx, delta);
+  armStepCollapse(slot, id, ctx);
+}
+function armStepCollapse(slot, id, ctx) {
+  clearTimeout(slot._t);
+  slot._t = setTimeout(() => { slot.innerHTML = stepCollapsedHtml(id, ctx); }, 2000);
+}
+function stepApply(id, delta, ctx) {
+  const key = String(id);
+  cart[key] = (cart[key] || 0) + delta;
+  if (cart[key] <= 0) delete cart[key];
+  saveCart(); updateCount(); updateCheckoutBar();
+  refreshBadge(id);   // sólo el número sobre la foto, sin re-render del footer (no corta el stepper)
+  if (document.getElementById('cart-panel').classList.contains('open')) renderCartItems();
+  return cart[key] || 0;
+}
+// actualiza el badge de cantidad sobre la foto de la tarjeta de la grilla, sin tocar el footer
+function refreshBadge(id) {
+  const card = document.getElementById('card-' + id);
+  if (!card) return;
+  const wrap = card.querySelector('.product-img-wrap');
+  if (!wrap) return;
+  let b = wrap.querySelector('.card-qty');
+  const q = cart[String(id)] || 0;
+  if (q > 0) {
+    if (!b) { b = document.createElement('span'); b.className = 'card-qty'; wrap.insertBefore(b, wrap.firstChild); }
+    b.textContent = q;
+    b.classList.remove('pulse'); void b.offsetWidth; b.classList.add('pulse');
+  } else if (b) { b.remove(); }
 }
 
 function modalSuggestions(p, limit = 4) {
