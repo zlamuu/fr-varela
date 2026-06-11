@@ -37,7 +37,7 @@
   "description": "Maxikiosco abierto las 24 horas en Florencio Varela. Golosinas, bebidas, snacks y almacén con envío gratis a domicilio.",
   "image": "https://fr-varela.vercel.app/img/logo.png",
   "url": "https://fr-varela.vercel.app",
-  "telephone": "+5491123593011",
+  "telephone": "+5491163536862",
   "priceRange": "$",
   "openingHours": "Mo-Su 00:00-23:59",
   "address": { "@type": "PostalAddress", "streetAddress": "España 2960", "addressLocality": "Florencio Varela", "addressRegion": "Buenos Aires", "addressCountry": "AR" },
@@ -1068,7 +1068,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   </div>
   <div class="foot-col">
     <h3>Contacto</h3>
-    <a href="https://wa.me/5491123593011" target="_blank" rel="noopener">WhatsApp · 11 2359-3011</a>
+    <a href="https://wa.me/5491163536862" target="_blank" rel="noopener">WhatsApp · 11 6353-6862</a>
     <a href="https://instagram.com/fr.varela" target="_blank" rel="noopener">Instagram · @fr.varela</a>
     <a href="https://www.facebook.com/franui.varela/" target="_blank" rel="noopener">Facebook · FR Varela</a>
   </div>
@@ -2177,7 +2177,7 @@ function sendToWhatsApp() {
 
   // conversión: el evento clave del embudo (toca "Pedir por WhatsApp" con pedido válido)
   track('checkout_whatsapp', { order: num, total, items: cartCount(), hasName: !!ckName, hasAddr: !!ckAddr });
-  window.open('https://wa.me/5491123593011?text=' + encodeURIComponent(msg), '_blank');
+  window.open('https://wa.me/5491163536862?text=' + encodeURIComponent(msg), '_blank');
 }
 
 /* ---------- Ventana de detalle del producto ---------- */
@@ -2433,7 +2433,7 @@ function renderChatQuick() {
   document.getElementById('chat-quick').innerHTML =
     cartBtn +
     chatQuick.map(([label, key]) => `<button onclick="chatPick('${key}',\`${label}\`)">${label}</button>`).join('') +
-    `<button class="cq-wa" onclick="window.open('https://wa.me/5491123593011','_blank')">Hablar por WhatsApp</button>`;
+    `<button class="cq-wa" onclick="window.open('https://wa.me/5491163536862','_blank')">Hablar por WhatsApp</button>`;
 }
 function chatMsg(text, who) {
   const body = document.getElementById('chat-body');
@@ -2505,7 +2505,7 @@ function openContacto() {
     <h3 class="info-title">Contacto</h3>
     <p class="info-sub">Estamos para ayudarte, las 24 hs</p>
     <div class="info-list">
-      <a class="info-cta wa" href="https://wa.me/5491123593011" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
+      <a class="info-cta wa" href="https://wa.me/5491163536862" target="_blank" rel="noopener">Escribinos por WhatsApp</a>
       <a class="info-cta ig" href="https://instagram.com/fr.varela" target="_blank" rel="noopener">Instagram @fr.varela</a>
       <a class="info-cta fb" href="https://www.facebook.com/franui.varela/" target="_blank" rel="noopener">Facebook FR Varela</a>
     </div>
