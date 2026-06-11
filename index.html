@@ -404,6 +404,9 @@ header .logo-name .va { color:#241F1A; }
 .step-num.down { animation:stepNumDown .2s ease; }
 .step-slot { display:flex; }
 .suggest-body .step-slot, .pm-sg-card .step-slot { display:block; }
+.step-slot.closing { opacity:0; transition:opacity .2s ease; }
+.step-slot.reveal { animation:stepReveal .24s ease; }
+@keyframes stepReveal { from{opacity:0} to{opacity:1} }
 .size-tag { position:absolute; top:8px; right:8px; z-index:3; background:rgba(255,255,255,0.95); color:var(--text); font-size:0.64rem; font-weight:800; padding:3px 9px; border-radius:50px; letter-spacing:0.2px; box-shadow:0 1px 4px rgba(0,0,0,0.12); }
 
 /* ===== SIN RESULTADOS ===== */
@@ -2299,21 +2302,35 @@ function stepStart(btn, id, ctx) {
   const q = stepApply(id, 1, ctx);
   track('add_to_cart', { id, source: 'step_' + ctx, price: p.price });
   const slot = btn.closest('.step-slot');
+  clearStepTimers(slot);
   slot.innerHTML = stepExpandedHtml(id, q, ctx, 1);
   slot.classList.add('open');
   armStepCollapse(slot, id, ctx);
 }
 function stepChange(btnEl, id, delta, ctx) {
   const slot = btnEl.closest('.step-slot');
+  clearStepTimers(slot);
   const q = stepApply(id, delta, ctx);
-  if (q <= 0) { clearTimeout(slot._t); slot.classList.remove('open'); slot.innerHTML = stepCollapsedHtml(id, ctx); return; }
+  if (q <= 0) { slot.classList.remove('open'); slot.innerHTML = stepCollapsedHtml(id, ctx); return; }
   slot.innerHTML = stepExpandedHtml(id, q, ctx, delta);
   slot.classList.add('open');
   armStepCollapse(slot, id, ctx);
 }
+function clearStepTimers(slot) {
+  clearTimeout(slot._t); clearTimeout(slot._t2);
+  slot.classList.remove('closing', 'reveal');
+}
 function armStepCollapse(slot, id, ctx) {
-  clearTimeout(slot._t);
-  slot._t = setTimeout(() => { slot.classList.remove('open'); slot.innerHTML = stepCollapsedHtml(id, ctx); }, 2000);
+  clearStepTimers(slot);
+  slot._t = setTimeout(() => {            // a los 2s: desvanece el stepper y revela el "+"/precio suave
+    slot.classList.add('closing');
+    slot._t2 = setTimeout(() => {
+      slot.classList.remove('open', 'closing');
+      slot.innerHTML = stepCollapsedHtml(id, ctx);
+      slot.classList.add('reveal');
+      slot._t2 = setTimeout(() => slot.classList.remove('reveal'), 240);
+    }, 200);
+  }, 2000);
 }
 function stepApply(id, delta, ctx) {
   const key = String(id);
