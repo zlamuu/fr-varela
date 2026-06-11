@@ -394,6 +394,7 @@ header .logo-name .va { color:#241F1A; }
 .qty-ctrl span { font-size:0.9rem; font-weight:800; color:var(--text); min-width:20px; text-align:center; }
 
 .promo-badge { position:absolute; top:8px; left:8px; z-index:3; background:var(--red); color:#fff; font-size:0.6rem; font-weight:900; padding:4px 8px; border-radius:50px; letter-spacing:0.8px; box-shadow:0 2px 8px rgba(225,27,34,0.45); }
+.card-qty { position:absolute; top:7px; right:7px; z-index:3; background:var(--red); color:#fff; border:2px solid #fff; border-radius:50%; min-width:25px; height:25px; padding:0 6px; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:900; box-shadow:0 2px 7px rgba(0,0,0,0.28); animation:cartBump .35s cubic-bezier(.34,1.56,.64,1); }
 .size-tag { position:absolute; top:8px; right:8px; z-index:3; background:rgba(255,255,255,0.95); color:var(--text); font-size:0.64rem; font-weight:800; padding:3px 9px; border-radius:50px; letter-spacing:0.2px; box-shadow:0 1px 4px rgba(0,0,0,0.12); }
 
 /* ===== SIN RESULTADOS ===== */
@@ -1678,15 +1679,22 @@ function splitSize(fullName) {
   return { name: name || fullName, size };
 }
 
+const TRASH_SVG = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>';
+
 function renderCard(p) {
   const inCart = cart[p.id];
+  // al llegar a 1, el "−" pasa a tacho (queda claro que el próximo toque lo saca del carrito)
+  const minus = inCart === 1
+    ? `<button onclick="changeQty(${p.id},-1)" aria-label="Quitar del carrito">${TRASH_SVG}</button>`
+    : `<button onclick="changeQty(${p.id},-1)" aria-label="Quitar uno">−</button>`;
   const footer = inCart
     ? `<div class="qty-ctrl">
-         <button onclick="changeQty(${p.id},-1)" aria-label="Quitar uno">−</button>
+         ${minus}
          <span>${inCart}</span>
          <button onclick="changeQty(${p.id},1)" aria-label="Agregar uno">+</button>
        </div>`
     : `<button class="add-btn" onclick="addToCart(${p.id})" aria-label="Agregar ${p.name}">+</button>`;
+  const imgBadge = inCart ? `<span class="card-qty">${inCart}</span>` : '';
 
   const badge = p.category === 'promos'
     ? '<span class="promo-badge">🔥 PROMO</span>'
@@ -1697,7 +1705,7 @@ function renderCard(p) {
     : (size ? `<div class="product-meta">${size}</div>` : '');
   return `<div class="product-card" data-reveal id="card-${p.id}">
     ${badge}
-    <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${thumbHtml(p)}</div>
+    <div class="product-img-wrap t-${p.category}" onclick="openProduct(${p.id})">${imgBadge}${thumbHtml(p)}</div>
     <div class="product-info" onclick="openProduct(${p.id})">
       <div class="product-name">${searchTerm.trim() ? hlMatch(name, searchTerm) : escapeHtml(name)}</div>
       ${meta}
@@ -2116,7 +2124,7 @@ function renderCartPanel() {
         <div class="ci-price">$${sub.toLocaleString('es-AR')}</div>
       </div>
       <div class="ci-ctrl">
-        <button onclick="changeQty('${key}',-1)" aria-label="Quitar uno">−</button>
+        <button onclick="changeQty('${key}',-1)" aria-label="${qty === 1 ? 'Quitar del carrito' : 'Quitar uno'}">${qty === 1 ? TRASH_SVG : '−'}</button>
         <span>${qty}</span>
         <button onclick="changeQty('${key}',1)" aria-label="Agregar uno">+</button>
       </div>
