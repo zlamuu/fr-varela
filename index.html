@@ -542,7 +542,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .feat-card .product-img-wrap { height:108px; }
 .feat-body { padding:8px 10px 12px; padding-right:44px; }
 .feat-name { font-size:0.76rem; font-weight:700; color:var(--text); line-height:1.25; height:2.5em; overflow:hidden; margin-bottom:2px; }
-.feat-add { position:absolute; right:8px; bottom:8px; width:34px; height:34px; font-size:1.3rem; }
+.feat-slot { position:absolute; right:8px; bottom:8px; z-index:3; }
+.feat-slot .add-btn { width:34px; height:34px; font-size:1.3rem; }
 
 /* ===== Barra de orden ===== */
 .toolbar { max-width:1100px; margin:18px auto 8px; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(0,0,0,0.05); scroll-margin-top:130px; }
@@ -1492,7 +1493,7 @@ function renderFeatured() {
           <div class="feat-name">${name}</div>
           <div class="product-price">$${p.price.toLocaleString('es-AR')}</div>
         </div>
-        <button class="add-btn feat-add" onclick="addToCart(${p.id})" aria-label="Agregar ${name}">+</button>
+        <div class="step-slot feat-slot">${stepCollapsedHtml(p.id, 'grid')}</div>
       </div>`;
     }).join('')}</div>`;
 }
@@ -1715,15 +1716,6 @@ function renderCard(p) {
 function keyId(k) { return parseInt(String(k).split('|')[0], 10); }
 function keyVar(k) { const s = String(k).split('|'); return s.length > 1 ? s[1] : ''; }
 
-function addToCart(id, source = 'grid') {
-  const p = products.find(x => x.id === id);
-  if (p && p.variants) { openProduct(id); return; } // tiene sabores: abrir para elegir
-  cart[id] = (cart[id] || 0) + 1;
-  afterCartChange(id);
-  showAddToast(p.name);
-  track('add_to_cart', { id, source, price: p.price });
-}
-
 function changeQty(key, delta) {
   cart[key] = (cart[key] || 0) + delta;
   if (cart[key] <= 0) delete cart[key];
@@ -1732,13 +1724,6 @@ function changeQty(key, delta) {
   refreshCard(keyId(key));
   updateCheckoutBar();
   renderCartPanel();
-}
-
-function afterCartChange(id) {
-  saveCart();
-  updateCount();
-  refreshCard(id);
-  updateCheckoutBar();
 }
 
 function refreshCard(id) {
