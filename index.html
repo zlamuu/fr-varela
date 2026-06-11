@@ -591,7 +591,8 @@ footer { background:#211A14; padding:30px 20px; display:grid; gap:18px; grid-tem
 .pm-sg-add { margin-top:5px; width:100%; background:#fff; color:var(--red); border:1.5px solid var(--red); border-radius:8px; padding:5px 4px; font-family:inherit; font-weight:800; font-size:0.68rem; cursor:pointer; transition:all .15s; }
 .pm-sg-add:hover { background:var(--red); color:#fff; }
 .pm-sg-card.added .pm-sg-add { background:#1f9d57; border-color:#1f9d57; color:#fff; }
-.pm-sg-card.added .pm-sg-thumb::after { content:'✓'; position:absolute; inset:0; z-index:2; display:flex; align-items:center; justify-content:center; background:rgba(31,157,87,0.78); color:#fff; font-size:26px; font-weight:900; border-radius:10px; }
+.pm-sg-card.added .pm-sg-thumb { outline:2.5px solid #1f9d57; outline-offset:-2.5px; }
+.pm-sg-card.added .pm-sg-thumb::after { content:'✓'; position:absolute; top:5px; right:5px; z-index:2; width:22px; height:22px; display:flex; align-items:center; justify-content:center; background:#1f9d57; color:#fff; font-size:13px; font-weight:900; border-radius:50%; box-shadow:0 2px 6px rgba(0,0,0,0.3); }
 
 /* Estado "agregado" dentro del modal: deja de ser callejón sin salida */
 .pm-added { background:#EAF8EF; border:1px solid #BCE7CC; border-radius:14px; padding:12px 14px; margin-top:4px; animation:pmin .2s ease; }
