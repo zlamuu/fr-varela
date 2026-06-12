@@ -879,6 +879,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
 /* ===== FAQ (Preguntas frecuentes) ===== */
 .faq { max-width:760px; margin:34px auto 10px; padding:0 16px; }
 .faq-title { font-family:'Anton',sans-serif; font-size:1.7rem; letter-spacing:1px; color:var(--text); text-transform:uppercase; text-align:center; margin-bottom:6px; }
+/* Títulos de secciones informativas: centrados, misma escala, con barra roja centrada (lenguaje común con las de compra) */
+.howto-title, .zones-title, .ts-title, .faq-title { font-size:clamp(1.6rem,4vw,2rem); }
+.howto-title::after, .zones-title::after, .ts-title::after, .faq-title::after {
+  content:""; display:block; width:44px; height:4px; background:var(--red); border-radius:50px; margin:12px auto 0;
+}
 .faq-sub { text-align:center; color:var(--muted); font-size:0.88rem; margin-bottom:18px; }
 .faq-item { background:var(--bg2); border:1px solid var(--line); border-radius:14px; margin-bottom:10px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.04); }
 .faq-item summary { list-style:none; cursor:pointer; padding:15px 18px; font-weight:700; font-size:0.95rem; color:var(--text); display:flex; align-items:center; justify-content:space-between; gap:14px; }
